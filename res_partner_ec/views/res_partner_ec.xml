@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="view_partner_form_ec" model="ir.ui.view">
+            <field name="name">res.partner.form.ec</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <h3>
+                        <field name="ec_identifier_type"
+                               placeholder="Tipo Identificación"/>
+                        <field name="ec_identifier"
+                               placeholder="CI / RUC / Pasaporte"/>
+                    </h3>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,22 +1,22 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Socio Negocio Ecuador",
+    'name': "Ver Atributo Peso en Productos",
 
     'summary': """
-        Gestion del socio de negocio en ecuador
+        Ver Atributo Peso en Productos
         """,
 
     'author': "TechTools",
     'website': "http://www.techtoolsec.com",
-    'category': 'TechTools Socio Negocio EC',
+    'category': 'TechTools Productos',
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['product'],
 
     # always loaded
     'data': [
-        "views/res_partner_ec.xml",
+        "views/product_view_weight.xml",
     ],
 }
 

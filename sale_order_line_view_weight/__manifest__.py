@@ -16,7 +16,7 @@
 
     # always loaded
     'data': [
-        "views/sale_order_line_view.xml",
+        "views/sale_order_views.xml"
     ],
 }
 

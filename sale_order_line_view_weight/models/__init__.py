@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
 
-from . import sale_order_line_view_weight
+from . import sale_order

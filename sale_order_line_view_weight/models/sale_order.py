@@ -31,11 +31,12 @@ class SaleOrderLine(models.Model):
         compute="get_peso_linea"
     )
 
-
+    @api.onchange('product_id')
     def get_peso_producto(self):
         for line in self:
             line.peso_producto = line.product_id.weight
 
+    @api.onchange('product_id', 'product_uom_qty')
     def get_peso_linea(self):
         for line in self:
             line.peso_linea = line.product_uom_qty * line.peso_producto

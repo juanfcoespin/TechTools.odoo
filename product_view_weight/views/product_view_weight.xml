@@ -8,7 +8,8 @@
             <field name="inherit_id" ref="product.product_template_only_form_view"/>
             <field name="arch" type="xml">
                 <field name="barcode" position="after">
-                    <field string="Peso (Kg)" name="weight"/>
+                    <field string="Peso" name="weight"/>
+                    <field string="Unidad" name="uom_id"/>
                 </field>
             </field>
         </record>
@@ -18,7 +19,8 @@
             <field name="inherit_id" ref="product.product_normal_form_view"/>
             <field name="arch" type="xml">
                 <field name="barcode" position="after">
-                    <field string="Peso (Kg)" name="weight"/>
+                    <field string="Peso" name="weight"/>
+                    <field string="Unidad" name="uom_id"/>
                 </field>
             </field>
         </record>

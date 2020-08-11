@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="0">
+        <!-- name="guia_remision.ride" ride es el nombre del template del ride -->
+        <report
+            id="guia_remision"
+            model="stock.picking"
+            report_type="qweb-pdf"
+            string="Guía de Remisión"
+            name="guia_remision.ride"
+            file="guia_remision.ride"
+            attachment="(object.state in ('done')) and ('GR-').replace('/','')+'.pdf'"
+        />
+    </data>
+</odoo>

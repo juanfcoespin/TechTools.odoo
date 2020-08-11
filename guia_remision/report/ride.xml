@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       <template id="ride">
+           <t t-call="web.html_container">
+              <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="text-right">
+                            <h2>Guía de Remisión: <span t-field="o.id"/></h2>
+                        </div>
+                        <div class="text-right">
+                            <h5>Fecha: <span t-field="o.date"/></h5>
+                        </div>
+                        <table class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Producto</th>
+                                    <th class="text-right">Cantidad</th>
+                                    <th class="text-right">Peso Unitario (Kg)</th>
+                                    <th class="text-right">Peso Total (Kg)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="o.move_ids_without_package" t-as="line">
+                                    <td><span t-field="line.product_id.barcode"/></td>
+                                    <td><span t-field="line.product_id"/></td>
+                                    <td class="text-right"><span t-field="line.product_uom_qty"/></td>
+                                    <td class="text-right"><span t-field="line.product_id.weight"/></td>
+                                    <td class="text-right"><span t-field="line.peso_linea"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table>
+                            <tr>
+                                <td width="100%" align="right"><h5>Peso Total (kg):</h5></td>
+                                <td style="padding-left:10px;  padding-right:15px"><h5><span t-field="o.peso_total"/></h5></td>
+                            </tr>
+                            <tr>
+                                <td align="right"><h5>Peso Total (qq):</h5></td>
+                                <td align="right" style="padding-left:10px; padding-right:15px"><h5><span t-field="o.peso_total_qq"/></h5></td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+              </t>
+           </t>
+       </template>
+   </data>
+</odoo>

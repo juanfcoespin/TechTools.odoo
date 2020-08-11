@@ -9,7 +9,7 @@
             <field name="arch" type="xml">
                 <field name="barcode" position="after">
                     <field string="Peso" name="weight"/>
-                    <field string="Unidad" name="uom_id"/>
+                    <field string="Unidad" name="weight_uom_name"/>
                 </field>
             </field>
         </record>
@@ -20,7 +20,7 @@
             <field name="arch" type="xml">
                 <field name="barcode" position="after">
                     <field string="Peso" name="weight"/>
-                    <field string="Unidad" name="uom_id"/>
+                    <field string="Unidad" name="weight_uom_name"/>
                 </field>
             </field>
         </record>

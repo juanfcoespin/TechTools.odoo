@@ -15,6 +15,21 @@ class StockPicking(models.Model):
         string="Total Peso (qq)",
         compute="get_total_peso_qq"
     )
+    num_guia = fields.Char(
+        string="No.",
+        compute="get_num_guia"
+    )
+    clave_acceso = fields.Char(
+        string="No.",
+        compute="get_clave_acceso_guia"
+    )
+
+    def get_clave_acceso_guia(self):
+        self.clave_acceso = utils.get_clave_acceso()
+
+    def get_num_guia(self):
+        company = self.env.user.company_id
+        self.num_guia = utils.get_num_ride(company, self.id)
 
     # peso en quintales
     def get_total_peso_qq(self):
@@ -49,5 +64,3 @@ class StockMoveLine(models.Model):
     def get_peso_linea(self):
         for line in self:
             line.peso_linea = line.product_uom_qty * line.peso_producto
-
-

@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "guia_remision",
+    'name': "rides",
 
     'summary': """
-        - Construye el RIDE de la guia de remisión conforme a los lineamientos del SRI   
+        Construye los RIDES  de facturación electrónica según los lineamientos del SRI
+          
     """,
 
     'description': """
-        Long description of module's purpose
+        - Guía de Remisión 
     """,
 
     'author': "TechTools",
@@ -22,6 +23,6 @@
     'data': [
         'views/stock_picking.xml',
         'report/guia_remision_report.xml',
-        'report/ride.xml'
+        'report/rides.xml'
     ]
 }

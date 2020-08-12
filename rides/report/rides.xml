@@ -7,8 +7,8 @@
             model="stock.picking"
             report_type="qweb-pdf"
             string="Guía de Remisión"
-            name="guia_remision.ride"
-            file="guia_remision.ride"
+            name="rides.guia_remision"
+            file="rides.guia_remision"
             attachment="(object.state in ('done')) and ('GR-').replace('/','')+'.pdf'"
         />
     </data>

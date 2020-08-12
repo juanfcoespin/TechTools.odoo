@@ -1,17 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-       <template id="ride">
+       <template id="guia_remision">
            <t t-call="web.html_container">
               <t t-foreach="docs" t-as="o">
                 <t t-call="web.external_layout">
                     <div class="page">
-                        <div class="text-right">
-                            <h2>Guía de Remisión: <span t-field="o.id"/></h2>
-                        </div>
-                        <div class="text-right">
-                            <h5>Fecha: <span t-field="o.date"/></h5>
-                        </div>
+                        <table align="right">
+                            <tr>
+                                <td>R.U.C.:</td>
+                                <td><span t-esc="res_company.ruc"/></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">GUIA DE REMISIÓN</td>
+                            </tr>
+                            <tr>
+                                <td>No.</td>
+                                <td><span t-field="o.num_guia"/></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">NÚMERO DE AUTORIZACIÓN</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><span t-field="o.clave_acceso"/></td>
+                            </tr>
+                        </table>
                         <table class="table">
                             <thead class="thead-dark">
                                 <tr>

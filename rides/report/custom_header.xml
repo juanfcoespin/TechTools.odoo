@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+<template id="web_external_layout_iherited"
+          inherit_id="web.external_layout_standard"
+          name="Automatic Header">
+    <xpath expr="//div[@class='header']" position="replace">
+        <div class="header">
+            <div class="row">
+                <div class="col-3 mb4">
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 45px;" alt="Logo"/>
+                </div>
+<!--                <div class="col-9 text-right" style="margin-top:22px;" t-field="company.report_header" name="moto"/>-->
+            </div>
+            <div t-if="company.logo or company.report_header" class="row zero_min_height">
+                <div class="col-12">
+                    <div style="border-bottom: 1px solid black;"/>
+                </div>
+            </div>
+        </div>
+    </xpath>
+</template>
+</data>
+</odoo>

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-
+from . import convertion_utils
 from odoo import api, fields, models
-from . import utils
 
 
-class StockPicking(models.Model):
-    _inherit = 'stock.picking'
+class GuiaRemision(models.Model):
+    _name = 'stock.picking'
+    _inherit = ['stock.picking', 'rides.base']
 
     peso_total = fields.Float(
         string="Total Peso (kg)",
@@ -20,20 +20,40 @@ class StockPicking(models.Model):
         compute="get_num_guia"
     )
     clave_acceso = fields.Char(
-        string="No.",
-        compute="get_clave_acceso_guia"
+        string="Clave de Acceso",
+        compute="get_clave_acceso_guia",
     )
+    
+    ambiente = fields.Char(
+        string="Ambiente",
+        compute="get_ambiente_guia",
+    )
+    tipo_emision = fields.Char(
+        string="Ambiente",
+        compute="get_tipo_emision_guia",
+    )
+    transportista_id = fields.Many2one("res.partner", string="Transportista")
+    placa_vehiculo = fields.Char(
+        string="Placa Vehículo",
+        size=8
+    )
+    punto_partida = fields.Char("Punto de Partida"
+                                )
+    def get_tipo_emision_guia(self):
+        self.tipo_emision= self.get_tipo_emision()
+
+    def get_ambiente_guia(self):
+        self.ambiente= self.get_ambiente()
 
     def get_clave_acceso_guia(self):
-        self.clave_acceso = utils.get_clave_acceso()
+        self.clave_acceso = self.get_clave_acceso('06', self.id, self.date)
 
     def get_num_guia(self):
-        company = self.env.user.company_id
-        self.num_guia = utils.get_num_ride(company, self.id)
+        self.num_guia = self.get_num_ride(self.id)
 
     # peso en quintales
     def get_total_peso_qq(self):
-        self.peso_total_qq = utils.kg_to_quintales(self.peso_total)
+        self.peso_total_qq = convertion_utils.kg_to_quintales(self.peso_total)
 
     def get_total_peso(self):
         self.peso_total = 0

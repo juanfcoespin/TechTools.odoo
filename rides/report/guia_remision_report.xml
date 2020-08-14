@@ -6,26 +6,117 @@
               <t t-foreach="docs" t-as="o">
                 <t t-call="web.external_layout">
                     <div class="page">
-                        <table align="right">
+                        <table style="padding-bottom: 10px;">
+                            <tbody>
                             <tr>
-                                <td>R.U.C.:</td>
-                                <td><span t-esc="res_company.ruc"/></td>
+                                <!--Logo y direccion-->
+                                <td class="align-top">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)" style="max-height: 200px;" alt="Logo"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><h5>Dirección Matriz:</h5></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span t-esc="res_company.street"/> y <span t-esc="res_company.street2"/> <span t-esc="res_company.city"/> - <span t-esc="res_company.country_id.name"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-top: 20px">
+                                                    <table>
+                                                        <tr>
+                                                            <td>Contribuyente Especial Nro:</td>
+                                                            <td style="padding-left: 10px"><span t-esc="res_company.nro_contribuyente_especial"/></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Obligado a Llevar Contabilidad:</td>
+                                                            <td style="padding-left: 10px"><span t-esc="res_company.obligado_llevar_contabilidad"/></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <!--Info ruc , clave de acceso-->
+                                <td style="padding-left: 30px" class="align-top">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td><h4>R.U.C.: <span t-esc="res_company.ruc"/></h4></td>
+                                            </tr>
+                                            <tr>
+                                                <td><h2>GUIA DE REMISIÓN</h2></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-top: 10px">No. <span t-field="o.num_guia"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-top: 10px">NÚMERO DE AUTORIZACIÓN</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span t-field="o.clave_acceso"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-top: 10px">FECHA Y HORA DE AUTORIZACIÓN:</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span t-field="o.date" t-options='{"format": "MM/dd/yyyy HH:mm:ss"}'/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-top: 10px">AMBIENTE: <span t-field="o.ambiente"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-top: 10px">EMISIÓN: <span t-field="o.tipo_emision"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-top: 10px">CLAVE DE ACCESO</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <t t-set="content" t-value="o.clave_acceso"/>
+                                                    <img class="barcode" style="max-height: 70px;" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;humanreadable=1' % ('Code128', content, 600, 100)" alt="Barcode"/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
                             </tr>
-                            <tr>
-                                <td colspan="2">GUIA DE REMISIÓN</td>
-                            </tr>
-                            <tr>
-                                <td>No.</td>
-                                <td><span t-field="o.num_guia"/></td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">NÚMERO DE AUTORIZACIÓN</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2"><span t-field="o.clave_acceso"/></td>
-                            </tr>
+                            </tbody>
                         </table>
-                        <table class="table">
+                        <hr></hr>
+                        <!--Detalle Transporte-->
+                        <table style="padding-bottom: 10px; width: 100%">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 50%">Identificación Transportista:</td>
+                                    <td><span t-field="o.transportista_id.ec_identifier"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-right: 20px">Razón Social / Nombres y Apellidos:</td>
+                                    <td align="left"><span t-field="o.transportista_id.name"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Placa:</td>
+                                    <td><span t-field="o.placa_vehiculo"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Punto de Partida:</td>
+                                    <td><span t-field="o.punto_partida"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Fecha Inicio Transporte: <span t-field="o.date" t-options='{"format": "MM/dd/yyyy"}'/></td>
+                                    <td>Fecha Fin Transporte: <span t-field="o.date_done" t-options='{"format": "MM/dd/yyyy"}'/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr></hr>
+                        <!--Detalle Productos-->
+                        <table class="table" >
                             <thead class="thead-dark">
                                 <tr>
                                     <th>Código</th>

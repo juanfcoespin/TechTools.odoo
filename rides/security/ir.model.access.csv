@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_guia_remision_guia_remision,guia_remision.guia_remision,model_guia_remision_guia_remision,base.group_user,1,1,1,1
+access_rides_guia_remision,access_rides_guia_remision,model_rides_guia_remision,base.group_user,1,1,1,1
+

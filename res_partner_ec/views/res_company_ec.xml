@@ -11,6 +11,8 @@
                     <field name="ruc" placeholder="Ruc"/>
                     <field name="cod_establecimiento"/>
                     <field name="cod_punto_emision"/>
+                    <field name="obligado_llevar_contabilidad"/>
+                    <field name="nro_contribuyente_especial"/>
                 </field>
             </field>
         </record>

@@ -23,6 +23,7 @@
     'data': [
         'views/stock_picking.xml',
         'report/guia_remision_report.xml',
-        'report/rides.xml'
+        'report/rides.xml',
+        'report/custom_header.xml'
     ]
 }

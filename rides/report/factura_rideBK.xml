@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       <template id="factura2">
+           <t t-call="web.html_container">
+              <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <table style="padding-bottom: 10px;">
+                            <tbody>
+                            <tr>
+                                <!--Logo y direccion-->
+                                <td class="align-top">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)" style="max-height: 200px;" alt="Logo"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><h5>Dirección Matriz:</h5></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span t-esc="res_company.street"/> y <span t-esc="res_company.street2"/> <span t-esc="res_company.city"/> - <span t-esc="res_company.country_id.name"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-top: 20px">
+                                                    <table>
+                                                        <tr>
+                                                            <td>Contribuyente Especial Nro:</td>
+                                                            <td style="padding-left: 10px"><span t-esc="res_company.nro_contribuyente_especial"/></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Obligado a Llevar Contabilidad:</td>
+                                                            <td style="padding-left: 10px"><span t-esc="res_company.obligado_llevar_contabilidad"/></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <!--Info ruc , clave de acceso-->
+                                <td style="padding-left: 30px" class="align-top">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td><h4>R.U.C.: <span t-esc="res_company.ruc"/></h4></td>
+                                            </tr>
+                                            <tr>
+                                                <td><h2>FACTURA</h2></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-top: 10px">No. <span t-field="o.num_factura"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-top: 10px">NÚMERO DE AUTORIZACIÓN</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span t-field="o.clave_acceso"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-top: 10px">FECHA Y HORA DE AUTORIZACIÓN:</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span t-field="o.fecha_autorizacion" t-options='{"format": "MM/dd/yyyy HH:mm:ss"}'/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-top: 10px">AMBIENTE: <span t-field="o.ambiente"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-top: 10px">EMISIÓN: <span t-field="o.tipo_emision"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-top: 10px">CLAVE DE ACCESO</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <t t-set="content" t-value="o.clave_acceso"/>
+                                                    <img class="barcode" style="max-height: 70px;" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;humanreadable=1' % ('Code128', content, 600, 100)" alt="Barcode"/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <hr></hr>
+                        <!--Informacion del cliente-->
+                        <table style="padding-bottom: 10px; width: 100%">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        Razón Social / Nombres y Apellidos:
+                                        <span t-field="o.partner_id.name" style="padding-left:10px;"/>
+                                    </td>
+                                    <td>Identificación:
+                                        <span t-field="o.partner_id.ec_identifier" style="padding-left:10px;"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Fecha Emisión:<span t-field="o.invoice_date" style="padding-left:10px;"/>
+                                    </td>
+                                    <td>Guia Remisión:</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        Dirección:
+                                        <span t-field="o.partner_id.street" style="padding-left:10px;"/> y
+                                        <span t-field="o.partner_id.street2"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr></hr>
+                        <!--Detalle Productos-->
+                        <table class="table" >
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Producto</th>
+                                    <th class="text-right">Cantidad</th>
+                                    <th class="text-right">Precio</th>
+                                    <th class="text-right">Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                    <td><span t-field="line.product_id.barcode"/></td>
+                                    <td><span t-field="line.product_id"/></td>
+                                    <td class="text-right"><span t-field="line.quantity"/></td>
+                                    <td class="text-right"><span t-field="line.price_unit"/></td>
+                                    <td class="text-right"><span t-field="line.price_subtotal"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr></hr>
+                        <table>
+                            <tr>
+                                <td width="100%" align="right"><h5>Subtotal sin impuestos:</h5></td>
+                                <td style="padding-left:10px;  padding-right:15px"><h5><span t-field="o.amount_untaxed"/></h5></td>
+                            </tr>
+                            <tr>
+                                <td align="right"><h5>Iva 12%:</h5></td>
+                                <td align="right" style="padding-left:10px; padding-right:15px"><h5><span t-field="o.amount_tax"/></h5></td>
+                            </tr>
+                            <tr>
+                                <td align="right"><h5>Total:</h5></td>
+                                <td align="right" style="padding-left:10px; padding-right:15px"><h5><span t-field="o.amount_total"/></h5></td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+              </t>
+           </t>
+       </template>
+   </data>
+</odoo>

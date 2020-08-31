@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <data noupdate="0">
-        <!-- name="guia_remision.ride" ride es el nombre del template del ride -->
+        <!-- name="rides.guia_remision" ride es el nombre del template del ride -->
         <report
             id="guia_remision"
             model="stock.picking"
@@ -10,6 +10,15 @@
             name="rides.guia_remision"
             file="rides.guia_remision"
             attachment="(object.state in ('done')) and ('GR-').replace('/','')+'.pdf'"
+        />
+        <report
+            id="factura"
+            model="account.move"
+            report_type="qweb-pdf"
+            string="Factura (Ride)"
+            name="rides.factura"
+            file="rides.factura"
+            attachment="(object.state in ('done')) and ('FC-').replace('/','')+'.pdf'"
         />
     </data>
 </odoo>

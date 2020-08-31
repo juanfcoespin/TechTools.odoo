@@ -2,3 +2,4 @@
 
 from . import base
 from . import guia_remision
+from . import factura

@@ -17,12 +17,13 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['stock'],
+    'depends': ['stock', 'account'],
 
     # always loaded
     'data': [
         'views/stock_picking.xml',
         'report/guia_remision_report.xml',
+        'report/factura_ride.xml',
         'report/rides.xml',
         'report/custom_header.xml'
     ]

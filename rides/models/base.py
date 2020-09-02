@@ -1,3 +1,4 @@
+import logging
 from odoo import api, fields, models
 
 
@@ -5,27 +6,38 @@ class Ride(models.AbstractModel):
     _name = 'rides.base'
     _description = 'Compendio de funciones generales para los rides'
 
-    # 1 para pruebas, 2 para produccion
-    cod_ambiente = "1"
+    cod_ambiente = fields.Char(compute="set_ambiente")
+    ambiente = fields.Char(compute="set_ambiente")
 
-    # 1 Emisión Normal
-    cod_tipo_emision = "1"
+    cod_tipo_emision = fields.Char(compute="set_tipo_emision")
+    tipo_emision = fields.Char(compute="set_tipo_emision")
 
-    def get_ambiente(self):
-        if self.cod_ambiente == "1":
-            return "PRUEBAS"
-        if self.cod_ambiente == "2":
-            return "PRODUCCION"
-        return ""
-    def get_tipo_emision(self):
-        if self.cod_tipo_emision == "1":
-            return "NORMAL"
-        return ""
+
+    def set_ambiente(self):
+        self.cod_ambiente = self.company_id.factura_electronica_ambiente
+        self.ambiente = self.get_selection_name('res.company',
+                                                'factura_electronica_ambiente',
+                                                self.cod_ambiente)
+
+    def set_tipo_emision(self):
+        self.cod_tipo_emision = self.company_id.factura_electronica_tipo_emision
+        self.tipo_emision = self.get_selection_name('res.company',
+                                                    'factura_electronica_tipo_emision',
+                                                    self.cod_tipo_emision)
+
+    def get_selection_name(self, model, field, value):
+        return dict(
+            self.env[model].fields_get(field,
+                                       'selection').get(field, {}).get('selection',
+                                                                       {})).get(value)
 
     def get_secuencial(self, id_documento):
         # 145 -> '000000145'
         secuencial = str(id_documento).rjust(9, '0')
         return secuencial
+
+    def get_direccion(self):
+        return "{} y {}".format(self.company_id.street, self.company_id.street2)
 
     def get_num_ride(self, id_documento):
         return "{}-{}-{}".format(
@@ -43,10 +55,9 @@ class Ride(models.AbstractModel):
         06 Guía de Remisión
         07 Comprobante de Retención
     '''
-    def get_clave_acceso(self, cod_tipo_documento, id_documento, fecha_documento):
-        current_date = "{}{}{}".format(str(fecha_documento.day).rjust(2, '0'),
-                                       str(fecha_documento.month).rjust(2, '0'),
-                                       fecha_documento.year)
+
+    def get_clave_acceso(self, cod_tipo_documento, id_documento,  fecha_documento):
+        current_date = self.get_ddmmyyy_date(fecha_documento)
         num_emisor = "12345678"
         clave = "{}{}{}{}{}{}{}{}{}".format(
             current_date,
@@ -59,10 +70,17 @@ class Ride(models.AbstractModel):
             num_emisor,
             self.cod_tipo_emision
         )
-        # clave = "010420200117904628540012001010000068498123456781"
+        # clave = "010420200117904628540012001010000068498123456781" (sin dv)
         dv = self.get_digito_verificador(clave)
         clave = "{}{}".format(clave, str(dv))
         return clave
+
+    def get_ddmmyyy_date(self, fecha, token=''):
+        return "{}{}{}{}{}".format(str(fecha.day).rjust(2, '0'),
+                                   token,
+                                   str(fecha.month).rjust(2, '0'),
+                                   token,
+                                   fecha.year)
 
     def get_digito_verificador(self, clave):
         clave_invertida = clave[::-1]
@@ -72,7 +90,7 @@ class Ride(models.AbstractModel):
         for n in clave_invertida:
             if i == 8:
                 i = 2
-            sumandos.append(int(n)*i)
+            sumandos.append(int(n) * i)
             i += 1
 
         total = 0
@@ -96,6 +114,3 @@ class Ride(models.AbstractModel):
             str(document_date.second).rjust(2, '0'),
         )
         return ms
-
-
-

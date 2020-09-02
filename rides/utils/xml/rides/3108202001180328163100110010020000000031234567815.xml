@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<factura id="comprobante" version="1.1.0">
+  <infoTributaria>
+    <ambiente>1</ambiente>
+    <tipoEmision>1</tipoEmision>
+    <razonSocial>TodoMetal</razonSocial>
+    <nombreComercial>TodoMetal</nombreComercial>
+    <ruc>1803281631001</ruc>
+    <claveAcceso>3108202001180328163100110010020000000031234567815</claveAcceso>
+    <codDoc>01</codDoc>
+    <estab>001</estab>
+    <ptoEmi>002</ptoEmi>
+    <secuencial>000000003</secuencial>
+    <dirMatriz>Farsalias y Nogales</dirMatriz>
+  </infoTributaria>
+  <infoFactura>
+    <fechaEmision>31/08/2020</fechaEmision>
+    <dirEstablecimiento>Farsalias y Nogales</dirEstablecimiento>
+    <contribuyenteEspecial>536</contribuyenteEspecial>
+    <obligadoContabilidad>SI</obligadoContabilidad>
+    <tipoIdentificacionComprador>04</tipoIdentificacionComprador>
+    <razonSocialComprador>Mariana Morillo</razonSocialComprador>
+    <identificacionComprador>1712643608001</identificacionComprador>
+    <direccionComprador>Farsalias y Nogales</direccionComprador>
+  </infoFactura>
+</factura>

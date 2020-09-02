@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<factura id="comprobante" version="1.1.0">
+  <infoTributaria>
+    <ambiente>1</ambiente>
+    <tipoEmision>1</tipoEmision>
+    <razonSocial>TodoMetal</razonSocial>
+    <nombreComercial>TodoMetal</nombreComercial>
+    <ruc>1803281631001</ruc>
+    <claveAcceso>0109202001180328163100110010020000000081234567818</claveAcceso>
+    <codDoc>01</codDoc>
+    <estab>001</estab>
+    <ptoEmi>002</ptoEmi>
+    <secuencial>000000008</secuencial>
+    <dirMatriz>Farsalias y Nogales</dirMatriz>
+  </infoTributaria>
+  <infoFactura>
+    <fechaEmision>02/09/2020</fechaEmision>
+    <dirEstablecimiento>Farsalias y Nogales</dirEstablecimiento>
+    <contribuyenteEspecial>536</contribuyenteEspecial>
+    <obligadoContabilidad>SI</obligadoContabilidad>
+    <tipoIdentificacionComprador>05</tipoIdentificacionComprador>
+    <razonSocialComprador>Daniel Espin</razonSocialComprador>
+    <identificacionComprador>1803281649</identificacionComprador>
+    <direccionComprador>Manzana 4 y Urdesa</direccionComprador>
+    <totalSinImpuestos>5.38</totalSinImpuestos>
+  </infoFactura>
+</factura>

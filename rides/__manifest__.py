@@ -22,6 +22,7 @@
     # always loaded
     'data': [
         'views/stock_picking.xml',
+        'views/account.move.xml',
         'report/guia_remision_report.xml',
         'report/factura_ride.xml',
         'report/rides.xml',

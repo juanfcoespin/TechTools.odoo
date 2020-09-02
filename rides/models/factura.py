@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from . import convertion_utils
-from odoo import api, fields, models
+from odoo import fields, models, api
 from datetime import datetime
+from ..utils.xml.xml_doc import XmlDoc
 
 
 class Factura(models.Model):
@@ -12,32 +12,31 @@ class Factura(models.Model):
         string="No.",
         compute="get_num_factura"
     )
-    clave_acceso = fields.Char(
-        string="Clave de Acceso",
-        compute="get_clave_acceso_factura"
-    )
-    
-    ambiente = fields.Char(
-        string="Ambiente",
-        compute="get_ambiente_factura"
-    )
-    tipo_emision = fields.Char(
-        string="Ambiente",
-        compute="get_tipo_emision_factura"
-    )
     fecha_autorizacion = fields.Datetime(
         string="Fecha y Hora Autorización",
         default=datetime.now()
     )
+    secuencial = fields.Char(compute="get_secuencial_factura")
+    clave_acceso = fields.Char(compute="get_clave_acceso_factura")
 
-    def get_tipo_emision_factura(self):
-        self.tipo_emision= self.get_tipo_emision()
 
-    def get_ambiente_factura(self):
-        self.ambiente= self.get_ambiente()
+    @api.model
+    def create(self, vals):
+        # la funcion create hace un insert en la tabla
+        ms = super(Factura, self).create(vals)
+        self.enviar_sri()
+        return ms
+
+    def get_secuencial_factura(self):
+        self.secuencial = self.get_secuencial(self.id)
 
     def get_clave_acceso_factura(self):
         self.clave_acceso = self.get_clave_acceso('01', self.id, self.date)
+
+    def enviar_sri(self):
+        doc = XmlDoc(self)
+        doc.render()
+
 
     def get_num_factura(self):
         self.num_factura = self.get_num_ride(self.id)

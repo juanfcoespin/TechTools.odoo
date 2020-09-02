@@ -7,13 +7,34 @@
             <field name="model">res.company</field>
             <field name="inherit_id" ref="base.view_company_form"/>
             <field name="arch" type="xml">
-                <field name="partner_id" position="after">
-                    <field name="ruc" placeholder="Ruc"/>
-                    <field name="cod_establecimiento"/>
-                    <field name="cod_punto_emision"/>
-                    <field name="obligado_llevar_contabilidad"/>
-                    <field name="nro_contribuyente_especial"/>
-                </field>
+                <!--field name="partner_id" position="after">
+
+                </field-->
+                <xpath expr="//notebook[last()]" position="inside">
+                    <page string="Información Tributaria (SRI)">
+                        <group>
+                            <group>
+                                <field name="ruc" placeholder="Ruc"/>
+                                <field name="obligado_llevar_contabilidad"/>
+                                <field name="nro_contribuyente_especial"/>
+                            </group>
+                            <group>
+                                <field name="cod_establecimiento"/>
+                                <field name="cod_punto_emision"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//notebook[last()]" position="inside">
+                    <page string="Facturación Electrónica">
+                        <group>
+                            <group>
+                                <field name="factura_electronica_ambiente"/>
+                                <field name="factura_electronica_tipo_emision"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
             </field>
         </record>
     </data>

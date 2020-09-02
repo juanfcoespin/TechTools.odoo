@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from . import convertion_utils
 from odoo import api, fields, models
+from ..utils import convertion_utils
 
 
 class GuiaRemision(models.Model):
@@ -19,19 +19,8 @@ class GuiaRemision(models.Model):
         string="No.",
         compute="get_num_guia"
     )
-    clave_acceso = fields.Char(
-        string="Clave de Acceso",
-        compute="get_clave_acceso_guia",
-    )
-    
-    ambiente = fields.Char(
-        string="Ambiente",
-        compute="get_ambiente_guia",
-    )
-    tipo_emision = fields.Char(
-        string="Ambiente",
-        compute="get_tipo_emision_guia",
-    )
+    secuencial = fields.Char(compute="get_secuencial_guia")
+    clave_acceso = fields.Char(compute="get_clave_acceso_guia")
     transportista_id = fields.Many2one("res.partner", string="Transportista")
     placa_vehiculo = fields.Char(
         string="Placa Vehículo",
@@ -39,11 +28,9 @@ class GuiaRemision(models.Model):
     )
     punto_partida = fields.Char("Punto de Partida"
                                 )
-    def get_tipo_emision_guia(self):
-        self.tipo_emision= self.get_tipo_emision()
 
-    def get_ambiente_guia(self):
-        self.ambiente= self.get_ambiente()
+    def get_secuencial_guia(self):
+        self.secuencial = self.get_secuencial(self.id)
 
     def get_clave_acceso_guia(self):
         self.clave_acceso = self.get_clave_acceso('06', self.id, self.date)

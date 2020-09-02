@@ -20,6 +20,22 @@ class ResCompanyEc(models.Model):
         string='Obligado a llevar contabilidad',
         default='NO'
     )
+    factura_electronica_ambiente = fields.Selection(
+        [
+            ('1', 'Pruebas'),
+            ('2', 'Producción')
+        ],
+        string='Ambiente',
+        default='1'
+    )
+    factura_electronica_tipo_emision = fields.Selection(
+        [
+            ('1', 'Normal'),
+            ('2', 'Extraordinario')
+        ],
+        string='Tipo de emisión',
+        default='1'
+    )
     nro_contribuyente_especial = fields.Integer(string="Nro. Contribuyente Especial")
 
 

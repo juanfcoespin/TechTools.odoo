@@ -6,21 +6,24 @@
     <razonSocial>TodoMetal</razonSocial>
     <nombreComercial>TodoMetal</nombreComercial>
     <ruc>1803281631001</ruc>
-    <claveAcceso>3108202001180328163100110010020000000031234567815</claveAcceso>
+    <claveAcceso>1801202101180328163100110010020000000131234567814</claveAcceso>
     <codDoc>01</codDoc>
     <estab>001</estab>
     <ptoEmi>002</ptoEmi>
-    <secuencial>000000003</secuencial>
+    <secuencial>000000013</secuencial>
     <dirMatriz>Farsalias y Nogales</dirMatriz>
   </infoTributaria>
   <infoFactura>
-    <fechaEmision>31/08/2020</fechaEmision>
+    <fechaEmision>04/02/2021</fechaEmision>
     <dirEstablecimiento>Farsalias y Nogales</dirEstablecimiento>
     <contribuyenteEspecial>536</contribuyenteEspecial>
     <obligadoContabilidad>SI</obligadoContabilidad>
-    <tipoIdentificacionComprador>04</tipoIdentificacionComprador>
-    <razonSocialComprador>Mariana Morillo</razonSocialComprador>
-    <identificacionComprador>1712643608001</identificacionComprador>
-    <direccionComprador>Farsalias y Nogales</direccionComprador>
+    <tipoIdentificacionComprador>05</tipoIdentificacionComprador>
+    <razonSocialComprador>Rodrigo Villota</razonSocialComprador>
+    <identificacionComprador>1002314242</identificacionComprador>
+    <direccionComprador>False</direccionComprador>
+    <totalSinImpuestos>127.8</totalSinImpuestos>
+    <totalDescuento>0.0</totalDescuento>
+
   </infoFactura>
 </factura>

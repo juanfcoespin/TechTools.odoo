@@ -9,6 +9,9 @@
                 <button name="enviar_sri" type="object" string="Enviar al SRI"
                                 class="btn-primary"/>
             </button>
+            <field name="amount_untaxed" position="after">
+                <field name="total_discount"/>
+            </field>
         </field>
     </record>
 </odoo>

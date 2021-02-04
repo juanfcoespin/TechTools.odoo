@@ -10,6 +10,16 @@ class SaleOrder(models.Model):
         string="Total Peso (Kg.)",
         compute="get_total_peso"
     )
+    total_discount = fields.Float(
+        string="Total Descuento",
+        compute="get_total_discount"
+    )
+    def get_total_discount(self):
+        self.total_discount = 0
+        for line in self.order_line:
+            line_subTotal = line.product_uom_qty*line.price_unit
+            line_discount = line_subTotal*line.discount/100
+            self.total_discount += line_discount
 
     def get_total_peso(self):
         self.peso_total = 0

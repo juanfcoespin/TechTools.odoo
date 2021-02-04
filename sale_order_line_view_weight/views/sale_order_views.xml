@@ -9,8 +9,9 @@
                 <field name="peso_producto"/>
                 <field name="peso_linea"/>
             </xpath>
-            <xpath expr="/form/sheet/notebook/page/group[@name='note_group']/group[@name='sale_total']/field[@name='amount_untaxed']" position="before">
+            <xpath expr="/form/sheet/notebook/page/group[@name='note_group']/group[@name='sale_total']/field[@name='amount_untaxed']" position="after">
                 <field name="peso_total"/>
+                <field name="total_discount"/>
             </xpath>
         </field>
     </record>

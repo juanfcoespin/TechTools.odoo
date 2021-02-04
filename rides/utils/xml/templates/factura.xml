@@ -23,7 +23,7 @@
     <identificacionComprador>{{ identificacionComprador }}</identificacionComprador>
     <direccionComprador>{{ direccionComprador }}</direccionComprador>
     <totalSinImpuestos>{{ totalSinImpuestos }}</totalSinImpuestos>
-    <totalDescuento>0.00</totalDescuento>
+    <totalDescuento>{{ totalDescuento }}</totalDescuento>
 
   </infoFactura>
 </factura>

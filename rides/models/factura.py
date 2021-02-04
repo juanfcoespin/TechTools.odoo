@@ -16,8 +16,20 @@ class Factura(models.Model):
         string="Fecha y Hora Autorización",
         default=datetime.now()
     )
+    
     secuencial = fields.Char(compute="get_secuencial_factura")
     clave_acceso = fields.Char(compute="get_clave_acceso_factura")
+    total_discount = fields.Float(
+        string="Total Descuento",
+        compute="get_total_discount"
+    )
+
+    def get_total_discount(self):
+        self.total_discount = 0
+        for line in self.invoice_line_ids:
+            line_subTotal = line.quantity * line.price_unit
+            line_discount = line_subTotal * line.discount / 100
+            self.total_discount += line_discount
 
 
     @api.model

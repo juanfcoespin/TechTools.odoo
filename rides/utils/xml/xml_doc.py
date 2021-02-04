@@ -38,7 +38,8 @@ class XmlDoc:
             razonSocialComprador=comprador.name,
             identificacionComprador=comprador.ec_identifier,
             direccionComprador=comprador.invoice_address,
-            totalSinImpuestos=ride.amount_untaxed
+            totalSinImpuestos=ride.amount_untaxed,
+            totalDescuento=ride.total_discount
         )
         return ms
 

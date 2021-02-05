@@ -4,7 +4,14 @@
 <template id="web_external_layout_iherited"
           inherit_id="web.external_layout_standard"
           name="Automatic Header">
-    <xpath expr="//div[@class='header']" position="replace">
+    <!--
+    Hereda la vista web/report_templates.xml
+    <template id="external_layout_standard">
+        odoo13: <xpath expr="//div[@class='header']"
+        odoo14: <xpath expr="//div[contains(@t-attf-class, 'header')]"
+        ambos: <xpath expr="//div[1]"
+    -->
+    <xpath expr="//div[1]" position="replace">
         <div class="header">
             <div class="row">
                 <div class="col-3 mb4">

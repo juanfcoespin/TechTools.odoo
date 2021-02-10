@@ -18,7 +18,8 @@ class ResPartnerEc(models.Model):
     )
     ec_identifier = fields.Char(string="Ruc / CI",
         help="Registro único de contribuyentes o cédula de identidad", size=13)
-
+    ec_porcentaje_retencion_iva = fields.Float(string="% Retencion IVA")
+    ec_porcentaje_retencion_renta = fields.Float(string="% Retencion Renta")
     invoice_address = fields.Char(compute="set_invoice_address")
     delivery_address = fields.Char(compute="set_delivery_address")
 

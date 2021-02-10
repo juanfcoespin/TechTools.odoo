@@ -15,6 +15,16 @@
                                placeholder="Identificación"/>
                     </h3>
                 </field>
+                <xpath expr="//notebook[last()]" position="inside">
+                    <page string="Retenciones">
+                        <group>
+                            <field name="ec_porcentaje_retencion_iva"
+                               placeholder="% Retencion IVA"/>
+                            <field name="ec_porcentaje_retencion_renta"
+                               placeholder="% Retencion Renta"/>
+                        </group>
+                    </page>
+                </xpath>
             </field>
         </record>
     </data>

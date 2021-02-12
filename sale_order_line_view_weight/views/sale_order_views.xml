@@ -13,6 +13,9 @@
                 <field name="peso_total"/>
                 <field name="total_discount"/>
             </xpath>
+            <xpath expr="//tree/field[@name='price_unit']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
         </field>
     </record>
 </odoo>

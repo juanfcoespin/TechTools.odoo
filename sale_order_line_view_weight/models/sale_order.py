@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from odoo import api, fields, models
+from datetime import datetime
 
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
+    validity_date = fields.Date(string="Expiración", default=datetime.today())
     peso_total = fields.Float(
         string="Total Peso (Kg.)",
         compute="get_total_peso"

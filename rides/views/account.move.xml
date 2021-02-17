@@ -12,6 +12,10 @@
             <field name="amount_untaxed" position="after">
                 <field name="total_discount"/>
             </field>
+            <field name="amount_total" position="after">
+                <field name="retencion_iva"/>
+                <field name="retencion_renta"/>
+            </field>
         </field>
     </record>
 </odoo>

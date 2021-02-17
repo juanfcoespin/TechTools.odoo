@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-       <template id="factura">
+       <template id="rides.factura">
            <t t-call="web.html_container">
               <t t-foreach="docs" t-as="o">
                 <t t-call="web.external_layout">
@@ -158,6 +158,14 @@
                                 <tr>
                                     <td align="right"><h5>Iva 12%:</h5></td>
                                     <td align="right" style="padding-left:10px; padding-right:15px"><h5><span t-field="o.amount_tax"/></h5></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><h5>Retencion Iva:</h5></td>
+                                    <td align="right" style="padding-left:10px; padding-right:15px"><h5><span t-field="o.retencion_iva"/></h5></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><h5>Retencion Renta:</h5></td>
+                                    <td align="right" style="padding-left:10px; padding-right:15px"><h5><span t-field="o.retencion_renta"/></h5></td>
                                 </tr>
                                 <tr>
                                     <td align="right"><h5>Total:</h5></td>

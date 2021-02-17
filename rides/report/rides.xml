@@ -3,7 +3,7 @@
     <data noupdate="0">
         <!-- name="rides.guia_remision" ride es el nombre del template del ride -->
         <report
-            id="guia_remision"
+            id="rides.guia_remision"
             model="stock.picking"
             report_type="qweb-pdf"
             string="Guía de Remisión"
@@ -12,7 +12,7 @@
             attachment="(object.state in ('done')) and ('GR-').replace('/','')+'.pdf'"
         />
         <report
-            id="factura"
+            id="rides.factura"
             model="account.move"
             report_type="qweb-pdf"
             string="Factura (Ride)"

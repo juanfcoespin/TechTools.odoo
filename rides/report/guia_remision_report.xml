@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-       <template id="guia_remision">
+       <template id="rides.guia_remision">
            <t t-call="web.html_container">
               <t t-foreach="docs" t-as="o">
                 <t t-call="web.external_layout">

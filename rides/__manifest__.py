@@ -25,5 +25,7 @@
         'views/account.move.xml',
         'report/custom_header.xml',
         'report/rides.xml',
+        'report/guia_remision_ride.xml',
+        'report/factura_ride.xml',
     ]
 }

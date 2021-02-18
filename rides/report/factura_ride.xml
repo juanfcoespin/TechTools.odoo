@@ -156,16 +156,8 @@
                                     <td style="padding-left:10px;  padding-right:15px"><h5><span t-field="o.amount_untaxed"/></h5></td>
                                 </tr>
                                 <tr>
-                                    <td align="right"><h5>Iva 12%:</h5></td>
+                                    <td align="right"><h5>Impuestos:</h5></td>
                                     <td align="right" style="padding-left:10px; padding-right:15px"><h5><span t-field="o.amount_tax"/></h5></td>
-                                </tr>
-                                <tr>
-                                    <td align="right"><h5>Retencion Iva:</h5></td>
-                                    <td align="right" style="padding-left:10px; padding-right:15px"><h5><span t-field="o.retencion_iva"/></h5></td>
-                                </tr>
-                                <tr>
-                                    <td align="right"><h5>Retencion Renta:</h5></td>
-                                    <td align="right" style="padding-left:10px; padding-right:15px"><h5><span t-field="o.retencion_renta"/></h5></td>
                                 </tr>
                                 <tr>
                                     <td align="right"><h5>Total:</h5></td>

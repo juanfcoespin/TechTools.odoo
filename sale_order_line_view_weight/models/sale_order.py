@@ -49,6 +49,17 @@ class SaleOrderLine(models.Model):
             line.peso_producto = line.product_id.weight
 
     @api.onchange('product_id', 'product_uom_qty')
+    def check_stock(self):
+        for line in self:
+            #si la cantidad del producto es mayor que el stock
+            if(line.product_id and line.product_uom_qty > line.product_id.qty_available):
+                mess = {
+                    'title': 'Falta Stock!',
+                    'message': 'Stock del producto no disponible para la cantidad ingresada!!'
+                }
+                return {'warning': mess}
+
+    @api.onchange('product_id', 'product_uom_qty')
     def get_peso_linea(self):
         for line in self:
             line.peso_linea = line.product_uom_qty * line.peso_producto

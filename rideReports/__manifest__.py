@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "rides",
+    'name': "rideReports",
 
     'summary': """
-        Construye los RIDES  de facturación electrónica según los lineamientos del SRI
+        Reporte de los RIDES  de facturación electrónica según los lineamientos del SRI
           
     """,
 
@@ -17,11 +17,13 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['stock', 'account'],
+    'depends': ['stock', 'account', 'rides'],
 
     # always loaded
     'data': [
-        'views/stock_picking.xml',
-        'views/account.move.xml',
+        'report/custom_header.xml',
+        'report/rides.xml',
+        'report/factura_ride.xml',
+        'report/guia_remision_ride.xml',
     ]
 }

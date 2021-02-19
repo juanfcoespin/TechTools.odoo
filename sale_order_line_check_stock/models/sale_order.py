@@ -2,20 +2,18 @@
 
 from odoo import api, fields, models
 from datetime import datetime
+from ..utils import common
+from odoo.exceptions import ValidationError
+
+
+class SaleOrder(models.Model):
+    _inherit = 'sale.order'
 
 
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
-    @api.onchange('product_id', 'product_uom_qty')
+    @api.constrains('product_id', 'product_uom_qty')
     def check_stock(self):
-        for line in self:
-            #si la cantidad del producto es mayor que el stock
-            if(line.product_id and line.product_uom_qty > line.product_id.qty_available):
-                mess = {
-                    'title': 'Falta Stock!',
-                    'message': 'Stock del producto no disponible para la cantidad ingresada!!'
-                }
-                return {'warning': mess}
-
-
+        if common.hay_productos_sin_stock(self):
+            raise ValidationError('Algún producto no tiene stock. No se guardó el pedido!!')

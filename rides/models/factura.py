@@ -25,6 +25,23 @@ class Factura(models.Model):
         string="Total Descuento",
         compute="get_total_discount"
     )
+    iva = fields.Float(
+        string="Iva",
+        compute="get_iva"
+    )
+    total_mas_iva = fields.Float(
+        string="Iva",
+        compute="get_total_mas_iva"
+    )
+
+    def get_total_mas_iva(self):
+        self.total_mas_iva = self.amount_untaxed + self.iva
+
+    def get_iva(self):
+        self.iva = 0
+        for group in self.amount_by_group:
+            if group[0] == 'IVA 12%':
+                self.iva = group[1]
 
     def get_total_discount(self):
         self.total_discount = 0

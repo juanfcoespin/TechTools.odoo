@@ -28,7 +28,7 @@ class SaleOrder(models.Model):
         for line in self.order_line:
             peso_producto = line.product_id.weight
             peso_linea = peso_producto * line.product_uom_qty
-            self.peso_total +=  peso_linea
+            self.peso_total += peso_linea
 
 
 class SaleOrderLine(models.Model):

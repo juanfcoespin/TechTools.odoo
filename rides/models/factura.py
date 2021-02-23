@@ -30,9 +30,16 @@ class Factura(models.Model):
         compute="get_iva"
     )
     total_mas_iva = fields.Float(
-        string="Iva",
+        string="Total mas Iva",
         compute="get_total_mas_iva"
     )
+    total_sin_descuento = fields.Float(
+        string="Total sin descuento",
+        compute="get_total_sin_descuento"
+    )
+
+    def get_total_sin_descuento(self):
+        self.total_sin_descuento = self.amount_untaxed + self.total_discount
 
     def get_total_mas_iva(self):
         self.total_mas_iva = self.amount_untaxed + self.iva

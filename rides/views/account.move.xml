@@ -12,6 +12,9 @@
             <field name="amount_untaxed" position="after">
                 <field name="total_discount"/>
             </field>
+            <field name="amount_total" position="before">
+                <field name="total_mas_iva"/>
+            </field>
         </field>
     </record>
 </odoo>

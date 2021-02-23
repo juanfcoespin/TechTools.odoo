@@ -152,7 +152,19 @@
                          account/views/report_invoice.xml-->
                         <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ml-auto">
                             <table class="table table-sm" style="page-break-inside: avoid;">
-                                    <tr class="border-black o_subtotal" style="">
+                                    <tr style="">
+                                        <td><strong>Subtotal sin Descuento</strong></td>
+                                        <td class="text-right">
+                                            $ <span t-field="o.total_sin_descuento"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="">
+                                        <td><strong>Descuento</strong></td>
+                                        <td class="text-right">
+                                            $ <span t-field="o.total_discount"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="">
                                         <td><strong>Subtotal</strong></td>
                                         <td class="text-right">
                                             <span t-field="o.amount_untaxed"/>

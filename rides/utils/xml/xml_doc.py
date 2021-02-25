@@ -11,10 +11,13 @@ class XmlDoc:
         self.loger = logging.getLogger(__name__)
 
     def render(self):
-        template = self.get_template()
-        ms = self.render_factura(template)
+        ms = self.get_xml_text_factura()
         self.loger.info(ms)
         self.save_xml_ride(ms)
+
+    def get_xml_text_factura(self):
+        template = self.get_template()
+        return self.render_factura(template)
 
     def render_factura(self, template):
         ride = self.ride

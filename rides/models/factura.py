@@ -2,7 +2,11 @@
 from odoo import fields, models, api
 from datetime import datetime
 from ..utils.xml.xml_doc import XmlDoc
+from ..utils.signP12.sign import SignP12
+from ..utils.signP12.signXML import SignXML
+
 import logging
+
 _logger = logging.getLogger(__name__)
 
 
@@ -18,7 +22,7 @@ class Factura(models.Model):
         string="Fecha y Hora Autorización",
         default=datetime.now()
     )
-    
+
     secuencial = fields.Char(compute="get_secuencial_factura")
     clave_acceso = fields.Char(compute="get_clave_acceso_factura")
     total_discount = fields.Float(
@@ -57,7 +61,6 @@ class Factura(models.Model):
             line_discount = line_subTotal * line.discount / 100
             self.total_discount += line_discount
 
-
     @api.model
     def create(self, vals):
         # la funcion create hace un insert en la tabla
@@ -74,7 +77,11 @@ class Factura(models.Model):
     def enviar_sri(self):
         doc = XmlDoc(self)
         doc.render()
-
+        str_data = doc.get_xml_text_factura()
+        # sign_p12 = SignP12('c:\\tmp\\KARLA ELIZABETH PONCE FLORES 300720195029.p12', 'S1st3m4sJBP')
+        # signed_data = sign_p12.get_signed_data('hola')
+        sign_xml = SignXML('c:\\tmp\\KARLA ELIZABETH PONCE FLORES 300720195029.p12', 'S1st3m4sJBP')
+        tmp = sign_xml.get_signed_value(str_data)
 
     def get_num_factura(self):
         self.num_factura = self.get_num_ride(self.id)

@@ -78,9 +78,9 @@ class Factura(models.Model):
         doc.render()
         str_data = doc.get_xml_text_factura()
 
-        # sign_xml = SignXML('c:\\tmp\\KARLA ELIZABETH PONCE FLORES 300720195029.p12', 'S1st3m4sJBP')
-        sign_xml = SignXML('/Users/mac/Dropbox/TechTools/Proyectos/SistemaFacturacion/facturaElectronica/firmaElectronica/certificado/KARLA ELIZABETH PONCE FLORES 300720195029.p12',
-                           'S1st3m4sJBP')
+        sign_xml = SignXML('c:\\tmp\\KARLA ELIZABETH PONCE FLORES 300720195029.p12', 'S1st3m4sJBP')
+        # sign_xml = SignXML('/Users/mac/Dropbox/TechTools/Proyectos/SistemaFacturacion/facturaElectronica/firmaElectronica/certificado/KARLA ELIZABETH PONCE FLORES 300720195029.p12',
+        #                   'S1st3m4sJBP')
         tmp = sign_xml.get_signed_value(str_data)
 
     def get_num_factura(self):

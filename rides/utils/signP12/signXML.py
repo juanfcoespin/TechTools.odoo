@@ -3,6 +3,8 @@ from OpenSSL import crypto
 # pip3 install signxml
 from lxml import etree
 from signxml import XMLSigner, XMLVerifier
+import os
+from jinja2 import Template, Environment, FileSystemLoader
 
 
 class SignXML:
@@ -16,17 +18,29 @@ class SignXML:
             return crypto.load_pkcs12(file.read(), self.pwd)
 
     def get_pem_private_key(self):
-        return crypto.dump_privatekey(crypto.FILETYPE_PEM, self.p12.get_privatekey())
+        key_binary = crypto.dump_privatekey(crypto.FILETYPE_PEM, self.p12.get_privatekey())
+        return bytes.decode(key_binary, 'utf-8')
 
     def get_pem_certificate(self):
-        return crypto.dump_certificate(crypto.FILETYPE_PEM, self.p12.get_certificate())
+        cert_binary = crypto.dump_certificate(crypto.FILETYPE_PEM, self.p12.get_certificate())
+        return bytes.decode(cert_binary, 'utf-8')
+
+    def get_signed_value2(self, str_xml):
+        data_to_sign = "<Test/>"
+        pem_path = os.path.join(os.path.dirname(__file__), 'testCertificate\\example.pem')
+        key_path = os.path.join(os.path.dirname(__file__), 'testCertificate\\example.key')
+        cert = open(pem_path).read()
+        key = open(key_path).read()
+        root = etree.fromstring(data_to_sign)
+        signed_root = XMLSigner().sign(root, key=key, cert=cert)
+        verified_data = XMLVerifier().verify(signed_root).signed_xml
+        return verified_data
 
     def get_signed_value(self, str_xml):
         cert = self.get_pem_certificate()
         key = self.get_pem_private_key()
-        # utf8_str_xml = str_xml.encode('UTF-8')
-        # utf8_str_xml = bytes(str_xml, 'UTF-8')
-        root = etree.fromstring('<Test/>')
+        # root = etree.fromstring(str_xml)
+        root = etree.fromstring('<test/>')
         signed_root = XMLSigner().sign(root, key=key, cert=cert)
         ms = XMLVerifier().verify(signed_root).signed_xml
         return ms

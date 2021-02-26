@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <factura id="comprobante" version="1.1.0">
   <infoTributaria>
     <ambiente>1</ambiente>
@@ -14,7 +13,7 @@
     <dirMatriz>Dir. María Duchicela y y Pasaje Rogelio Suárez</dirMatriz>
   </infoTributaria>
   <infoFactura>
-    <fechaEmision>25/02/2021</fechaEmision>
+    <fechaEmision>26/02/2021</fechaEmision>
     <dirEstablecimiento>Dir. María Duchicela y y Pasaje Rogelio Suárez</dirEstablecimiento>
     <contribuyenteEspecial>0</contribuyenteEspecial>
     <obligadoContabilidad>SI</obligadoContabilidad>
@@ -24,6 +23,5 @@
     <direccionComprador>False</direccionComprador>
     <totalSinImpuestos>38.67</totalSinImpuestos>
     <totalDescuento>2.035</totalDescuento>
-
   </infoFactura>
 </factura>

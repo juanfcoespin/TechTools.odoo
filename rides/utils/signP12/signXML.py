@@ -24,7 +24,9 @@ class SignXML:
     def get_signed_value(self, str_xml):
         cert = self.get_pem_certificate()
         key = self.get_pem_private_key()
-        root = etree.fromstring(str_xml)
+        # utf8_str_xml = str_xml.encode('UTF-8')
+        # utf8_str_xml = bytes(str_xml, 'UTF-8')
+        root = etree.fromstring('<Test/>')
         signed_root = XMLSigner().sign(root, key=key, cert=cert)
         ms = XMLVerifier().verify(signed_root).signed_xml
         return ms

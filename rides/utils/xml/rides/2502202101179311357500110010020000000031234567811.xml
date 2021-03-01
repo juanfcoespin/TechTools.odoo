@@ -14,7 +14,7 @@
     <dirMatriz>Dir. María Duchicela y y Pasaje Rogelio Suárez</dirMatriz>
   </infoTributaria>
   <infoFactura>
-    <fechaEmision>26/02/2021</fechaEmision>
+    <fechaEmision>27/02/2021</fechaEmision>
     <dirEstablecimiento>Dir. María Duchicela y y Pasaje Rogelio Suárez</dirEstablecimiento>
     <contribuyenteEspecial>0</contribuyenteEspecial>
     <obligadoContabilidad>SI</obligadoContabilidad>
@@ -24,6 +24,5 @@
     <direccionComprador>False</direccionComprador>
     <totalSinImpuestos>86.7</totalSinImpuestos>
     <totalDescuento>1.7435000000000003</totalDescuento>
-
   </infoFactura>
 </factura>

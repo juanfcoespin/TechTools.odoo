@@ -3,8 +3,10 @@ from OpenSSL import crypto
 # pip3 install signxml
 from lxml import etree
 from signxml import XMLSigner, XMLVerifier
+from lxml import etree as lxml_ET
+
 import os
-from jinja2 import Template, Environment, FileSystemLoader
+import xml.etree.ElementTree as ET
 
 
 class SignXML:
@@ -25,22 +27,20 @@ class SignXML:
         cert_binary = crypto.dump_certificate(crypto.FILETYPE_PEM, self.p12.get_certificate())
         return bytes.decode(cert_binary, 'utf-8')
 
-    def get_signed_value2(self, str_xml):
-        data_to_sign = "<Test/>"
-        pem_path = os.path.join(os.path.dirname(__file__), 'testCertificate\\example.pem')
-        key_path = os.path.join(os.path.dirname(__file__), 'testCertificate\\example.key')
-        cert = open(pem_path).read()
-        key = open(key_path).read()
-        root = etree.fromstring(data_to_sign)
-        signed_root = XMLSigner().sign(root, key=key, cert=cert)
-        verified_data = XMLVerifier().verify(signed_root).signed_xml
-        return verified_data
-
     def get_signed_value(self, str_xml):
         cert = self.get_pem_certificate()
         key = self.get_pem_private_key()
-        # root = etree.fromstring(str_xml)
-        root = etree.fromstring('<test/>')
-        signed_root = XMLSigner().sign(root, key=key, cert=cert)
-        ms = XMLVerifier().verify(signed_root).signed_xml
-        return ms
+        ET.register_namespace("ds", "http://www.w3.org/2000/09/xmldsig#")
+
+        xml2 = str_xml.encode('utf -8')
+        root = etree.fromstring(xml2)
+        # root = etree.fromstring('<test/>')
+        data = ET.fromstring(
+            "<Test><ds:Signature xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" Id=\"placeholder\"></ds:Signature></Test>")
+        signed_root = XMLSigner().sign(data, key=key, cert=cert)
+        data_serialized = lxml_ET.tostring(signed_root)
+        data_parsed = ET.fromstring(data_serialized)
+
+        tree = ET.ElementTree(data_parsed)
+        tree.write("/Users/mac/Dropbox/new_signed_file4.xml")
+        # ms = XMLVerifier().verify(signed_root).signed_xml

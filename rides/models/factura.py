@@ -3,6 +3,8 @@ from odoo import fields, models, api
 from datetime import datetime
 from ..utils.xml.xml_doc import XmlDoc
 from ..utils.signP12.signXML import SignXML
+from ..utils.signP12.xades import Xades
+import base64
 
 import logging
 
@@ -76,12 +78,20 @@ class Factura(models.Model):
     def enviar_sri(self):
         doc = XmlDoc(self)
         doc.render()
-        str_data = doc.get_xml_text_factura()
+        str_xml = doc.get_xml_text_factura()
+        # url_p12 = 'c:\\tmp\\KARLA ELIZABETH PONCE FLORES 300720195029.p12'
+        url_p12 = '/Users/mac/Dropbox/TechTools/Proyectos/SistemaFacturacion/facturaElectronica/firmaElectronica/certificado/KARLA ELIZABETH PONCE FLORES 300720195029.p12'
+        pwd = 'S1st3m4sJBP'
+        self.sign_xml(str_xml, url_p12, pwd)
+        # self.sign_xade(url_p12, pwd, str_xml)
 
-        sign_xml = SignXML('c:\\tmp\\KARLA ELIZABETH PONCE FLORES 300720195029.p12', 'S1st3m4sJBP')
-        # sign_xml = SignXML('/Users/mac/Dropbox/TechTools/Proyectos/SistemaFacturacion/facturaElectronica/firmaElectronica/certificado/KARLA ELIZABETH PONCE FLORES 300720195029.p12',
-        #                   'S1st3m4sJBP')
-        tmp = sign_xml.get_signed_value(str_data)
+    def sign_xml(self, str_xml, url_p12,  pwd):
+        sign_xml = SignXML(url_p12, pwd)
+        sign_xml.get_signed_value(str_xml)
+
+    def sign_xade(self, path_p12, pwd, str_xml):
+        xade = Xades(path_p12, pwd)
+        xade.sign(str_xml)
 
     def get_num_factura(self):
         self.num_factura = self.get_num_ride(self.id)

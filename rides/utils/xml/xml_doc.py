@@ -22,7 +22,6 @@ class XmlDoc:
     def render_factura(self, template):
         ride = self.ride
         comprador = ride.partner_id
-
         ms = template.render(
             ambiente=ride.cod_ambiente,
             tipoEmision=ride.cod_tipo_emision,

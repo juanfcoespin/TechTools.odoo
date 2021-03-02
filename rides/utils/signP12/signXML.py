@@ -34,13 +34,11 @@ class SignXML:
 
         xml2 = str_xml.encode('utf -8')
         root = etree.fromstring(xml2)
-        # root = etree.fromstring('<test/>')
-        data = ET.fromstring(
-            "<Test><ds:Signature xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" Id=\"placeholder\"></ds:Signature></Test>")
-        signed_root = XMLSigner().sign(data, key=key, cert=cert)
+        signed_root = XMLSigner().sign(root, key=key, cert=cert)
         data_serialized = lxml_ET.tostring(signed_root)
         data_parsed = ET.fromstring(data_serialized)
 
         tree = ET.ElementTree(data_parsed)
-        tree.write("/Users/mac/Dropbox/new_signed_file4.xml")
+        # tree.write("/Users/mac/Dropbox/new_signed_file4.xml")
+        tree.write("c:\\tmp\\new_signed_file4.xml")
         # ms = XMLVerifier().verify(signed_root).signed_xml

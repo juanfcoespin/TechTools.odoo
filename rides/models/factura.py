@@ -3,8 +3,9 @@ from odoo import fields, models, api
 from datetime import datetime
 from ..utils.xml.xml_doc import XmlDoc
 from ..utils.signP12.signXML import SignXML
-from ..utils.signP12.xades import Xades
-import base64
+import os
+from jinja2 import Template, Environment, FileSystemLoader
+from zeep import Client
 
 import logging
 
@@ -43,6 +44,16 @@ class Factura(models.Model):
         compute="get_total_sin_descuento"
     )
 
+    def enviar_sri(self):
+        template_path = os.path.dirname(__file__)
+        env = Environment(loader=FileSystemLoader(template_path))
+        xml_fact = env.get_template('example.xml')
+        tmp = xml_fact.render()
+        url = 'https://celcer.sri.gob.ec/comprobantes-electronicos-ws/RecepcionComprobantesOffline?wsdl '
+        client = Client(url)
+        result = client.validarComprobante(tmp)
+        tmp2 = 'hola'
+
     def get_total_sin_descuento(self):
         self.total_sin_descuento = self.amount_untaxed + self.total_discount
 
@@ -75,23 +86,12 @@ class Factura(models.Model):
     def get_clave_acceso_factura(self):
         self.clave_acceso = self.get_clave_acceso('01', self.id, self.date)
 
-    def enviar_sri(self):
+
+
+    def enviar_sri2(self):
         doc = XmlDoc(self)
         doc.render()
         str_xml = doc.get_xml_text_factura()
-        # url_p12 = 'c:\\tmp\\KARLA ELIZABETH PONCE FLORES 300720195029.p12'
-        url_p12 = '/Users/mac/Dropbox/TechTools/Proyectos/SistemaFacturacion/facturaElectronica/firmaElectronica/certificado/KARLA ELIZABETH PONCE FLORES 300720195029.p12'
+        url_p12 = 'c:\\tmp\\KARLA ELIZABETH PONCE FLORES 300720195029.p12'
+        # url_p12 = '/Users/mac/Dropbox/TechTools/Proyectos/SistemaFacturacion/facturaElectronica/firmaElectronica/certificado/KARLA ELIZABETH PONCE FLORES 300720195029.p12'
         pwd = 'S1st3m4sJBP'
-        self.sign_xml(str_xml, url_p12, pwd)
-        # self.sign_xade(url_p12, pwd, str_xml)
-
-    def sign_xml(self, str_xml, url_p12,  pwd):
-        sign_xml = SignXML(url_p12, pwd)
-        sign_xml.get_signed_value(str_xml)
-
-    def sign_xade(self, path_p12, pwd, str_xml):
-        xade = Xades(path_p12, pwd)
-        xade.sign(str_xml)
-
-    def get_num_factura(self):
-        self.num_factura = self.get_num_ride(self.id)

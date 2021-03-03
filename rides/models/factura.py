@@ -49,9 +49,11 @@ class Factura(models.Model):
         env = Environment(loader=FileSystemLoader(template_path))
         xml_fact = env.get_template('example.xml')
         tmp = xml_fact.render()
-        url = 'https://celcer.sri.gob.ec/comprobantes-electronicos-ws/RecepcionComprobantesOffline?wsdl '
+        url = 'https://celcer.sri.gob.ec/comprobantes-electronicos-ws/RecepcionComprobantesOffline?wsdl'
+        # url = 'http://www.soapclient.com/xml/soapresponder.wsdl'
         client = Client(url)
-        result = client.validarComprobante(tmp)
+        result = client.service.validarComprobante(tmp.encode('utf-8'))
+        # result = client.service.Method1('hola', 'mundo')
         tmp2 = 'hola'
 
     def get_total_sin_descuento(self):

@@ -32,6 +32,10 @@
                                 <field name="factura_electronica_ambiente"/>
                                 <field name="factura_electronica_tipo_emision"/>
                             </group>
+                            <group>
+                                <field name="certificado_digital" filename="document_name"/>
+                                <field name="document_name" invisible="1"/>
+                            </group>
                         </group>
                     </page>
                 </xpath>

@@ -37,5 +37,8 @@ class ResCompanyEc(models.Model):
         default='1'
     )
     nro_contribuyente_especial = fields.Integer(string="Nro. Contribuyente Especial")
+    certificado_digital = fields.Binary(string="Certificado Digital ext p12")
+    document_name = fields.Char(string="Nombre Certificado")
+
 
 

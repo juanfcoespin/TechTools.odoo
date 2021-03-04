@@ -10,20 +10,29 @@ import xml.etree.ElementTree as ET
 
 
 class SignXML:
-    def __init__(self, path_p12, pwd):
-        self.path12 = path_p12
+    def __init__(self, cert, pwd):
+        self.cert = cert
         self.pwd = pwd
         self.p12 = self.get_p12()
 
     def get_p12(self):
-        with open(self.path12, 'rb') as file:
+        if self.cert is not None:
+            return crypto.load_pkcs12(self.cert, self.pwd)
+        return None
+
+    def get_p12_from_path(self, path_p12):
+        with open(path_p12, 'rb') as file:
             return crypto.load_pkcs12(file.read(), self.pwd)
 
     def get_pem_private_key(self):
+        if self.p12 is None:
+            return None
         key_binary = crypto.dump_privatekey(crypto.FILETYPE_PEM, self.p12.get_privatekey())
         return bytes.decode(key_binary, 'utf-8')
 
     def get_pem_certificate(self):
+        if self.p12 is None:
+            return None
         cert_binary = crypto.dump_certificate(crypto.FILETYPE_PEM, self.p12.get_certificate())
         return bytes.decode(cert_binary, 'utf-8')
 

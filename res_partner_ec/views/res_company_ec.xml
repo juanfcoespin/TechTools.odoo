@@ -37,6 +37,14 @@
                                 <field name="document_name" invisible="1"/>
                             </group>
                         </group>
+                        <group>
+                            <field name="url_recepcion_documentos_prueba" readonly="1"/>
+                            <field name="url_autorizacion_documentos_prueba" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="url_recepcion_documentos" readonly="1"/>
+                            <field name="url_autorizacion_documentos" readonly="1"/>
+                        </group>
                     </page>
                 </xpath>
             </field>

@@ -45,16 +45,31 @@ class Factura(models.Model):
     )
 
     def enviar_sri(self):
+        url = None
+        if self.company_id.factura_electronica_ambiente == 2:  # Produccion
+            url = self.company_id.url_recepcion_documentos
+        else:
+            url = self.company_id.url_recepcion_documentos_prueba  # Pruebas
+        if url is not None:
+            xml = self.get_signed_xml()
+            client = Client(url)
+            result = client.service.validarComprobante(xml)
+        tmp2 = 'hola'
+
+    def get_signed_xml_mock(self):
         template_path = os.path.dirname(__file__)
         env = Environment(loader=FileSystemLoader(template_path))
         xml_fact = env.get_template('example.xml')
-        tmp = xml_fact.render()
-        url = 'https://celcer.sri.gob.ec/comprobantes-electronicos-ws/RecepcionComprobantesOffline?wsdl'
-        # url = 'http://www.soapclient.com/xml/soapresponder.wsdl'
-        client = Client(url)
-        result = client.service.validarComprobante(tmp.encode('utf-8'))
-        # result = client.service.Method1('hola', 'mundo')
-        tmp2 = 'hola'
+        return xml_fact.render().encode('utf-8')
+
+    def get_signed_xml(self):
+        doc = XmlDoc(self)
+        # doc.render()
+        str_xml = doc.get_xml_text_factura()
+        pwd = 'S1st3m4sJBP'
+        xml_signer = SignXML(self.company_id.certificado_digital, pwd)
+        ms = xml_signer.get_signed_value(str_xml)
+        return ms
 
     def get_total_sin_descuento(self):
         self.total_sin_descuento = self.amount_untaxed + self.total_discount
@@ -89,11 +104,3 @@ class Factura(models.Model):
         self.clave_acceso = self.get_clave_acceso('01', self.id, self.date)
 
 
-
-    def enviar_sri2(self):
-        doc = XmlDoc(self)
-        doc.render()
-        str_xml = doc.get_xml_text_factura()
-        url_p12 = 'c:\\tmp\\KARLA ELIZABETH PONCE FLORES 300720195029.p12'
-        # url_p12 = '/Users/mac/Dropbox/TechTools/Proyectos/SistemaFacturacion/facturaElectronica/firmaElectronica/certificado/KARLA ELIZABETH PONCE FLORES 300720195029.p12'
-        pwd = 'S1st3m4sJBP'

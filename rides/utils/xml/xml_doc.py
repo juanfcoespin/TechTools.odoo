@@ -50,10 +50,3 @@ class XmlDoc:
         env = Environment(loader=FileSystemLoader(template_path))
         template = env.get_template('factura.xml')
         return template
-
-    def save_xml_ride(self, xml_string):
-        xml_path = os.path.join(os.path.dirname(__file__), 'rides')
-        file_name = "{}.xml".format(self.ride.clave_acceso)
-        file_name = os.path.join(xml_path, file_name)
-        with open(file_name, "w") as fh:
-            fh.write(xml_string)

@@ -39,6 +39,8 @@ class ResCompanyEc(models.Model):
     nro_contribuyente_especial = fields.Integer(string="Nro. Contribuyente Especial")
     certificado_digital = fields.Binary(string="Certificado Digital ext p12")
     document_name = fields.Char(string="Nombre Certificado")
+    cert_pwd = fields.Char(string="Contraseña Certificado")
+    xml_path = fields.Char(string="Ruta Carpeta de XMLs")
     url_recepcion_documentos_prueba = \
         fields.Char(string="Url Recepcion Documentos Prueba",
                     default="https://celcer.sri.gob.ec/comprobantes-electronicos-ws"

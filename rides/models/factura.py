@@ -63,13 +63,22 @@ class Factura(models.Model):
         return xml_fact.render().encode('utf-8')
 
     def get_signed_xml(self):
+        ride_path = self.company_id.xml_path
+        if ride_path is None:
+            raise Exception('Debe configurar la ruta de destino de los rides')
         doc = XmlDoc(self)
         # doc.render()
         str_xml = doc.get_xml_text_factura()
-        pwd = 'S1st3m4sJBP'
-        xml_signer = SignXML(self.company_id.certificado_digital, pwd)
-        ms = xml_signer.get_signed_value(str_xml)
-        return ms
+        cert = self.company_id.certificado_digital
+        cert_name = self.company_id.document_name
+        pwd = self.company_id.cert_pwd
+
+        xml_signer = SignXML(cert, cert_name, pwd)
+        xml_filename = self.clave_acceso+'.xml'
+        xml_signer.sign_xml(str_xml, os.path.join(ride_path, xml_filename))
+        env = Environment(loader=FileSystemLoader(ride_path))
+        xml_fact = env.get_template(xml_filename)
+        return xml_fact.render().encode('utf-8')
 
     def get_total_sin_descuento(self):
         self.total_sin_descuento = self.amount_untaxed + self.total_discount

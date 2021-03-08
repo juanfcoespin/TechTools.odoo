@@ -6,6 +6,7 @@ from ..utils.signP12.signXML import SignXML
 import os
 from jinja2 import Template, Environment, FileSystemLoader
 from zeep import Client
+from os import path
 
 import logging
 
@@ -43,6 +44,7 @@ class Factura(models.Model):
         string="Total sin descuento",
         compute="get_total_sin_descuento"
     )
+    resp_sri = fields.Char(string="Respuesta SRI")
 
     def enviar_sri(self):
         url = None
@@ -54,7 +56,10 @@ class Factura(models.Model):
             xml = self.get_signed_xml()
             client = Client(url)
             result = client.service.validarComprobante(xml)
-        tmp2 = 'hola'
+            self.save_resp_sri(result)
+
+    def save_resp_sri(self, result):
+        self.resp_sri = result
 
     def get_signed_xml_mock(self):
         template_path = os.path.dirname(__file__)
@@ -64,8 +69,16 @@ class Factura(models.Model):
 
     def get_signed_xml(self):
         ride_path = self.company_id.xml_path
+
         if ride_path is None:
             raise Exception('Debe configurar la ruta de destino de los rides')
+        ride_path = os.path.join(ride_path, 'xml')
+        if not path.exists(ride_path):
+            try:
+                os.mkdir(ride_path)
+            except OSError:
+                raise Exception('no se pudo crear el directorio: ' + ride_path)
+
         doc = XmlDoc(self)
         # doc.render()
         str_xml = doc.get_xml_text_factura()

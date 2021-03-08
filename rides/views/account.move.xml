@@ -15,6 +15,15 @@
             <field name="amount_total" position="before">
                 <field name="total_mas_iva"/>
             </field>
+            <xpath expr="//notebook[last()]" position="inside">
+                <page string="Facturación Electrónica">
+                <group>
+                    <group>
+                        <field name="resp_sri"/>
+                    </group>
+                </group>
+            </page>
+            </xpath>
         </field>
     </record>
 </odoo>

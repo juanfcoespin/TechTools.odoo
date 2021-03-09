@@ -41,12 +41,17 @@ class XmlDoc:
             identificacionComprador=comprador.ec_identifier,
             direccionComprador=comprador.invoice_address,
             totalSinImpuestos=ride.amount_untaxed,
-            totalDescuento=ride.total_discount
+            totalDescuento=ride.total_discount,
+            totalConImpuesto=ride.total_con_impuestos,
+            iva=ride.iva,
+            lines=ride.get_lines()
         )
         return ms
 
     def get_template(self):
         template_path = os.path.join(os.path.dirname(__file__), 'templates')
         env = Environment(loader=FileSystemLoader(template_path))
-        template = env.get_template('factura.xml')
-        return template
+        template_file_name = 'factura.xml'
+        if self.ride.company_id.nro_contribuyente_especial > 0:
+            template_file_name = 'facturaContribuyenteEspecial.xml'
+        return env.get_template(template_file_name)

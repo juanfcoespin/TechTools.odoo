@@ -17,10 +17,7 @@ class Factura(models.Model):
     _name = 'account.move'
     _inherit = ['account.move', 'rides.base']
 
-    num_factura = fields.Char(
-        string="No.",
-        compute="get_num_factura"
-    )
+    num_factura = fields.Char(compute="get_num_factura")
     fecha_autorizacion = fields.Datetime(
         string="Fecha y Hora Autorización",
         default=datetime.now()
@@ -36,9 +33,9 @@ class Factura(models.Model):
         string="Iva",
         compute="get_iva"
     )
-    total_mas_iva = fields.Float(
-        string="Total mas Iva",
-        compute="get_total_mas_iva"
+    total_con_impuestos = fields.Float(
+        string="Total con impuestos",
+        compute="get_total_con_impuestos"
     )
     total_sin_descuento = fields.Float(
         string="Total sin descuento",
@@ -46,11 +43,39 @@ class Factura(models.Model):
     )
     resp_sri = fields.Char(string="Respuesta SRI")
 
+    def get_lines(self):
+        detalles = []
+        for line in self.invoice_line_ids:
+            codigo_principal = line.product_id.id
+            codigo_auxiliar = line.product_id.barcode
+            priced = line.price_unit * (1 - (line.discount or 0.00) / 100.0)
+            discount = (line.price_unit - priced) * line.quantity
+            detalle = {
+                'codigoPrincipal': codigo_principal,
+                'descripcion': line.name.strip(),
+                'cantidad': '%.6f' % (line.quantity),
+                'precioUnitario': '%.6f' % (line.price_unit),
+                'descuento': '%.2f' % discount,
+                'precioTotalSinImpuesto': '%.2f' % (line.price_subtotal)
+            }
+            impuestos = []
+            for tax in line.tax_ids:
+                if tax.description in ['IVA Cobrado 12%']:
+                    impuesto = {
+                        'codigo': 2,
+                        'codigoPorcentaje': 2,  # noqa
+                        'tarifa': tax.amount,
+                        'baseImponible': '{:.2f}'.format(line.price_subtotal),
+                        'valor': '{:.2f}'.format(line.price_subtotal *
+                                                 tax.amount/100)
+                    }
+                    impuestos.append(impuesto)
+            detalle.update({'impuestos': impuestos})
+            detalles.append(detalle)
+        return detalles
+
     def get_num_factura(self):
-        ms = ''
-        if self.name is not None:
-            ms = self.name.replace('/', '')
-        return '002'
+        self.num_factura = self.get_num_ride(self.id)
 
     def enviar_sri(self):
         url = None
@@ -102,8 +127,8 @@ class Factura(models.Model):
     def get_total_sin_descuento(self):
         self.total_sin_descuento = self.amount_untaxed + self.total_discount
 
-    def get_total_mas_iva(self):
-        self.total_mas_iva = self.amount_untaxed + self.iva
+    def get_total_con_impuestos(self):
+        self.total_con_impuestos = self.amount_untaxed + self.iva
 
     def get_iva(self):
         self.iva = 0
@@ -117,6 +142,7 @@ class Factura(models.Model):
             line_subTotal = line.quantity * line.price_unit
             line_discount = line_subTotal * line.discount / 100
             self.total_discount += line_discount
+        self.total_discount = round(self.total_discount, 2)
 
     @api.model
     def create(self, vals):

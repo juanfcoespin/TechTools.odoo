@@ -16,6 +16,7 @@
   <infoFactura>
     <fechaEmision>{{ fechaEmision }}</fechaEmision>
     <dirEstablecimiento>{{ dirEstablecimiento }}</dirEstablecimiento>
+    <contribuyenteEspecial>{{ contribuyenteEspecial }}</contribuyenteEspecial>
     <obligadoContabilidad>{{ obligadoContabilidad }}</obligadoContabilidad>
     <tipoIdentificacionComprador>{{ tipoIdentificacionComprador }}</tipoIdentificacionComprador>
     <razonSocialComprador>{{ razonSocialComprador }}</razonSocialComprador>
@@ -25,35 +26,14 @@
     <totalDescuento>{{ totalDescuento }}</totalDescuento>
     <totalConImpuestos>
       <totalImpuesto>
+        <!--IVA-->
         <codigo>2</codigo>
-        <codigoPorcentaje>2</codigoPorcentaje>
-        <baseImponible>{{ totalSinImpuestos }}</baseImponible>
-        <valor>{{ iva }}</valor>
+        <!--12%-->
+        <codigoPorcentaje>2</ codigoPorcentaje>
+        <baseImponible>{{ totalSinImpuestos }}</ baseImponible >
+        <valor>{{ iva }}</valor >
       </totalImpuesto>
     </totalConImpuestos>
-    <importeTotal>{{ totalConImpuesto }}</importeTotal>
+    <importeTotal>{{ totalConImpuesto }}</ importeTotal>
   </infoFactura>
-  <detalles>
-    {% for item in lines %}
-    <detalle>
-      <codigoPrincipal>{{ item['codigoPrincipal'] }}</codigoPrincipal>
-      <descripcion>{{ item['descripcion'] }}</descripcion>
-      <cantidad>{{ item['cantidad'] }}</cantidad>
-      <precioUnitario>{{ item['precioUnitario'] }}</precioUnitario>
-      <descuento>{{ item['descuento'] }}</descuento>
-      <precioTotalSinImpuesto>{{ item['precioTotalSinImpuesto'] }}</precioTotalSinImpuesto>
-      <impuestos>
-        {% for tax in item['impuestos'] %}
-        <impuesto>
-          <codigo>{{ tax['codigo'] }}</codigo>
-          <codigoPorcentaje>{{ tax['codigoPorcentaje'] }}</codigoPorcentaje>
-          <tarifa>{{ tax['tarifa'] }}</tarifa>
-          <baseImponible>{{ tax['baseImponible'] }}</baseImponible>
-          <valor>{{ tax['valor'] }}</valor>
-        </impuesto>
-        {% endfor %}
-      </impuestos>
-    </detalle>
-    {% endfor %}
-  </detalles>
 </factura>

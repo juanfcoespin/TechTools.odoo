@@ -13,7 +13,7 @@
                 <field name="total_discount"/>
             </field>
             <field name="amount_total" position="before">
-                <field name="total_mas_iva"/>
+                <field name="total_con_impuestos"/>
             </field>
             <xpath expr="//notebook[last()]" position="inside">
                 <page string="Facturación Electrónica">

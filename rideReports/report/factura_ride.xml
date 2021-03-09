@@ -56,6 +56,7 @@
                                             <tr>
                                                 <td style="padding-top: 10px">No. <span t-field="o.num_factura"/></td>
                                             </tr>
+
                                             <tr>
                                                 <td style="padding-top: 10px">NÚMERO DE AUTORIZACIÓN</td>
                                             </tr>
@@ -179,9 +180,9 @@
                                         </td>
                                     </tr>
                                     <tr class="border-black o_total">
-                                        <td><strong>Total</strong></td>
+                                        <td><strong>Total con Impuestos</strong></td>
                                         <td class="text-right">
-                                            $ <span class="text-nowrap" t-field="o.total_mas_iva"/>
+                                            $ <span class="text-nowrap" t-field="o.total_con_impuestos"/>
                                         </td>
                                     </tr>
                                     <!-- si se requiere que aparezca el detalle de impuestos y retenciones -->

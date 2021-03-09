@@ -32,7 +32,7 @@ class XmlDoc:
             ptoEmi=ride.company_id.cod_punto_emision,
             secuencial=ride.secuencial,
             dirMatriz=ride.get_direccion(),
-            fechaEmision=ride.get_ddmmyyy_date(datetime.now(), '/'),
+            fechaEmision=ride.get_ddmmyyy_date(ride.date, '/'),
             dirEstablecimiento=ride.get_direccion(),
             contribuyenteEspecial=ride.company_id.nro_contribuyente_especial,
             obligadoContabilidad=ride.company_id.obligado_llevar_contabilidad,

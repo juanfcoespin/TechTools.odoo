@@ -46,6 +46,12 @@ class Factura(models.Model):
     )
     resp_sri = fields.Char(string="Respuesta SRI")
 
+    def get_num_factura(self):
+        ms = ''
+        if self.name is not None:
+            ms = self.name.replace('/', '')
+        return '002'
+
     def enviar_sri(self):
         url = None
         if self.company_id.factura_electronica_ambiente == 2:  # Produccion

@@ -37,6 +37,7 @@
     {% for item in lines %}
     <detalle>
       <codigoPrincipal>{{ item['codigoPrincipal'] }}</codigoPrincipal>
+      <codigoAuxiliar>{{ item['codigoAuxiliar'] }}</codigoAuxiliar>
       <descripcion>{{ item['descripcion'] }}</descripcion>
       <cantidad>{{ item['cantidad'] }}</cantidad>
       <precioUnitario>{{ item['precioUnitario'] }}</precioUnitario>

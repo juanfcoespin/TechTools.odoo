@@ -4,11 +4,11 @@ from datetime import datetime
 from ..utils.xml.xml_doc import XmlDoc
 from ..utils.signP12.signXML import SignXML
 import os
-from jinja2 import Template, Environment, FileSystemLoader
+from jinja2 import Environment, FileSystemLoader
 from zeep import Client
 from os import path
-
 import logging
+import threading
 
 _logger = logging.getLogger(__name__)
 
@@ -52,6 +52,7 @@ class Factura(models.Model):
             discount = (line.price_unit - priced) * line.quantity
             detalle = {
                 'codigoPrincipal': codigo_principal,
+                'codigoAuxiliar': codigo_auxiliar,
                 'descripcion': line.name.strip(),
                 'cantidad': '%.6f' % (line.quantity),
                 'precioUnitario': '%.6f' % (line.price_unit),
@@ -77,17 +78,24 @@ class Factura(models.Model):
     def get_num_factura(self):
         self.num_factura = self.get_num_ride(self.id)
 
+
     def enviar_sri(self):
-        url = None
         if self.company_id.factura_electronica_ambiente == 2:  # Produccion
             url = self.company_id.url_recepcion_documentos
         else:
             url = self.company_id.url_recepcion_documentos_prueba  # Pruebas
         if url is not None:
             xml = self.get_signed_xml()
-            client = Client(url)
-            result = client.service.validarComprobante(xml)
-            self.save_resp_sri(result)
+            # client = Client(url)
+            # result = client.service.validarComprobante(xml)
+            # self.save_resp_sri(result)
+            threaded_calculation = threading.Thread(target=self.call_ws_sri, args=(url, xml))
+            threaded_calculation.start()
+
+    def call_ws_sri(self, url, xml):
+        client = Client(url)
+        result = client.service.validarComprobante(xml)
+        self.save_resp_sri(result)
 
     def save_resp_sri(self, result):
         self.resp_sri = result

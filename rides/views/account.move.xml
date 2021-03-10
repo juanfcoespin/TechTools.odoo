@@ -19,7 +19,8 @@
                 <page string="Facturación Electrónica">
                 <group>
                     <group>
-                        <field name="resp_sri"/>
+                        <field name="clave_acceso" readonly="1"/>
+                        <field name="resp_sri" readonly="1"/>
                     </group>
                 </group>
             </page>

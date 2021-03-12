@@ -7,7 +7,12 @@
         <field name="arch" type="xml">
             <button name="action_post" position="after">
                 <button name="enviar_sri" type="object" string="Enviar al SRI"
-                                class="btn-primary"/>
+                        class="btn-primary"/>
+                <button name="consultar_estado_autorizacion"
+                        attrs="{'invisible': [('resp_sri', '=', 'none')]}"
+                        type="object"
+                        string="Aut SRI?"
+                        class="btn-primary"/>
             </button>
             <field name="amount_untaxed" position="after">
                 <field name="total_discount"/>
@@ -21,6 +26,7 @@
                     <group>
                         <field name="clave_acceso" readonly="1"/>
                         <field name="resp_sri" readonly="1"/>
+                        <field name="autorizacion_sri" readonly="1"/>
                     </group>
                 </group>
             </page>

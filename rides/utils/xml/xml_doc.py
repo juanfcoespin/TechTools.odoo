@@ -25,7 +25,8 @@ class XmlDoc:
         ms = template.render(
             ambiente=ride.cod_ambiente,
             tipoEmision=ride.cod_tipo_emision,
-            razonSocial=ride.company_id.name,
+            razonSocial=ride.company_id.razon_social,
+            nombreComercial=ride.company_id.name,
             ruc=ride.company_id.ruc,
             claveAcceso=ride.clave_acceso,
             estab=ride.company_id.cod_establecimiento,

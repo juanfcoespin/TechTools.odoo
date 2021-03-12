@@ -3,6 +3,7 @@ from odoo import fields, models, api
 from datetime import datetime
 from ..utils.xml.xml_doc import XmlDoc
 from ..utils.signP12.signXML import SignXML
+from ..utils import common
 import os
 from jinja2 import Environment, FileSystemLoader
 from zeep import Client
@@ -42,6 +43,20 @@ class Factura(models.Model):
         compute="get_total_sin_descuento"
     )
     resp_sri = fields.Char(string="Respuesta SRI")
+    autorizacion_sri = fields.Char(string="Estado autorización SRI")
+
+    def consultar_estado_autorizacion(self):
+        if self.resp_sri is None:
+            raise Exception('Primero debe enviar el documento al SRI!!')
+            return
+        if self.company_id.factura_electronica_ambiente == 2:  # Produccion
+            url = self.company_id.url_autorizacion_documentos
+        else:
+            url = self.company_id.url_autorizacion_documentos_prueba  # Pruebas
+        client = Client(url)
+        result = client.service.autorizacionComprobante(self.clave_acceso)
+        # estado = result.autorizaciones.autorizacion[0].estado
+        self.autorizacion_sri = result
 
     def get_lines(self):
         detalles = []
@@ -78,7 +93,6 @@ class Factura(models.Model):
     def get_num_factura(self):
         self.num_factura = self.get_num_ride(self.id)
 
-
     def enviar_sri(self):
         if self.company_id.factura_electronica_ambiente == 2:  # Produccion
             url = self.company_id.url_recepcion_documentos
@@ -86,19 +100,31 @@ class Factura(models.Model):
             url = self.company_id.url_recepcion_documentos_prueba  # Pruebas
         if url is not None:
             xml = self.get_signed_xml()
-            # client = Client(url)
-            # result = client.service.validarComprobante(xml)
-            # self.save_resp_sri(result)
-            threaded_calculation = threading.Thread(target=self.call_ws_sri, args=(url, xml))
-            threaded_calculation.start()
+            client = Client(url)
+            result = client.service.validarComprobante(xml)
+            self.resp_sri = result
+            # threaded_calculation = threading.Thread(target=self.call_ws_sri, args=(url, xml))
+            # threaded_calculation.start()
+
+    def save_pdf_ride(self):
+        ms = {
+            'type': 'ir.actions.client',
+            'tag': 'action_warn',
+            'name': 'Failure',
+            'params': {
+                'title': 'Postage Cancellation Failed',
+                'text': 'Shipment is outside the void period.',
+                'sticky': True
+            }
+        }
+        return ms
+
+
 
     def call_ws_sri(self, url, xml):
         client = Client(url)
         result = client.service.validarComprobante(xml)
         self.save_resp_sri(result)
-
-    def save_resp_sri(self, result):
-        self.resp_sri = result
 
     def get_signed_xml_mock(self):
         template_path = os.path.dirname(__file__)
@@ -107,8 +133,7 @@ class Factura(models.Model):
         return xml_fact.render().encode('utf-8')
 
     def get_signed_xml(self):
-        ride_path = self.company_id.xml_path
-
+        ride_path = self.company_id.electronic_docs_path
         if ride_path is None:
             raise Exception('Debe configurar la ruta de destino de los rides')
         ride_path = os.path.join(ride_path, 'xml')
@@ -117,7 +142,6 @@ class Factura(models.Model):
                 os.mkdir(ride_path)
             except OSError:
                 raise Exception('no se pudo crear el directorio: ' + ride_path)
-
         doc = XmlDoc(self)
         # doc.render()
         str_xml = doc.get_xml_text_factura()
@@ -136,7 +160,7 @@ class Factura(models.Model):
         self.total_sin_descuento = self.amount_untaxed + self.total_discount
 
     def get_total_con_impuestos(self):
-        self.total_con_impuestos = self.amount_untaxed + self.iva
+        self.total_con_impuestos = round(self.amount_untaxed + self.iva, 2)
 
     def get_iva(self):
         self.iva = 0

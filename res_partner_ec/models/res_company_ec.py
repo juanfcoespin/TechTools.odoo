@@ -12,6 +12,7 @@ class ResCompanyEc(models.Model):
                                       default="001", size=3)
     cod_punto_emision = fields.Char(string="Codigo Punto Emisión",
                                       default="002", size=3)
+    razon_social = fields.Char(string="Razón Social")
     obligado_llevar_contabilidad = fields.Selection(
         [
             ('SI', 'SI'),
@@ -40,7 +41,7 @@ class ResCompanyEc(models.Model):
     certificado_digital = fields.Binary(string="Certificado Digital ext p12")
     document_name = fields.Char(string="Nombre Certificado")
     cert_pwd = fields.Char(string="Contraseña Certificado")
-    xml_path = fields.Char(string="Ruta Carpeta de XMLs")
+    electronic_docs_path = fields.Char(string="Ruta Carpeta Comprobantes Elctrónicos")
     url_recepcion_documentos_prueba = \
         fields.Char(string="Url Recepcion Documentos Prueba",
                     default="https://celcer.sri.gob.ec/comprobantes-electronicos-ws"

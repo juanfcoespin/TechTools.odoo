@@ -1,14 +1,15 @@
 # pip3 install pyOpenSSL
+import base64
+import os
+import xml.etree.ElementTree as ET
+from os import path
+
 from OpenSSL import crypto
 # pip3 install signxml
 from lxml import etree
-from signxml import XMLSigner, XMLVerifier
 from lxml import etree as lxml_ET
-import os
-from os import path
-import xml.etree.ElementTree as ET
-import base64
-
+from signxml import XMLSigner
+from .. import common
 
 
 class SignXML:
@@ -24,15 +25,9 @@ class SignXML:
         local_path = os.path.dirname(__file__)
         cert_path = os.path.join(local_path, self.cert_name)
         if not path.exists(cert_path):
-            self.copy_cert(cert_path)
+            common.create_file_from_binary(self.cert, True)
         with open(cert_path, 'rb') as file:
             return crypto.load_pkcs12(file.read(), self.pwd)
-
-    def copy_cert(self, cert_path):
-        buffer = open(cert_path, "wb")
-        byte_array = base64.b64decode(self.cert)
-        buffer.write(byte_array)
-        buffer.close()
 
     def get_p12_from_path(self, path_p12):
         with open(path_p12, 'rb') as file:

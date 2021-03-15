@@ -9,6 +9,7 @@ from jinja2 import Environment, FileSystemLoader
 from zeep import Client
 from os import path
 import logging
+import base64
 import threading
 
 _logger = logging.getLogger(__name__)
@@ -94,6 +95,14 @@ class Factura(models.Model):
         self.num_factura = self.get_num_ride(self.id)
 
     def enviar_sri(self):
+        self.safe_pdf_factura()
+
+    def safe_pdf_factura(self):
+        pdf_binary = common.get_pdf_report_binary(self, 'rides.factura')
+        ride_path = common.get_ride_path(self, 'pdf', self.clave_acceso+'.pdf')
+        common.create_file_from_binary(pdf_binary, ride_path)
+
+    def enviar_sri2(self):
         if self.company_id.factura_electronica_ambiente == 2:  # Produccion
             url = self.company_id.url_recepcion_documentos
         else:
@@ -105,21 +114,6 @@ class Factura(models.Model):
             self.resp_sri = result
             # threaded_calculation = threading.Thread(target=self.call_ws_sri, args=(url, xml))
             # threaded_calculation.start()
-
-    def save_pdf_ride(self):
-        ms = {
-            'type': 'ir.actions.client',
-            'tag': 'action_warn',
-            'name': 'Failure',
-            'params': {
-                'title': 'Postage Cancellation Failed',
-                'text': 'Shipment is outside the void period.',
-                'sticky': True
-            }
-        }
-        return ms
-
-
 
     def call_ws_sri(self, url, xml):
         client = Client(url)
@@ -133,15 +127,9 @@ class Factura(models.Model):
         return xml_fact.render().encode('utf-8')
 
     def get_signed_xml(self):
-        ride_path = self.company_id.electronic_docs_path
-        if ride_path is None:
-            raise Exception('Debe configurar la ruta de destino de los rides')
-        ride_path = os.path.join(ride_path, 'xml')
-        if not path.exists(ride_path):
-            try:
-                os.mkdir(ride_path)
-            except OSError:
-                raise Exception('no se pudo crear el directorio: ' + ride_path)
+        xml_filename = self.clave_acceso + '.xml'
+        ride_path = common.get_ride_path(self, 'xml')
+
         doc = XmlDoc(self)
         # doc.render()
         str_xml = doc.get_xml_text_factura()
@@ -150,7 +138,7 @@ class Factura(models.Model):
         pwd = self.company_id.cert_pwd
 
         xml_signer = SignXML(cert, cert_name, pwd)
-        xml_filename = self.clave_acceso+'.xml'
+
         xml_signer.sign_xml(str_xml, os.path.join(ride_path, xml_filename))
         env = Environment(loader=FileSystemLoader(ride_path))
         xml_fact = env.get_template(xml_filename)

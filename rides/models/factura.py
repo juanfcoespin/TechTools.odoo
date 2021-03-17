@@ -94,21 +94,43 @@ class Factura(models.Model):
     def get_num_factura(self):
         self.num_factura = self.get_num_ride(self.id)
 
-    def enviar_sri(self):
-        self.safe_pdf_factura()
+    def generate_files(self, ride_path, clave_acceso):
+        xml_path = common.get_ride_path(ride_path, 'xml')
+        self.sign_and_safe_xml_factura(xml_path, clave_acceso + '.xml')
 
-    def safe_pdf_factura(self):
+        pdf_path = common.get_ride_path(ride_path, 'pdf')
+        self.safe_pdf_factura(pdf_path, clave_acceso + '.pdf')
+
+    def safe_pdf_factura(self, pdf_path, pdf_filename):
         pdf_binary = common.get_pdf_report_binary(self, 'rides.factura')
-        ride_path = common.get_ride_path(self, 'pdf', self.clave_acceso+'.pdf')
-        common.create_file_from_binary(pdf_binary, ride_path)
+        common.create_file_from_binary(pdf_binary,
+                                       os.path.join(pdf_path, pdf_filename))
 
-    def enviar_sri2(self):
+    def sign_and_safe_xml_factura(self, xml_path, xml_filename):
+        doc = XmlDoc(self)
+        # doc.render()
+        str_xml = doc.get_xml_text_factura()
+        cert = self.company_id.certificado_digital
+        cert_name = self.company_id.document_name
+        pwd = self.company_id.cert_pwd
+        xml_signer = SignXML(cert, cert_name, pwd)
+        xml_signer.sign_xml(str_xml,
+                            os.path.join(xml_path, xml_filename))
+
+    def send_by_mail(self):
+        return None
+
+    def enviar_sri(self):
         if self.company_id.factura_electronica_ambiente == 2:  # Produccion
             url = self.company_id.url_recepcion_documentos
         else:
             url = self.company_id.url_recepcion_documentos_prueba  # Pruebas
         if url is not None:
-            xml = self.get_signed_xml()
+            ride_path = self.company_id.electronic_docs_path
+            # to no call algorithm to generate clave_acceso more than one time
+            clave_acceso = self.clave_acceso
+            self.generate_files(ride_path, clave_acceso)
+            xml = self.get_signed_xml(os.path.join(ride_path, 'xml'), clave_acceso+'.xml')
             client = Client(url)
             result = client.service.validarComprobante(xml)
             self.resp_sri = result
@@ -126,20 +148,7 @@ class Factura(models.Model):
         xml_fact = env.get_template('example.xml')
         return xml_fact.render().encode('utf-8')
 
-    def get_signed_xml(self):
-        xml_filename = self.clave_acceso + '.xml'
-        ride_path = common.get_ride_path(self, 'xml')
-
-        doc = XmlDoc(self)
-        # doc.render()
-        str_xml = doc.get_xml_text_factura()
-        cert = self.company_id.certificado_digital
-        cert_name = self.company_id.document_name
-        pwd = self.company_id.cert_pwd
-
-        xml_signer = SignXML(cert, cert_name, pwd)
-
-        xml_signer.sign_xml(str_xml, os.path.join(ride_path, xml_filename))
+    def get_signed_xml(self, ride_path, xml_filename):
         env = Environment(loader=FileSystemLoader(ride_path))
         xml_fact = env.get_template(xml_filename)
         return xml_fact.render().encode('utf-8')
@@ -168,8 +177,8 @@ class Factura(models.Model):
     def create(self, vals):
         # la funcion create hace un insert en la tabla
         ms = super(Factura, self).create(vals)
-        # self.enviar_sri()
         return ms
+
 
     def get_secuencial_factura(self):
         self.secuencial = self.get_secuencial(self.id)

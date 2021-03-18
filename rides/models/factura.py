@@ -117,25 +117,40 @@ class Factura(models.Model):
         xml_signer.sign_xml(str_xml,
                             os.path.join(xml_path, xml_filename))
 
-    def send_by_mail(self):
-        return None
-
     def enviar_sri(self):
+        url = self.get_url_to_send_xml()
+        ride_path = self.company_id.electronic_docs_path
+        # to no call algorithm to generate clave_acceso more than one time
+        clave_acceso = self.clave_acceso
+        # self.generate_files(ride_path, clave_acceso)
+
+        self.send_documents_by_mail(ride_path, clave_acceso)
+
+        # xml = self.get_signed_xml(os.path.join(ride_path, 'xml'), clave_acceso+'.xml')
+        # client = Client(url)
+        # result = client.service.validarComprobante(xml)
+        # self.resp_sri = result
+
+
+        # threaded_calculation = threading.Thread(target=self.call_ws_sri, args=(url, xml))
+        # threaded_calculation.start()
+
+
+    def send_documents_by_mail(self, ride_path, clave_acceso):
+        print('********** send email')
+        template_id = self.env.ref('mail.email_template_form').id
+        template = self.env('mail.template').browse(template_id)
+        template.send_mail(self.id, force_send=True)
+        print('********** email sended')
+
+    def get_url_to_send_xml(self):
         if self.company_id.factura_electronica_ambiente == 2:  # Produccion
-            url = self.company_id.url_recepcion_documentos
+            ms = self.company_id.url_recepcion_documentos
         else:
-            url = self.company_id.url_recepcion_documentos_prueba  # Pruebas
-        if url is not None:
-            ride_path = self.company_id.electronic_docs_path
-            # to no call algorithm to generate clave_acceso more than one time
-            clave_acceso = self.clave_acceso
-            self.generate_files(ride_path, clave_acceso)
-            xml = self.get_signed_xml(os.path.join(ride_path, 'xml'), clave_acceso+'.xml')
-            client = Client(url)
-            result = client.service.validarComprobante(xml)
-            self.resp_sri = result
-            # threaded_calculation = threading.Thread(target=self.call_ws_sri, args=(url, xml))
-            # threaded_calculation.start()
+            ms = self.company_id.url_recepcion_documentos_prueba  # Pruebas
+        if ms is None:
+            raise Exception('Debe registrar las Urls de comunicación con el SRI')
+        return ms
 
     def call_ws_sri(self, url, xml):
         client = Client(url)

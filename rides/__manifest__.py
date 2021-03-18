@@ -23,5 +23,6 @@
     'data': [
         'views/stock_picking.xml',
         'views/account.move.xml',
+        'data/fec_email_template.xml'
     ]
 }

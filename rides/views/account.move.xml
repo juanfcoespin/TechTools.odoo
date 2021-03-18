@@ -20,6 +20,11 @@
             <field name="amount_total" position="before">
                 <field name="total_con_impuestos"/>
             </field>
+            <field name="name" position="after">
+                <group>
+                    <field name="num_factura" readonly="1"/>
+                </group>
+            </field>
             <xpath expr="//notebook[last()]" position="inside">
                 <page string="Facturación Electrónica">
                 <group>

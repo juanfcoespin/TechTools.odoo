@@ -30,6 +30,8 @@
                 <group>
                     <group>
                         <field name="clave_acceso" readonly="1"/>
+                        <field name="pdf_generado" readonly="1"/>
+                        <field name="email_enviado" readonly="1"/>
                         <field name="resp_sri" readonly="1"/>
                         <field name="autorizacion_sri" readonly="1"/>
                     </group>

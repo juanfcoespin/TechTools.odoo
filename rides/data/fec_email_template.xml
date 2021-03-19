@@ -9,36 +9,41 @@
             <field name="model_id" ref="account.model_account_move"/>
             <field name="email_from">${object.company_id.email}</field>
             <field name="email_to">${object.partner_id.email}</field>
-            <field name="subject">${object.company_id.name} Factura (Ref ${object.num_factura or 'n/a'})</field>
+            <field name="subject">${object.company_id.name} Factura (Nro ${object.num_factura or 'n/a'})</field>
             <field name="body_html" type="html">
                 <div style="margin: 0px; padding: 0px;">
                     <p style="margin: 0px; padding: 0px; font-size: 13px;">
-                        Estimado <strong>${object.partner_id.name}</strong>,
+                        Estimado Cliente <strong>${object.partner_id.name}</strong>,
 
                         <br /><br />
-                        Here is your invoice <strong>${object.num_factura}</strong>
-                        amounting in <strong>${format_amount(object.amount_total, object.currency_id)}</strong>
-                        from ${object.company_id.name}.
+                        Gracias por preferirnos, su factura <strong>${object.num_factura}</strong>
+                        por el monto de <strong>${format_amount(object.amount_total, object.currency_id)}</strong>
+                        ha sido generada correctamente.
+                        <br /><br />
+                        Clave de acceso: <strong>${object.clave_acceso}</strong>
+                        <br />
+                        Estado de la factura:
                         % if object.payment_state in ('paid', 'in_payment'):
-                            This invoice is already paid.
+                            <strong>Pagada</strong>
                         % else:
-                            Please remit payment at your earliest convenience.
+                            <strong>Pendiente de pago</strong>
                             % if object.payment_reference:
                                 <br /><br />
-                                Please use the following communication for your payment: <strong>${object.payment_reference}</strong>.
+                                Agradecemos tomar contacto con: <strong>${object.payment_reference}</strong>.
                             % endif
                         % endif
                         <br /><br />
-                        Do not hesitate to contact us if you have any questions.
+                        Atentamente
                         % if object.invoice_user_id.signature:
                             <br />
                             ${object.invoice_user_id.signature | safe}
                         % endif
+                        ${object.company_id.name}
                     </p>
                 </div>
             </field>
-            <!--field name="report_template" ref="ride.account.move"/>
-            <field name="report_name">Invoice_${(object.name or '').replace('/','_')}${object.state == 'draft' and '_draft' or ''}</field-->
+            <field name="report_template" ref="rides.factura"/>
+            <field name="report_name">${object.clave_acceso}</field>
             <field name="lang">${object.partner_id.lang}</field>
             <field name="auto_delete" eval="True"/>
         </record>

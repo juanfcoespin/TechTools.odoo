@@ -43,6 +43,8 @@ class Factura(models.Model):
         string="Total sin descuento",
         compute="get_total_sin_descuento"
     )
+    pdf_generado = fields.Boolean(string="Pdf Generado")
+    email_enviado = fields.Boolean(string="Email enviado al cliente")
     resp_sri = fields.Char(string="Respuesta SRI")
     autorizacion_sri = fields.Char(string="Estado autorización SRI")
 
@@ -84,7 +86,7 @@ class Factura(models.Model):
                         'tarifa': tax.amount,
                         'baseImponible': '{:.2f}'.format(line.price_subtotal),
                         'valor': '{:.2f}'.format(line.price_subtotal *
-                                                 tax.amount/100)
+                                                 tax.amount / 100)
                     }
                     impuestos.append(impuesto)
             detalle.update({'impuestos': impuestos})
@@ -100,6 +102,7 @@ class Factura(models.Model):
 
         pdf_path = common.get_ride_path(ride_path, 'pdf')
         self.safe_pdf_factura(pdf_path, clave_acceso + '.pdf')
+        self.pdf_generado = True
 
     def safe_pdf_factura(self, pdf_path, pdf_filename):
         pdf_binary = common.get_pdf_report_binary(self, 'rides.factura')
@@ -118,30 +121,34 @@ class Factura(models.Model):
                             os.path.join(xml_path, xml_filename))
 
     def enviar_sri(self):
+        '''
+            - genera el pdf y el xml de la factura
+            - envia por correo al cliente
+            - envia al sri el xml firmado electrónicamente
+        :return:
+        '''
         url = self.get_url_to_send_xml()
         ride_path = self.company_id.electronic_docs_path
         # to no call algorithm to generate clave_acceso more than one time
         clave_acceso = self.clave_acceso
-        # self.generate_files(ride_path, clave_acceso)
-
-        self.send_documents_by_mail(ride_path, clave_acceso)
-
-        # xml = self.get_signed_xml(os.path.join(ride_path, 'xml'), clave_acceso+'.xml')
-        # client = Client(url)
-        # result = client.service.validarComprobante(xml)
-        # self.resp_sri = result
-
+        self.generate_files(ride_path, clave_acceso)
+        self.send_documents_by_mail()
+        xml = self.get_signed_xml(os.path.join(ride_path, 'xml'), clave_acceso+'.xml')
+        client = Client(url)
+        result = client.service.validarComprobante(xml)
+        self.resp_sri = result
 
         # threaded_calculation = threading.Thread(target=self.call_ws_sri, args=(url, xml))
         # threaded_calculation.start()
 
-
-    def send_documents_by_mail(self, ride_path, clave_acceso):
-        print('********** send email')
-        template_id = self.env.ref('mail.email_template_form').id
-        template = self.env('mail.template').browse(template_id)
-        template.send_mail(self.id, force_send=True)
-        print('********** email sended')
+    def send_documents_by_mail(self):
+        try:
+            template_id = self.env.ref('rides.email_template_FEL').id
+            template = self.env['mail.template'].browse(template_id)
+            idsended = template.send_mail(self.id, force_send=True)
+            self.email_enviado = True
+        except:
+            self.email_enviado = False
 
     def get_url_to_send_xml(self):
         if self.company_id.factura_electronica_ambiente == 2:  # Produccion
@@ -194,11 +201,8 @@ class Factura(models.Model):
         ms = super(Factura, self).create(vals)
         return ms
 
-
     def get_secuencial_factura(self):
         self.secuencial = self.get_secuencial(self.id)
 
     def get_clave_acceso_factura(self):
         self.clave_acceso = self.get_clave_acceso('01', self.id, self.date)
-
-

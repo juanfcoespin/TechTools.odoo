@@ -27,10 +27,6 @@
                             <strong>Pagada</strong>
                         % else:
                             <strong>Pendiente de pago</strong>
-                            % if object.payment_reference:
-                                <br /><br />
-                                Agradecemos tomar contacto con: <strong>${object.payment_reference}</strong>.
-                            % endif
                         % endif
                         <br /><br />
                         Atentamente

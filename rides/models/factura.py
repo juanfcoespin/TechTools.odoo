@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import fields, models, api
+from odoo import fields, models, api, sql_db, SUPERUSER_ID
 from datetime import datetime
 from ..utils.xml.xml_doc import XmlDoc
 from ..utils.signP12.signXML import SignXML
@@ -11,6 +11,7 @@ from os import path
 import logging
 import base64
 import threading
+from requests import request
 
 _logger = logging.getLogger(__name__)
 
@@ -43,23 +44,24 @@ class Factura(models.Model):
         string="Total sin descuento",
         compute="get_total_sin_descuento"
     )
+    enviado_al_sri = fields.Boolean(string="Enviado al SRI")
     pdf_generado = fields.Boolean(string="Pdf Generado")
     email_enviado = fields.Boolean(string="Email enviado al cliente")
     resp_sri = fields.Char(string="Respuesta SRI")
     autorizacion_sri = fields.Char(string="Estado autorización SRI")
 
     def consultar_estado_autorizacion(self):
-        if self.resp_sri is None:
-            raise Exception('Primero debe enviar el documento al SRI!!')
-            return
-        if self.company_id.factura_electronica_ambiente == 2:  # Produccion
-            url = self.company_id.url_autorizacion_documentos
+        if self.resp_sri is not None and self.enviado_al_sri:
+            if self.company_id.factura_electronica_ambiente == 2:  # Produccion
+                url = self.company_id.url_autorizacion_documentos
+            else:
+                url = self.company_id.url_autorizacion_documentos_prueba  # Pruebas
+            client = Client(url)
+            result = client.service.autorizacionComprobante(self.clave_acceso)
+            # estado = result.autorizaciones.autorizacion[0].estado
+            self.autorizacion_sri = result
         else:
-            url = self.company_id.url_autorizacion_documentos_prueba  # Pruebas
-        client = Client(url)
-        result = client.service.autorizacionComprobante(self.clave_acceso)
-        # estado = result.autorizaciones.autorizacion[0].estado
-        self.autorizacion_sri = result
+            self.autorizacion_sri = "Primero debe enviarse el documento al SRI"
 
     def get_lines(self):
         detalles = []
@@ -120,6 +122,30 @@ class Factura(models.Model):
         xml_signer.sign_xml(str_xml,
                             os.path.join(xml_path, xml_filename))
 
+    '''def button_method(self):  # this is button method from wizard call
+        # you need to set kwargs for db and uid
+        kwargs = {'uid': request.uid, 'db': request.db}
+        thread.start_new_thread(self.theard_method, (kwargs, arg1, args2, args_n)
+        return {'type': 'ir.actions.act_window_close'}
+
+    def thread_method(self, kwargs, arg1, arg2, arg_n):
+        new_cr = sql_db.db_connect(kwargs.get('db')).cursor()
+        with Environment.manage():
+            # you need to define environment as you can't use the self.env['']
+            env = Environment(new_cr, kwargs.get('uid'), {})
+            partner_obj = env['res.partner']  # example to initiate the obj
+    '''
+
+    def enviar_sri2(self):
+        self.send_documents_by_mail()
+
+    def enviar_sri3(self):
+        dbname = threading.current_thread().dbname
+        uid = SUPERUSER_ID
+        env_args = {'uid': uid, 'db': dbname}
+        task = threading.Thread(target=self.send_documents_by_mail, args=())
+        task.start()
+
     def enviar_sri(self):
         '''
             - genera el pdf y el xml de la factura
@@ -131,24 +157,69 @@ class Factura(models.Model):
         ride_path = self.company_id.electronic_docs_path
         # to no call algorithm to generate clave_acceso more than one time
         clave_acceso = self.clave_acceso
-        self.generate_files(ride_path, clave_acceso)
-        self.send_documents_by_mail()
-        xml = self.get_signed_xml(os.path.join(ride_path, 'xml'), clave_acceso+'.xml')
-        client = Client(url)
-        result = client.service.validarComprobante(xml)
-        self.resp_sri = result
+        if not self.pdf_generado:
+            self.generate_files(ride_path, clave_acceso)
+        if not self.email_enviado:
+            self.send_documents_by_mail()
+        if not self.enviado_al_sri:
+            self.send_xmlsigned_to_sri(url, ride_path, clave_acceso)
 
-        # threaded_calculation = threading.Thread(target=self.call_ws_sri, args=(url, xml))
-        # threaded_calculation.start()
+    def send_xmlsigned_to_sri(self, url, ride_path, clave_acceso):
+        try:
+            client = Client(url)
+            xml = self.get_signed_xml(os.path.join(ride_path, 'xml'),
+                                      clave_acceso + '.xml')
+            result = client.service.validarComprobante(xml)
+            self.resp_sri = result
+            self.enviado_al_sri = True
+        except:
+            self.resp_sri = "El Servicio Web del Sri no está disponible en este momento"
 
     def send_documents_by_mail(self):
+        template_id = self.env.ref('rides.email_template_FEL').id
+        template = self.env['mail.template'].browse(template_id)
+        id_factura = self.id
+        template.send_mail(id_factura, force_send=True)
+        self.email_enviado = True
+
+    def send_documents_by_mail3(self):
+
         try:
-            template_id = self.env.ref('rides.email_template_FEL').id
-            template = self.env['mail.template'].browse(template_id)
-            idsended = template.send_mail(self.id, force_send=True)
-            self.email_enviado = True
+            with api.Environment.manage():
+
+                # you need to define environment as you can't use the self.env['']
+                # ctx = api.Environment(new_cr, uid, {})['res.users'].context_get()
+                new_cr = self.pool.cursor()
+                env = Environment(new_cr, self.env.uid, self.env.context)
+
+                template_id = env.ref('rides.email_template_FEL').id
+                template = env['mail.template'].browse(template_id)
+                id_factura = env['account.move'].id
+                template.send_mail(id_factura, force_send=True)
+                env['account.move'].email_enviado = True
+                new_cr.close()
+            # self.email_enviado = True
         except:
-            self.email_enviado = False
+            if new_cr is not None:
+                new_cr.close()
+
+    def send_documents_by_mail2(self, dbname, uid):
+        new_cr = sql_db.db_connect(dbname).cursor()
+        try:
+            with api.Environment.manage():
+                # you need to define environment as you can't use the self.env['']
+                # ctx = api.Environment(new_cr, uid, {})['res.users'].context_get()
+                env = Environment(new_cr, uid, {})
+                template_id = env.ref('rides.email_template_FEL').id
+                template = env['mail.template'].browse(template_id)
+                id_factura = env['account.move'].id
+                template.send_mail(id_factura, force_send=True)
+                env['account.move'].email_enviado = True
+                new_cr.close()
+            # self.email_enviado = True
+        except:
+            if new_cr is not None:
+                new_cr.close()
 
     def get_url_to_send_xml(self):
         if self.company_id.factura_electronica_ambiente == 2:  # Produccion

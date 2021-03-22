@@ -1,5 +1,6 @@
 import logging
 from odoo import api, fields, models
+from datetime import datetime
 
 
 class Ride(models.AbstractModel):
@@ -31,19 +32,14 @@ class Ride(models.AbstractModel):
                                        'selection').get(field, {}).get('selection',
                                                                        {})).get(value)
 
-    def get_secuencial(self, id_documento):
-        # 145 -> '000000145'
-        secuencial = str(id_documento).rjust(9, '0')
-        return secuencial
-
     def get_direccion(self):
         return "{} y {}".format(self.company_id.street, self.company_id.street2)
 
-    def get_num_ride(self, id_documento):
+    def get_num_ride(self, secuencial):
         return "{}-{}-{}".format(
             self.company_id.cod_establecimiento,
             self.company_id.cod_punto_emision,
-            self.get_secuencial(id_documento)
+            secuencial
         )
 
     '''
@@ -56,8 +52,8 @@ class Ride(models.AbstractModel):
         07 Comprobante de Retención
     '''
 
-    def get_clave_acceso(self, cod_tipo_documento, id_documento,  fecha_documento):
-        current_date = self.get_ddmmyyy_date(fecha_documento)
+    def get_clave_acceso(self, cod_tipo_documento, ride_date):
+        current_date = self.get_ddmmyyy_date(ride_date)
         num_emisor = "12345678"
         clave = "{}{}{}{}{}{}{}{}{}".format(
             current_date,
@@ -66,7 +62,7 @@ class Ride(models.AbstractModel):
             self.cod_ambiente,
             self.company_id.cod_establecimiento,
             self.company_id.cod_punto_emision,
-            self.get_secuencial(id_documento),
+            self.secuencial,
             num_emisor,
             self.cod_tipo_emision
         )

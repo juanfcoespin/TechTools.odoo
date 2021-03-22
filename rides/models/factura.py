@@ -20,14 +20,14 @@ class Factura(models.Model):
     _name = 'account.move'
     _inherit = ['account.move', 'rides.base']
 
-    num_factura = fields.Char(compute="get_num_factura")
+    num_factura = fields.Char(string="Num Factura")
     fecha_autorizacion = fields.Datetime(
         string="Fecha y Hora Autorización",
         default=datetime.now()
     )
 
-    secuencial = fields.Char(compute="get_secuencial_factura")
-    clave_acceso = fields.Char(compute="get_clave_acceso_factura")
+    secuencial = fields.Char(string="secuencial")
+    clave_acceso = fields.Char(compute="set_clave_acceso", string="Clave de Acceso")
     total_discount = fields.Float(
         string="Total Descuento",
         compute="get_total_discount"
@@ -49,6 +49,13 @@ class Factura(models.Model):
     email_enviado = fields.Boolean(string="Email enviado al cliente")
     resp_sri = fields.Char(string="Respuesta SRI")
     autorizacion_sri = fields.Char(string="Estado autorización SRI")
+
+    def set_clave_acceso(self):
+        if not self.secuencial:
+            self.company_id.ultimo_secuencial_factura = self.company_id.ultimo_secuencial_factura + 1
+            self.secuencial = str(self.company_id.ultimo_secuencial_factura).rjust(9, '0')
+            self.num_factura = self.get_num_ride(self.secuencial)
+        self.clave_acceso = self.get_clave_acceso('01', self.date)
 
     def consultar_estado_autorizacion(self):
         if self.resp_sri is not None and self.enviado_al_sri:
@@ -95,9 +102,6 @@ class Factura(models.Model):
             detalles.append(detalle)
         return detalles
 
-    def get_num_factura(self):
-        self.num_factura = self.get_num_ride(self.id)
-
     def generate_files(self, ride_path, clave_acceso):
         xml_path = common.get_ride_path(ride_path, 'xml')
         self.sign_and_safe_xml_factura(xml_path, clave_acceso + '.xml')
@@ -122,20 +126,6 @@ class Factura(models.Model):
         xml_signer.sign_xml(str_xml,
                             os.path.join(xml_path, xml_filename))
 
-    '''def button_method(self):  # this is button method from wizard call
-        # you need to set kwargs for db and uid
-        kwargs = {'uid': request.uid, 'db': request.db}
-        thread.start_new_thread(self.theard_method, (kwargs, arg1, args2, args_n)
-        return {'type': 'ir.actions.act_window_close'}
-
-    def thread_method(self, kwargs, arg1, arg2, arg_n):
-        new_cr = sql_db.db_connect(kwargs.get('db')).cursor()
-        with Environment.manage():
-            # you need to define environment as you can't use the self.env['']
-            env = Environment(new_cr, kwargs.get('uid'), {})
-            partner_obj = env['res.partner']  # example to initiate the obj
-    '''
-
     def enviar_sri2(self):
         self.send_documents_by_mail()
 
@@ -155,6 +145,7 @@ class Factura(models.Model):
         '''
         url = self.get_url_to_send_xml()
         ride_path = self.company_id.electronic_docs_path
+        ride_path = common.get_ride_path(ride_path, self.company_id.name)
         # to no call algorithm to generate clave_acceso more than one time
         clave_acceso = self.clave_acceso
         if not self.pdf_generado:
@@ -265,15 +256,3 @@ class Factura(models.Model):
             line_discount = line_subTotal * line.discount / 100
             self.total_discount += line_discount
         self.total_discount = round(self.total_discount, 2)
-
-    @api.model
-    def create(self, vals):
-        # la funcion create hace un insert en la tabla
-        ms = super(Factura, self).create(vals)
-        return ms
-
-    def get_secuencial_factura(self):
-        self.secuencial = self.get_secuencial(self.id)
-
-    def get_clave_acceso_factura(self):
-        self.clave_acceso = self.get_clave_acceso('01', self.id, self.date)

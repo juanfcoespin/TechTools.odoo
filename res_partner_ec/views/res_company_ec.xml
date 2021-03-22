@@ -22,6 +22,9 @@
                             <group>
                                 <field name="cod_establecimiento"/>
                                 <field name="cod_punto_emision"/>
+                                <field name="ultimo_secuencial_factura"/>
+                                <field name="ultimo_secuencial_gr"/>
+                                <field name="ultimo_secuencial_nc"/>
                             </group>
                         </group>
                     </page>

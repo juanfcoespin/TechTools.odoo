@@ -6,12 +6,9 @@ from odoo import models, fields
 class ResCompanyEc(models.Model):
     _inherit = 'res.company'
 
+    #info tributaria
     ruc = fields.Char(string="Ruc",
         help="Registro único de contribuyentes", size=13)
-    cod_establecimiento = fields.Char(string="Codigo Establecimiento",
-                                      default="001", size=3)
-    cod_punto_emision = fields.Char(string="Codigo Punto Emisión",
-                                      default="002", size=3)
     razon_social = fields.Char(string="Razón Social")
     obligado_llevar_contabilidad = fields.Selection(
         [
@@ -21,6 +18,16 @@ class ResCompanyEc(models.Model):
         string='Obligado a llevar contabilidad',
         default='NO'
     )
+    nro_contribuyente_especial = fields.Integer(string="Nro. Contribuyente Especial")
+    cod_establecimiento = fields.Char(string="Codigo Establecimiento",
+                                      default="001", size=3)
+    cod_punto_emision = fields.Char(string="Codigo Punto Emisión",
+                                    default="002", size=3)
+    ultimo_secuencial_factura = fields.Integer(string="Último secuencial factura", default=500)
+    ultimo_secuencial_gr = fields.Integer(string="Último secuencial guía de Remisión", default=500)
+    ultimo_secuencial_nc = fields.Integer(string="Último secuencial nota de crédito", default=500)
+
+    # facturación electrónica
     factura_electronica_ambiente = fields.Selection(
         [
             ('1', 'Pruebas'),
@@ -37,7 +44,7 @@ class ResCompanyEc(models.Model):
         string='Tipo de emisión',
         default='1'
     )
-    nro_contribuyente_especial = fields.Integer(string="Nro. Contribuyente Especial")
+
     certificado_digital = fields.Binary(string="Certificado Digital ext p12")
     document_name = fields.Char(string="Nombre Certificado")
     cert_pwd = fields.Char(string="Contraseña Certificado")

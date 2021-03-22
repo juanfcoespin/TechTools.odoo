@@ -213,7 +213,7 @@ class Factura(models.Model):
                 new_cr.close()
 
     def get_url_to_send_xml(self):
-        if self.company_id.factura_electronica_ambiente == 2:  # Produccion
+        if self.company_id.factura_electronica_ambiente == '2':  # Produccion
             ms = self.company_id.url_recepcion_documentos
         else:
             ms = self.company_id.url_recepcion_documentos_prueba  # Pruebas

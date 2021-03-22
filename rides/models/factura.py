@@ -145,7 +145,8 @@ class Factura(models.Model):
         '''
         url = self.get_url_to_send_xml()
         ride_path = self.company_id.electronic_docs_path
-        ride_path = common.get_ride_path(ride_path, self.company_id.name)
+        dbname = threading.current_thread().dbname
+        ride_path = common.get_ride_path(ride_path, dbname)
         # to no call algorithm to generate clave_acceso more than one time
         clave_acceso = self.clave_acceso
         if not self.pdf_generado:

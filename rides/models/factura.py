@@ -53,7 +53,8 @@ class Factura(models.Model):
     def set_clave_acceso(self):
         if not self.secuencial:
             self.company_id.ultimo_secuencial_factura = self.company_id.ultimo_secuencial_factura + 1
-            self.secuencial = str(self.company_id.ultimo_secuencial_factura).rjust(9, '0')
+            self.secuencial = str(self.company_id.ultimo_secuencial_factura).rjust(9,
+                                                                                   '0')
             self.num_factura = self.get_num_ride(self.secuencial)
         self.clave_acceso = self.get_clave_acceso('01', self.date)
 
@@ -136,7 +137,55 @@ class Factura(models.Model):
         task = threading.Thread(target=self.send_documents_by_mail, args=())
         task.start()
 
-    def enviar_sri(self):
+    def job_invoices_to_send_sri(self):
+        '''
+            check pull of invoices that need execute enviar_sri function
+        :return:
+        '''
+        url = self.get_url_to_send_xml()
+        ride_path = self.company_id.electronic_docs_path
+        dbname = threading.current_thread().dbname
+        ride_path = common.get_ride_path(ride_path, dbname)
+
+        invoices = self.env['account.move'].search([
+            ('state', '=', 'posted'),
+        ])
+        '''
+        invoices = self.env['account.move'].search([
+            '&', ('state', '=', 'posted'),
+            '|', ('pdf_generado', '=', 'False'),
+            ('email_enviado', '=', 'False'),
+            ('email_enviado', '=', 'False'),
+        ])
+        '''
+        for inv in invoices:
+            self.enviar_sri(inv, url, ride_path)
+
+    def enviar_sri(self, me=None, url=None, ride_path=None):
+        '''
+            - genera el pdf y el xml de la factura
+            - envia por correo al cliente
+            - envia al sri el xml firmado electrónicamente
+        :return:
+        '''
+        if me is None:
+            me = self
+        if url is None:
+            url = me.get_url_to_send_xml()
+        if ride_path is None:
+            ride_path = me.company_id.electronic_docs_path
+            dbname = threading.current_thread().dbname
+            ride_path = common.get_ride_path(ride_path, dbname)
+        # to no call algorithm to generate clave_acceso more than one time
+        clave_acceso = me.clave_acceso
+        if not me.pdf_generado:
+            me.generate_files(ride_path, clave_acceso)
+        if not me.email_enviado:
+            me.send_documents_by_mail()
+        if not me.enviado_al_sri:
+            me.send_xmlsigned_to_sri(url, ride_path, clave_acceso)
+
+    def enviar_sri_bk(self):
         '''
             - genera el pdf y el xml de la factura
             - envia por correo al cliente
@@ -173,45 +222,6 @@ class Factura(models.Model):
         id_factura = self.id
         template.send_mail(id_factura, force_send=True)
         self.email_enviado = True
-
-    def send_documents_by_mail3(self):
-
-        try:
-            with api.Environment.manage():
-
-                # you need to define environment as you can't use the self.env['']
-                # ctx = api.Environment(new_cr, uid, {})['res.users'].context_get()
-                new_cr = self.pool.cursor()
-                env = Environment(new_cr, self.env.uid, self.env.context)
-
-                template_id = env.ref('rides.email_template_FEL').id
-                template = env['mail.template'].browse(template_id)
-                id_factura = env['account.move'].id
-                template.send_mail(id_factura, force_send=True)
-                env['account.move'].email_enviado = True
-                new_cr.close()
-            # self.email_enviado = True
-        except:
-            if new_cr is not None:
-                new_cr.close()
-
-    def send_documents_by_mail2(self, dbname, uid):
-        new_cr = sql_db.db_connect(dbname).cursor()
-        try:
-            with api.Environment.manage():
-                # you need to define environment as you can't use the self.env['']
-                # ctx = api.Environment(new_cr, uid, {})['res.users'].context_get()
-                env = Environment(new_cr, uid, {})
-                template_id = env.ref('rides.email_template_FEL').id
-                template = env['mail.template'].browse(template_id)
-                id_factura = env['account.move'].id
-                template.send_mail(id_factura, force_send=True)
-                env['account.move'].email_enviado = True
-                new_cr.close()
-            # self.email_enviado = True
-        except:
-            if new_cr is not None:
-                new_cr.close()
 
     def get_url_to_send_xml(self):
         if self.company_id.factura_electronica_ambiente == '2':  # Produccion

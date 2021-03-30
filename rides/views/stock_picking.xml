@@ -5,12 +5,15 @@
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.view_picking_form"/>
         <field name="arch" type="xml">
-
+            <field name="name" position="after">
+                <field name="num_documento" readonly="1"/>
+            </field>
             <field name="backorder_id" position="after">
                 <field name="transportista_id"/>
                 <field name="placa_vehiculo"/>
                 <field name="punto_partida"/>
             </field>
+
             <xpath expr="/form/sheet/notebook/page/field[@name='move_ids_without_package']/tree/field[@name='product_uom']" position="after">
                 <field name="peso_producto"/>
                 <field name="peso_linea"/>
@@ -20,6 +23,20 @@
                     <field name="peso_total"/>
                     <field name="peso_total_qq"/>
                 </group>
+            </xpath>
+            <xpath expr="//notebook[last()]" position="inside">
+                <page string="Facturación Electrónica">
+                <group>
+                    <group>
+                        <field name="clave_acceso" readonly="1"/>
+                        <field name="pdf_generado"/>
+                        <field name="email_enviado"/>
+                        <field name="enviado_al_sri"/>
+                        <field name="resp_sri" readonly="1"/>
+                        <field name="autorizacion_sri" readonly="1"/>
+                    </group>
+                </group>
+            </page>
             </xpath>
         </field>
     </record>

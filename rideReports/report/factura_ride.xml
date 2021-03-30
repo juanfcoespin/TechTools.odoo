@@ -54,7 +54,7 @@
                                                 <td><h2>FACTURA</h2></td>
                                             </tr>
                                             <tr>
-                                                <td style="padding-top: 10px">No. <span t-field="o.num_factura"/></td>
+                                                <td style="padding-top: 10px">No. <span t-field="o.num_documento"/></td>
                                             </tr>
 
                                             <tr>
@@ -140,7 +140,14 @@
                                 </thead>
                                 <tbody>
                                     <tr t-foreach="o.invoice_line_ids" t-as="line">
-                                        <td><span t-field="line.product_id.barcode"/></td>
+                                         <td>
+                                            <t t-if="line.product_id.barcode">
+                                                <span t-field="line.product_id.barcode"/>
+                                            </t>
+                                            <t t-else="">
+                                                <span t-field="line.product_id.id"/>
+                                            </t>
+                                        </td>
                                         <td><span t-field="line.product_id"/></td>
                                         <td class="text-right"><span t-field="line.quantity"/></td>
                                         <td class="text-right"><span t-field="line.price_unit"/></td>

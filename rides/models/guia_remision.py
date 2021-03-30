@@ -7,6 +7,7 @@ class GuiaRemision(models.Model):
     _name = 'stock.picking'
     _inherit = ['stock.picking', 'rides.base']
 
+    clave_acceso = fields.Char(string="Clave de Acceso", compute="init_ride")
     peso_total = fields.Float(
         string="Total Peso (kg)",
         compute="get_total_peso"
@@ -15,12 +16,6 @@ class GuiaRemision(models.Model):
         string="Total Peso (qq)",
         compute="get_total_peso_qq"
     )
-    num_guia = fields.Char(
-        string="No.",
-        compute="get_num_guia"
-    )
-    secuencial = fields.Char(compute="get_secuencial_guia")
-    clave_acceso = fields.Char(compute="get_clave_acceso_guia")
     transportista_id = fields.Many2one("res.partner", string="Transportista")
     placa_vehiculo = fields.Char(
         string="Placa Vehículo",
@@ -28,15 +23,8 @@ class GuiaRemision(models.Model):
     )
     punto_partida = fields.Char("Punto de Partida"
                                 )
-
-    def get_secuencial_guia(self):
-        self.secuencial = self.get_secuencial(self.id)
-
-    def get_clave_acceso_guia(self):
-        self.clave_acceso = self.get_clave_acceso('06', self.id, self.date)
-
-    def get_num_guia(self):
-        self.num_guia = self.get_num_ride(self.id)
+    def init_ride(self):
+        self.clave_acceso = self.init_ride_and_get_clave_acceso('06', self.date)
 
     # peso en quintales
     def get_total_peso_qq(self):

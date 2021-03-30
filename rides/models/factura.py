@@ -19,15 +19,7 @@ _logger = logging.getLogger(__name__)
 class Factura(models.Model):
     _name = 'account.move'
     _inherit = ['account.move', 'rides.base']
-
-    num_factura = fields.Char(string="Num Factura")
-    fecha_autorizacion = fields.Datetime(
-        string="Fecha y Hora Autorización",
-        default=datetime.now()
-    )
-
-    secuencial = fields.Char(string="secuencial")
-    clave_acceso = fields.Char(compute="set_clave_acceso", string="Clave de Acceso")
+    clave_acceso = fields.Char(string="Clave de Acceso", compute="init_ride")
     total_discount = fields.Float(
         string="Total Descuento",
         compute="get_total_discount"
@@ -44,19 +36,9 @@ class Factura(models.Model):
         string="Total sin descuento",
         compute="get_total_sin_descuento"
     )
-    enviado_al_sri = fields.Boolean(string="Enviado al SRI")
-    pdf_generado = fields.Boolean(string="Pdf Generado")
-    email_enviado = fields.Boolean(string="Email enviado al cliente")
-    resp_sri = fields.Char(string="Respuesta SRI")
-    autorizacion_sri = fields.Char(string="Estado autorización SRI")
 
-    def set_clave_acceso(self):
-        if not self.secuencial:
-            self.company_id.ultimo_secuencial_factura = self.company_id.ultimo_secuencial_factura + 1
-            self.secuencial = str(self.company_id.ultimo_secuencial_factura).rjust(9,
-                                                                                   '0')
-            self.num_factura = self.get_num_ride(self.secuencial)
-        self.clave_acceso = self.get_clave_acceso('01', self.date)
+    def init_ride(self):
+        self.clave_acceso = self.init_ride_and_get_clave_acceso('01', self.date)
 
     def consultar_estado_autorizacion(self):
         if self.resp_sri is not None and self.enviado_al_sri:
@@ -222,20 +204,10 @@ class Factura(models.Model):
         id_factura = self.id
         template.send_mail(id_factura, force_send=True)
         self.email_enviado = True
-
-    def get_url_to_send_xml(self):
-        if self.company_id.factura_electronica_ambiente == '2':  # Produccion
-            ms = self.company_id.url_recepcion_documentos
-        else:
-            ms = self.company_id.url_recepcion_documentos_prueba  # Pruebas
-        if ms is None:
-            raise Exception('Debe registrar las Urls de comunicación con el SRI')
-        return ms
-
-    def call_ws_sri(self, url, xml):
+    '''def call_ws_sri(self, url, xml):
         client = Client(url)
         result = client.service.validarComprobante(xml)
-        self.save_resp_sri(result)
+        self.save_resp_sri(result)'''
 
     def get_signed_xml_mock(self):
         template_path = os.path.dirname(__file__)

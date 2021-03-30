@@ -53,7 +53,7 @@
                                                 <td><h2>GUIA DE REMISIÓN</h2></td>
                                             </tr>
                                             <tr>
-                                                <td style="padding-top: 10px">No. <span t-field="o.num_guia"/></td>
+                                                <td style="padding-top: 10px">No. <span t-field="o.num_documento"/></td>
                                             </tr>
                                             <tr>
                                                 <td style="padding-top: 10px">NÚMERO DE AUTORIZACIÓN</td>
@@ -128,7 +128,14 @@
                             </thead>
                             <tbody>
                                 <tr t-foreach="o.move_ids_without_package" t-as="line">
-                                    <td><span t-field="line.product_id.barcode"/></td>
+                                    <td>
+                                        <t t-if="line.product_id.barcode">
+                                            <span t-field="line.product_id.barcode"/>
+                                        </t>
+                                        <t t-else="">
+                                            <span t-field="line.product_id.id"/>
+                                        </t>
+                                    </td>
                                     <td><span t-field="line.product_id"/></td>
                                     <td class="text-right"><span t-field="line.product_uom_qty"/></td>
                                     <td class="text-right"><span t-field="line.product_id.weight"/></td>

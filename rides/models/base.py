@@ -37,12 +37,24 @@ class Ride2(models.AbstractModel):
             07 Comprobante de Retención
         :return:
         '''
+        if self.es_factura_provedor(cod_tipo_documento):
+            return
         if not self.secuencial:
             ultimo_secuencial=self.get_ultimo_secuencia(cod_tipo_documento)
             self.secuencial = str(ultimo_secuencial).rjust(9, '0')
         if not self.num_documento:
             self.num_documento = self.get_num_ride(self.secuencial)
         return self.get_clave_acceso(cod_tipo_documento, ride_date)
+
+    def es_factura_provedor(self, ride_type):
+        '''
+            la factura de proveedor o factura de compra no debe generar secuencial
+        :return:
+        '''
+        # en odoo account_move es la misma tabla para factura de venta y compra
+        if ride_type == '01' and self.move_type == 'in_invoice':
+            return True
+        return False
 
     def get_ultimo_secuencia(self, ride_type):
         if ride_type == '01':

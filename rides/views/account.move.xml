@@ -6,10 +6,12 @@
         <field name="inherit_id" ref="account.view_move_form"/>
         <field name="arch" type="xml">
             <button name="action_post" position="after">
+                <!-- Que no se vea para factura de proveedores -->
                 <button name="enviar_sri" type="object" string="Enviar al SRI"
+                        attrs="{'invisible':[('move_type','=','in_invoice')]}"
                         class="btn-primary"/>
                 <button name="consultar_estado_autorizacion"
-                        attrs="{'invisible': [('resp_sri', '=', 'none')]}"
+                        attrs="{'invisible':[('move_type','=','in_invoice')]}"
                         type="object"
                         string="Estado Autorización en el SRI?"
                         class="btn-primary"/>
@@ -22,7 +24,9 @@
             </field>
             <field name="name" position="after">
                 <group>
-                    <field name="num_documento" readonly="1"/>
+                    <field name="num_documento"
+                        attrs="{'readonly':[('move_type','=','out_invoice')]}"
+                    />
                 </group>
             </field>
             <xpath expr="//notebook[last()]" position="inside">

@@ -8,7 +8,17 @@
     """,
 
     'description': """
+        Funcionalidades:
+        07Abr2021:
+        - Oculta botones de iteracción con el SRI para factura de proveedores
+        - Bloquea la gestión de secuenciales, y claves de acceso para factura de proveedores
         - Guía de Remisión 
+        
+        Mar2021:
+        - Firma electronicamente XMLs de rides
+        - Genera layouts de impresion para factura y guia de remisión
+        - Envía XML de facturas al SRI en ambiente de pruebas y producción
+         
     """,
 
     'author': "TechTools",

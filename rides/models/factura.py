@@ -204,10 +204,7 @@ class Factura(models.Model):
         id_factura = self.id
         template.send_mail(id_factura, force_send=True)
         self.email_enviado = True
-    '''def call_ws_sri(self, url, xml):
-        client = Client(url)
-        result = client.service.validarComprobante(xml)
-        self.save_resp_sri(result)'''
+
 
     def get_signed_xml_mock(self):
         template_path = os.path.dirname(__file__)

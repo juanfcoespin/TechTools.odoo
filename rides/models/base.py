@@ -20,6 +20,7 @@ class Ride2(models.AbstractModel):
     secuencial = fields.Char(string="secuencial")
     num_documento = fields.Char(string="Num Documento")
     enviado_al_sri = fields.Boolean(string="Enviado al SRI")
+    procesando_fec = fields.Boolean(string="Enviado al SRI", default=False)
     pdf_generado = fields.Boolean(string="Pdf Generado")
     email_enviado = fields.Boolean(string="Email enviado al cliente")
     resp_sri = fields.Char(string="Respuesta SRI")

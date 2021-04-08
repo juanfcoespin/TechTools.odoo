@@ -131,17 +131,14 @@ class Factura(models.Model):
 
         invoices = self.env['account.move'].search([
             ('state', '=', 'posted'),
+            ('procesando_fec', '!=', 't'),
+            ('move_type', '=', 'out_invoice'),
+            '|', ('enviado_al_sri', '!=', 't'), ('email_enviado', '!=', 't'), ('pdf_generado', '!=', 't')
         ])
-        '''
-        invoices = self.env['account.move'].search([
-            '&', ('state', '=', 'posted'),
-            '|', ('pdf_generado', '=', 'False'),
-            ('email_enviado', '=', 'False'),
-            ('email_enviado', '=', 'False'),
-        ])
-        '''
-        for inv in invoices:
-            self.enviar_sri(inv, url, ride_path)
+
+        if invoices:
+            for inv in invoices:
+                self.enviar_sri(inv, url, ride_path)
 
     def enviar_sri(self, me=None, url=None, ride_path=None):
         '''
@@ -150,42 +147,26 @@ class Factura(models.Model):
             - envia al sri el xml firmado electrónicamente
         :return:
         '''
-        if me is None:
-            me = self
-        if url is None:
-            url = me.get_url_to_send_xml()
-        if ride_path is None:
-            ride_path = me.company_id.electronic_docs_path
-            dbname = threading.current_thread().dbname
-            ride_path = common.get_ride_path(ride_path, dbname)
-        # to no call algorithm to generate clave_acceso more than one time
-        clave_acceso = me.clave_acceso
-        if not me.pdf_generado:
-            me.generate_files(ride_path, clave_acceso)
-        if not me.email_enviado:
-            me.send_documents_by_mail()
-        if not me.enviado_al_sri:
-            me.send_xmlsigned_to_sri(url, ride_path, clave_acceso)
-
-    def enviar_sri_bk(self):
-        '''
-            - genera el pdf y el xml de la factura
-            - envia por correo al cliente
-            - envia al sri el xml firmado electrónicamente
-        :return:
-        '''
-        url = self.get_url_to_send_xml()
-        ride_path = self.company_id.electronic_docs_path
-        dbname = threading.current_thread().dbname
-        ride_path = common.get_ride_path(ride_path, dbname)
-        # to no call algorithm to generate clave_acceso more than one time
-        clave_acceso = self.clave_acceso
-        if not self.pdf_generado:
-            self.generate_files(ride_path, clave_acceso)
-        if not self.email_enviado:
-            self.send_documents_by_mail()
-        if not self.enviado_al_sri:
-            self.send_xmlsigned_to_sri(url, ride_path, clave_acceso)
+        try:
+            if me is None:
+                me = self
+            me.procesando_fec = True
+            if url is None:
+                url = me.get_url_to_send_xml()
+            if ride_path is None:
+                ride_path = me.company_id.electronic_docs_path
+                dbname = threading.current_thread().dbname
+                ride_path = common.get_ride_path(ride_path, dbname)
+            # to no call algorithm to generate clave_acceso more than one time
+            clave_acceso = self.init_ride_and_get_clave_acceso('01', me.date)
+            if not me.pdf_generado:
+                self.generate_files(ride_path, clave_acceso)
+            if not me.email_enviado:
+                self.send_documents_by_mail()
+            if not me.enviado_al_sri:
+                self.send_xmlsigned_to_sri(url, ride_path, clave_acceso)
+        except:
+            me.procesando_fec = False
 
     def send_xmlsigned_to_sri(self, url, ride_path, clave_acceso):
         try:

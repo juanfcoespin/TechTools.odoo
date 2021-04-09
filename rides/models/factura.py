@@ -109,31 +109,28 @@ class Factura(models.Model):
         xml_signer.sign_xml(str_xml,
                             os.path.join(xml_path, xml_filename))
 
-    def enviar_sri2(self):
-        self.send_documents_by_mail()
-
-    def enviar_sri3(self):
-        dbname = threading.current_thread().dbname
-        uid = SUPERUSER_ID
-        env_args = {'uid': uid, 'db': dbname}
-        task = threading.Thread(target=self.send_documents_by_mail, args=())
-        task.start()
-
-    def job_invoices_to_send_sri(self):
+    def _job_invoices_to_send_sri(self):
         '''
             check pull of invoices that need execute enviar_sri function
         :return:
         '''
         url = self.get_url_to_send_xml()
-        ride_path = self.company_id.electronic_docs_path
-        dbname = threading.current_thread().dbname
+        _logger.debug(url)
+        # ride_path = self.company_id.electronic_docs_path
+        ride_path = '/Users/mac/Dropbox/TechTools/documentosEmpresa/comprobantesElectronicos'
+        _logger.debug(ride_path)
+        # dbname = threading.current_thread().dbname
+        dbname = 'devTT'
+        _logger.debug(dbname)
         ride_path = common.get_ride_path(ride_path, dbname)
+
+        _logger.debug(ride_path)
 
         invoices = self.env['account.move'].search([
             ('state', '=', 'posted'),
-            ('procesando_fec', '!=', 't'),
+            ('procesando_fec', '!=', True), # para evitar que se procese mas de una vez la misma factura
             ('move_type', '=', 'out_invoice'),
-            '|', ('enviado_al_sri', '!=', 't'), ('email_enviado', '!=', 't'), ('pdf_generado', '!=', 't')
+            '|', ('enviado_al_sri', '!=', True), ('email_enviado', '!=', True), ('pdf_generado', '!=', True)
         ])
 
         if invoices:
@@ -150,7 +147,9 @@ class Factura(models.Model):
         try:
             if me is None:
                 me = self
+
             me.procesando_fec = True
+            self.env.cr.commit()
             if url is None:
                 url = me.get_url_to_send_xml()
             if ride_path is None:
@@ -158,14 +157,18 @@ class Factura(models.Model):
                 dbname = threading.current_thread().dbname
                 ride_path = common.get_ride_path(ride_path, dbname)
             # to no call algorithm to generate clave_acceso more than one time
+            _logger.debug(ride_path)
             clave_acceso = self.init_ride_and_get_clave_acceso('01', me.date)
+            _logger.debug(clave_acceso)
             if not me.pdf_generado:
                 self.generate_files(ride_path, clave_acceso)
             if not me.email_enviado:
                 self.send_documents_by_mail()
             if not me.enviado_al_sri:
                 self.send_xmlsigned_to_sri(url, ride_path, clave_acceso)
-        except:
+            me.procesando_fec = False
+        except Exception as e:
+            _logger.debug('Error al enviar la factura al SRI:' + str(e))
             me.procesando_fec = False
 
     def send_xmlsigned_to_sri(self, url, ride_path, clave_acceso):
@@ -185,7 +188,6 @@ class Factura(models.Model):
         id_factura = self.id
         template.send_mail(id_factura, force_send=True)
         self.email_enviado = True
-
 
     def get_signed_xml_mock(self):
         template_path = os.path.dirname(__file__)

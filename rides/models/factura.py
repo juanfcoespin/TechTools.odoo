@@ -179,8 +179,8 @@ class Factura(models.Model):
             result = client.service.validarComprobante(xml)
             self.resp_sri = result
             self.enviado_al_sri = True
-        except:
-            self.resp_sri = "El Servicio Web del Sri no está disponible en este momento"
+        except Exception as e:
+            self.resp_sri = "El Servicio Web del Sri no está disponible en este momento. Error:"+str(e)
 
     def send_documents_by_mail(self):
         template_id = self.env.ref('rides.email_template_FEL').id

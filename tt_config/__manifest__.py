@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "TT_Config",
+    'name': "TechTools - Configuraciones",
 
     'summary': """
         Configuraciones en datos maestros""",
@@ -22,5 +22,6 @@
     'data': [
         # 'security/ir.model.access.csv',
         'views/inventario_conf_view.xml',
+        "security/ir.model.access.csv",
     ],
 }

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_inventario_conf" model="ir.ui.view">
+            <field name="name">Actualizar Costo Productos</field>
+            <field name="model">tt_config.inventario</field>
+            <field name="arch" type="xml">
+                <form>
+                     <div id="product_settings_update_cost"
+                     class="col-12 col-lg-6 o_setting_box"
+                     title="Update Cost of products">
+                        <div class="o_setting_right_pane">
+                            <div class="text-muted">
+                                Actualizar costos en productos con costo cero
+                            </div>
+                            <div class="content-group">
+                                <div class="mt16">
+                                    <label for="cost_type"/>
+                                    <field name="cost_type" class="o_light_label" widget="radio"/>
+                                </div>
+                                <button name="update_product_cost" type="object"
+                                    string="Actualizar Costo Productos" class="btn-primary"/>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="action_inventario_conf" model="ir.actions.act_window">
+            <field name="type">ir.actions.act_window</field>
+            <field name="name">Configuraciones adicionales de inventario</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="res_model">tt_config.inventario</field>
+            <field name="view_id" ref="tt_config.view_inventario_conf"/>
+        </record>
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.stock.update.cost</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="stock.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@id='manage_product_packaging']" position="after">
+                    <div id="product_settings_update_cost"
+                         class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_right_pane">
+                            <div class="text-muted">
+                                Actualizar costos en productos con costo cero
+                            </div>
+                            <div class="content-group">
+                                <button name="%(tt_config.action_inventario_conf)d" string="Actualizar Costos" type="action" class="oe_link" icon="fa-arrow-right"/>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
+

@@ -5,9 +5,9 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-class InventarioConfig(models.TransientModel):
-    _name = 'res.config.settings'
-    _inherit = ['res.config.settings']
+class InventarioConfig2(models.Model):
+    _name = 'tt_config.inventario'
+    _description = 'Configuraciones adicionales de inventario'
     cost_type = fields.Selection(
         string="Tipo de costo",
         selection=[
@@ -19,14 +19,7 @@ class InventarioConfig(models.TransientModel):
         change_default=True,
         default_model='product.template'
     )
-    '''
-    default_invoice_policy = fields.Selection([
-        ('order', 'Invoice what is ordered'),
-        ('delivery', 'Invoice what is delivered')
-    ], 'Invoicing Policy',
-        default='delivery',
-        default_model='product.template')
-    '''
+
     def update_product_cost(self):
         try:
             if self.cost_type and self.cost_type != 'nd':
@@ -42,7 +35,7 @@ class InventarioConfig(models.TransientModel):
                 raise exceptions.UserError('Debe seleccionar el método de costeo')
         except Exception as e:
             msg = str(e)
-            raise exceptions.UserError(msg)
+            raise exceptions.UserError('Error:\n'+msg)
 
     def get_last_purchase_price_by_product(self, id_product):
         # por defecto trae la orden mas reciente
@@ -53,7 +46,7 @@ class InventarioConfig(models.TransientModel):
 
     def get_avg_purchase_price_by_product(self, id_product):
         order_lines = self.env["purchase.order.line"].search([("product_id.id", "=", id_product)])
-        if order_lines and order_lines.id: #si hay ordenes de compra
+        if order_lines and len(order_lines) > 0: #si hay ordenes de compra
             sum_prices = 0
             num_orders = 0
             for order in order_lines:

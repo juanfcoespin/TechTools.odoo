@@ -1,3 +1,2 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_rides_guia_remision,access_rides_guia_remision,model_rides_guia_remision,base.group_user,1,1,1,1
-
+access_tt_config_inventario_all,access_tt_config_inventario_all,tt_config.inventario,base.group_user,1,1,1,1

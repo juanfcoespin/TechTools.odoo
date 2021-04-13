@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import fields, models, api, sql_db, SUPERUSER_ID
+from odoo import fields, models, api, exceptions, sql_db, SUPERUSER_ID
 from datetime import datetime
 from ..utils.xml.xml_doc import XmlDoc
 from ..utils.signP12.signXML import SignXML
@@ -36,6 +36,18 @@ class Factura(models.Model):
         string="Total sin descuento",
         compute="get_total_sin_descuento"
     )
+
+
+    @api.constrains('num_documento')
+    def check_uniq_num_factura(self):
+        fact_num = self.num_documento
+        facturas_existentes=self.env['account.move'].\
+            search([('num_documento', '=', self.num_documento), ('move_type', '=', 'out_invoice')])
+        if len(facturas_existentes) > 1:
+            raise exceptions.UserError('Ya existe la factura con el numero ' + self.num_documento +
+                                       '\n Por favor seleccione otro número')
+
+
 
     def init_ride(self):
         self.clave_acceso = self.init_ride_and_get_clave_acceso('01', self.date)

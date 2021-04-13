@@ -44,7 +44,7 @@ class Factura(models.Model):
         facturas_existentes=self.env['account.move'].\
             search([('num_documento', '=', self.num_documento), ('move_type', '=', 'out_invoice')])
         if len(facturas_existentes) > 1:
-            raise exceptions.UserError('Ya existe la factura con el numero ' + self.num_documento +
+            raise exceptions.UserError('Ya existe la factura con el número ' + self.num_documento +
                                        '\n Por favor seleccione otro número')
 
 

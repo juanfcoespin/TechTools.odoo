@@ -8,7 +8,7 @@ from OpenSSL import crypto
 # pip3 install signxml
 from lxml import etree
 from lxml import etree as lxml_ET
-from signxml import XMLSigner
+from signxml import XMLSigner, XMLVerifier, methods
 from .. import common
 
 
@@ -52,7 +52,13 @@ class SignXML:
         ET.register_namespace("ds", "http://www.w3.org/2000/09/xmldsig#")
         xml2 = str_xml.encode('utf -8')
         root = etree.fromstring(xml2)
-        signed_root = XMLSigner().sign(root, key=key, cert=cert)
+        # signed_root = XMLSigner().sign(root, key=key, cert=cert)
+        try:
+            signed_root = XMLSigner(method=methods.enveloped, signature_algorithm='rsa-sha1', digest_algorithm="sha1").sign(root, key=key, cert=cert)
+            signed_data = etree.tostring(signed_root)
+            verified_data = XMLVerifier().verify(signed_data, x509_cert=cert)
+        except Exception as e:
+            msg = str(e)
         data_serialized = lxml_ET.tostring(signed_root)
         data_parsed = ET.fromstring(data_serialized)
         tree = ET.ElementTree(data_parsed)

@@ -46,9 +46,6 @@ class Factura(models.Model):
         if len(facturas_existentes) > 1:
             raise exceptions.UserError('Ya existe la factura con el número ' + self.num_documento +
                                        '\n Por favor seleccione otro número')
-
-
-
     def init_ride(self):
         self.clave_acceso = self.init_ride_and_get_clave_acceso('01', self.date)
 
@@ -60,7 +57,9 @@ class Factura(models.Model):
                 url = self.company_id.url_autorizacion_documentos_prueba  # Pruebas
             client = Client(url)
             result = client.service.autorizacionComprobante(self.clave_acceso)
-            estado = result.autorizaciones.autorizacion[0].estado
+            if result and result.autorizaciones and result.autorizaciones.autorizacion and len(result.autorizaciones.autorizacion)>0:
+                estado = result.autorizaciones.autorizacion[0].estado
+                self.autorizacion_sri = estado
             self.autorizacion_sri = result
         else:
             self.autorizacion_sri = "Primero debe enviarse el documento al SRI"
@@ -186,13 +185,15 @@ class Factura(models.Model):
     def send_xmlsigned_to_sri(self, url, ride_path, clave_acceso):
         try:
             client = Client(url)
-            xml = self.get_signed_xml(os.path.join(ride_path, 'xml'),
-                                      clave_acceso + '.xml')
+            xml = self.get_signed_xml(os.path.join(ride_path, 'xml'),clave_acceso + '.xml')
             result = client.service.validarComprobante(xml)
             self.resp_sri = result
             self.enviado_al_sri = True
         except Exception as e:
             self.resp_sri = "El Servicio Web del Sri no está disponible en este momento. Error:"+str(e)
+
+
+
 
     def send_documents_by_mail(self):
         template_id = self.env.ref('rides.email_template_FEL').id
@@ -200,12 +201,6 @@ class Factura(models.Model):
         id_factura = self.id
         template.send_mail(id_factura, force_send=True)
         self.email_enviado = True
-
-    def get_signed_xml_mock(self):
-        template_path = os.path.dirname(__file__)
-        env = Environment(loader=FileSystemLoader(template_path))
-        xml_fact = env.get_template('example.xml')
-        return xml_fact.render().encode('utf-8')
 
     def get_signed_xml(self, ride_path, xml_filename):
         env = Environment(loader=FileSystemLoader(ride_path))

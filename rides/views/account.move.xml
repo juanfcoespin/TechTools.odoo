@@ -24,9 +24,10 @@
             </field>
             <field name="name" position="after">
                 <group>
-                    <field name="num_documento"
+                    <!--field name="num_documento"
                         attrs="{'readonly':[('move_type','=','out_invoice')]}"
-                    />
+                    /-->
+                    <field name="num_documento"/>
                 </group>
             </field>
             <xpath expr="//notebook[last()]" position="inside">

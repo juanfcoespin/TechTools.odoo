@@ -42,13 +42,13 @@ class Factura(models.Model):
 
     def consultar_estado_autorizacion(self):
         if self.resp_sri is not None and self.enviado_al_sri:
-            if self.company_id.factura_electronica_ambiente == 2:  # Produccion
+            if self.company_id.factura_electronica_ambiente == '2':  # Produccion
                 url = self.company_id.url_autorizacion_documentos
             else:
                 url = self.company_id.url_autorizacion_documentos_prueba  # Pruebas
             client = Client(url)
             result = client.service.autorizacionComprobante(self.clave_acceso)
-            # estado = result.autorizaciones.autorizacion[0].estado
+            estado = result.autorizaciones.autorizacion[0].estado
             self.autorizacion_sri = result
         else:
             self.autorizacion_sri = "Primero debe enviarse el documento al SRI"

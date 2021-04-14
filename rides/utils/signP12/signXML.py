@@ -10,6 +10,8 @@ from lxml import etree
 from lxml import etree as lxml_ET
 from signxml import XMLSigner, XMLVerifier, methods
 from .. import common
+import base64
+from .xades.xades import Xades
 
 
 class SignXML:
@@ -20,14 +22,18 @@ class SignXML:
         self.p12 = self.get_p12()
 
     def get_p12(self):
+        cert_path = self.get_p12_path()
+        with open(cert_path, 'rb') as file:
+            return crypto.load_pkcs12(file.read(), self.pwd)
+
+    def get_p12_path(self):
         if self.cert is None or self.cert_name is None:
             raise Exception('No se ha subido el cerfificado digital de firma electronica')
         local_path = os.path.dirname(__file__)
         cert_path = os.path.join(local_path, self.cert_name)
         if not path.exists(cert_path):
             common.create_file_from_binary(self.cert, True)
-        with open(cert_path, 'rb') as file:
-            return crypto.load_pkcs12(file.read(), self.pwd)
+        return cert_path
 
     def get_p12_from_path(self, path_p12):
         with open(path_p12, 'rb') as file:
@@ -47,6 +53,39 @@ class SignXML:
 
     # return xml file path signed
     def sign_xml(self, str_xml, output_filename):
+
+        xades = Xades()
+        file_pk12 = self.get_p12_path()
+        b_p12_path = self.get_b_base64(self.get_p12_path())
+        b_pwd = self.get_b_base64(self.pwd)
+        try:
+            signed_document = xades.sign(str_xml, file_pk12, self.pwd)
+        except Exception as e:
+            msg = str(e)
+
+        # ------------------------
+        cert = self.get_pem_certificate()
+        key = self.get_pem_private_key()
+        ET.register_namespace("ds", "http://www.w3.org/2000/09/xmldsig#")
+        xml2 = str_xml.encode('utf -8')
+        root = etree.fromstring(xml2)
+        # signed_root = XMLSigner().sign(root, key=key, cert=cert)
+        try:
+            signed_root = XMLSigner(method=methods.enveloped, signature_algorithm='rsa-sha1', digest_algorithm="sha1").sign(root, key=key, cert=cert)
+            signed_data = etree.tostring(signed_root)
+            verified_data = XMLVerifier().verify(signed_data, x509_cert=cert)
+        except Exception as e:
+            msg = str(e)
+        data_serialized = lxml_ET.tostring(signed_root)
+        data_parsed = ET.fromstring(data_serialized)
+        tree = ET.ElementTree(data_parsed)
+        tree.write(output_filename)
+
+    def get_b_base64(self, str_msg):
+        message_bytes = str_msg.encode('ascii')
+        return base64.b64encode(message_bytes)
+
+    def sign_xml_bk(self, str_xml, output_filename):
         cert = self.get_pem_certificate()
         key = self.get_pem_private_key()
         ET.register_namespace("ds", "http://www.w3.org/2000/09/xmldsig#")

@@ -7,11 +7,8 @@ from ..utils import common
 import os
 from jinja2 import Environment, FileSystemLoader
 from zeep import Client
-from os import path
 import logging
-import base64
 import threading
-from requests import request
 
 _logger = logging.getLogger(__name__)
 

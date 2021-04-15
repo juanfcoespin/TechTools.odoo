@@ -93,13 +93,8 @@ class Factura(models.Model):
             detalles.append(detalle)
         return detalles
 
-    def generate_files(self, ride_path, clave_acceso):
-        xml_path = common.get_ride_path(ride_path, 'xml')
-        self.sign_and_safe_xml_factura(xml_path, clave_acceso + '.xml')
 
-        pdf_path = common.get_ride_path(ride_path, 'pdf')
-        self.safe_pdf_factura(pdf_path, clave_acceso + '.pdf')
-        self.pdf_generado = True
+
 
     def safe_pdf_factura(self, pdf_path, pdf_filename):
         pdf_binary = common.get_pdf_report_binary(self, 'rides.factura')
@@ -168,8 +163,14 @@ class Factura(models.Model):
             _logger.debug(ride_path)
             clave_acceso = self.init_ride_and_get_clave_acceso('01', me.date)
             _logger.debug(clave_acceso)
+            if not me.xml_generado:
+                xml_path = common.get_ride_path(ride_path, 'xml')
+                self.sign_and_safe_xml_factura(xml_path, clave_acceso + '.xml')
+                self.xml_generado = True
             if not me.pdf_generado:
-                self.generate_files(ride_path, clave_acceso)
+                pdf_path = common.get_ride_path(ride_path, 'pdf')
+                self.safe_pdf_factura(pdf_path, clave_acceso + '.pdf')
+                self.pdf_generado = True
             if not me.email_enviado:
                 self.send_documents_by_mail()
             if not me.enviado_al_sri:
@@ -188,10 +189,6 @@ class Factura(models.Model):
             self.enviado_al_sri = True
         except Exception as e:
             self.resp_sri = "El Servicio Web del Sri no está disponible en este momento. Error:"+str(e)
-
-
-
-
     def send_documents_by_mail(self):
         template_id = self.env.ref('rides.email_template_FEL').id
         template = self.env['mail.template'].browse(template_id)

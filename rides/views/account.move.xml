@@ -36,6 +36,7 @@
                     <group>
                         <field name="clave_acceso" readonly="1"/>
                         <field name="pdf_generado"/>
+                        <field name="xml_generado"/>
                         <field name="email_enviado"/>
                         <field name="enviado_al_sri"/>
                         <field name="resp_sri" readonly="1"/>

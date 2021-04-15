@@ -12,6 +12,9 @@ from signxml import XMLSigner, XMLVerifier, methods
 from .. import common
 import base64
 from .xades.xades import Xades
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class SignXML:
@@ -53,39 +56,16 @@ class SignXML:
 
     # return xml file path signed
     def sign_xml(self, str_xml, output_filename):
-
         xades = Xades()
         file_pk12 = self.get_p12_path()
-        b_p12_path = self.get_b_base64(self.get_p12_path())
-        b_pwd = self.get_b_base64(self.pwd)
-        try:
-            signed_document = xades.sign(str_xml, file_pk12, self.pwd)
-        except Exception as e:
-            msg = str(e)
-
-        # ------------------------
-        cert = self.get_pem_certificate()
-        key = self.get_pem_private_key()
-        ET.register_namespace("ds", "http://www.w3.org/2000/09/xmldsig#")
-        xml2 = str_xml.encode('utf -8')
-        root = etree.fromstring(xml2)
-        # signed_root = XMLSigner().sign(root, key=key, cert=cert)
-        try:
-            signed_root = XMLSigner(method=methods.enveloped, signature_algorithm='rsa-sha1', digest_algorithm="sha1").sign(root, key=key, cert=cert)
-            signed_data = etree.tostring(signed_root)
-            verified_data = XMLVerifier().verify(signed_data, x509_cert=cert)
-        except Exception as e:
-            msg = str(e)
-        data_serialized = lxml_ET.tostring(signed_root)
-        data_parsed = ET.fromstring(data_serialized)
+        signed_document = xades.sign(str_xml, file_pk12, self.pwd)
+        ET.register_namespace('ds', 'http://www.w3.org/2000/09/xmldsig#')
+        ET.register_namespace('etsi', 'http://uri.etsi.org/01903/v1.3.2#')
+        data_parsed = ET.fromstring(signed_document)
         tree = ET.ElementTree(data_parsed)
         tree.write(output_filename)
 
-    def get_b_base64(self, str_msg):
-        message_bytes = str_msg.encode('ascii')
-        return base64.b64encode(message_bytes)
-
-    def sign_xml_bk(self, str_xml, output_filename):
+    def sign_xmlbk(self, str_xml, output_filename):
         cert = self.get_pem_certificate()
         key = self.get_pem_private_key()
         ET.register_namespace("ds", "http://www.w3.org/2000/09/xmldsig#")

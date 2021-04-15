@@ -24,6 +24,7 @@ class Ride2(models.AbstractModel):
     # para evitar que se procese mas de una vez el mismo documento electronico
     procesando_fec = fields.Boolean(string="Procesando FEC", default=False)
     pdf_generado = fields.Boolean(string="Pdf Generado")
+    xml_generado = fields.Boolean(string="Xml Generado")
     email_enviado = fields.Boolean(string="Email enviado al cliente")
     resp_sri = fields.Char(string="Respuesta SRI")
     autorizacion_sri = fields.Char(string="Estado autorización SRI")

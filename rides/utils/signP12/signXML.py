@@ -59,11 +59,9 @@ class SignXML:
         xades = Xades()
         file_pk12 = self.get_p12_path()
         signed_document = xades.sign(str_xml, file_pk12, self.pwd)
-        ET.register_namespace('ds', 'http://www.w3.org/2000/09/xmldsig#')
-        ET.register_namespace('etsi', 'http://uri.etsi.org/01903/v1.3.2#')
-        data_parsed = ET.fromstring(signed_document)
-        tree = ET.ElementTree(data_parsed)
-        tree.write(output_filename)
+        str_signed_xml = signed_document.decode('utf-8')
+        with open(output_filename, "w") as text_file:
+            text_file.write(str_signed_xml)
 
     def sign_xmlbk(self, str_xml, output_filename):
         cert = self.get_pem_certificate()

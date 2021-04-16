@@ -54,10 +54,11 @@ class Factura(models.Model):
                 url = self.company_id.url_autorizacion_documentos_prueba  # Pruebas
             client = Client(url)
             result = client.service.autorizacionComprobante(self.clave_acceso)
-            if result and result.autorizaciones and result.autorizaciones.autorizacion and len(result.autorizaciones.autorizacion)>0:
+            if result and result.autorizaciones and result.autorizaciones.autorizacion and len(result.autorizaciones.autorizacion) > 0:
                 estado = result.autorizaciones.autorizacion[0].estado
                 self.autorizacion_sri = estado
-            self.autorizacion_sri = result
+            else:
+                self.autorizacion_sri = result
         else:
             self.autorizacion_sri = "Primero debe enviarse el documento al SRI"
 
@@ -92,9 +93,6 @@ class Factura(models.Model):
             detalle.update({'impuestos': impuestos})
             detalles.append(detalle)
         return detalles
-
-
-
 
     def safe_pdf_factura(self, pdf_path, pdf_filename):
         pdf_binary = common.get_pdf_report_binary(self, 'rides.factura')

@@ -5,9 +5,9 @@ TechTools Localización de Odoo para Ecuador
 
 Este proyecto crea una localización para ecuador soportado para la version 14 Comunity de Odoo.
 
-version 1.0 no soporta facturación electrónica
-version 1.2 soporta facturacion electrónica (en desarrollo)
-version 1.2.2 Factura electronicamente de manera correcta 
+- version 1.0 no soporta facturación electrónica
+- version 1.2 soporta facturacion electrónica (en desarrollo)
+- version 1.2.2 Factura electronicamente de manera correcta 
 
 Puntos a tener en cuenta en la implementación:
 ---------------------------------------------

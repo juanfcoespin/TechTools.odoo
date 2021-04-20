@@ -9,6 +9,23 @@ def remove_chars(chars_to_remove, str_in):
     return str_in
 
 
+def clear_tildes(me):
+    me = me.replace('á', 'a')
+    me = me.replace('é', 'e')
+    me = me.replace('í', 'i')
+    me = me.replace('ó', 'o')
+    me = me.replace('ú', 'u')
+    me = me.replace('ñ', 'n')
+
+    me = me.replace('Á', 'A')
+    me = me.replace('É', 'E')
+    me = me.replace('Í', 'I')
+    me = me.replace('Ó', 'O')
+    me = me.replace('Ú', 'U')
+    me = me.replace('Ñ', 'Ñ')
+    return me
+
+
 def create_file_from_binary(binary, file_path, decode_to64=False):
     buffer = open(file_path, "wb")
     if decode_to64:

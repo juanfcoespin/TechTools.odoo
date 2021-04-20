@@ -13,7 +13,7 @@ class Xades(object):
         Metodo que aplica la firma digital al XML
         Ejecutando una libreria .jar de JAVA
         """
-        jar_path = os.path.join('publish', 'SignXades.jar')
+        jar_path = os.path.join('jar', 'SignXades.jar')
         absolute_jar_path = os.path.join(os.path.dirname(__file__), jar_path)
         firma_path = self.get_64bits_string_representation(file_pk12)
         clave_firma = self.get_64bits_string_representation(password)

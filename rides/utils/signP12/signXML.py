@@ -58,8 +58,10 @@ class SignXML:
     def sign_xml(self, str_xml, output_filename):
         xades = Xades()
         file_pk12 = self.get_p12_path()
+
         signed_document = xades.sign(str_xml, file_pk12, self.pwd)
         str_signed_xml = signed_document.decode('utf-8')
+        str_signed_xml = str_signed_xml.replace("\n", "")
         with open(output_filename, "w") as text_file:
             text_file.write(str_signed_xml)
 

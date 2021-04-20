@@ -3,6 +3,7 @@
 import base64
 import os
 import subprocess
+from lxml import etree
 import logging
 
 class Xades(object):
@@ -10,34 +11,34 @@ class Xades(object):
     def sign(self, xml_document, file_pk12, password):
         """
         Metodo que aplica la firma digital al XML
-        TODO: Revisar return
+        Ejecutando una libreria .jar de JAVA
         """
-        xml_str = xml_document.encode('utf-8')
-        # JAR_PATH = 'firma/firmaXadesBes.jar'
-        JAR_PATH = os.path.join('firma', 'firmaXadesBes.jar')
-        JAVA_CMD = 'java'
-        firma_path = os.path.join(os.path.dirname(__file__), JAR_PATH)
+        jar_path = os.path.join('publish', 'SignXades.jar')
+        absolute_jar_path = os.path.join(os.path.dirname(__file__), jar_path)
+        firma_path = self.get_64bits_string_representation(file_pk12)
+        clave_firma = self.get_64bits_string_representation(password)
         command = [
-            JAVA_CMD,
+            'java',
             '-jar',
+            absolute_jar_path,
+            xml_document,
             firma_path,
-            xml_str,
-            base64.b64encode(file_pk12.encode('utf-8')),
-            base64.b64encode(password.encode('utf-8'))
+            clave_firma
         ]
         try:
-            logging.info('Probando comando de firma digital')
-            subprocess.check_output(command)
-        except subprocess.CalledProcessError as e:
-            returncode = e.returncode
-            output = e.output
-            logging.error('Llamada a proceso JAVA codigo: %s' % returncode)
-            logging.error('Error: %s' % output)
+            p = subprocess.Popen(
+                command,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT
+            )
+            res = p.communicate()
+            return res[0]
+        except Exception as e:
+            error = str(e)
+            raise ValueError(error)
 
-        p = subprocess.Popen(
-            command,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT
-        )
-        res = p.communicate()
-        return res[0]
+    def get_64bits_string_representation(self, me):
+        ms = str(base64.b64encode(me.encode('utf-8')))
+        ms = ms.replace("b'", "")
+        ms = ms.replace("'", "")
+        return ms

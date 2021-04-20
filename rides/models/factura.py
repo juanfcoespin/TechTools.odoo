@@ -176,6 +176,7 @@ class Factura(models.Model):
             me.procesando_fec = False
         except Exception as e:
             error = 'Error al enviar la factura al SRI:' + str(e)
+            me.resp_sri = error
             _logger.debug(error)
             exceptions.UserError(error)
             me.procesando_fec = False

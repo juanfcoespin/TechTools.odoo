@@ -60,10 +60,10 @@ class SignXML:
         file_pk12 = self.get_p12_path()
         str_xml = common.clear_tildes(str_xml)
         signed_document = xades.sign(str_xml, file_pk12, self.pwd)
-        str_signed_xml = signed_document.decode('utf-8', errors='ignore')
-        str_signed_xml = str_signed_xml.replace("\n", "")
-        with open(output_filename, "w") as text_file:
-            text_file.write(str_signed_xml)
+        # str_signed_xml = signed_document.decode('utf-8', errors='ignore')
+        # str_signed_xml = str_signed_xml.replace("\n", "")
+        with open(output_filename, "wb") as text_file:
+            text_file.write(signed_document)
 
 
 

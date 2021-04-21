@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_tt_activo_all,access_tt_activo_all,model_tt_activos_fijos_activo,base.group_user,1,1,1,1
+access_tt_activoc_all,access_tt_activoc_all,model_tt_activos_fijos_caracteristica,base.group_user,1,1,1,1
+access_tt_activo_asignacion_all,access_tt_activo_asignacion_all,model_tt_activos_fijos_asignacion_activo,base.group_user,1,1,1,1

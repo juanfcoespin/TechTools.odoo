@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--
+se pone noupdate para que la secuancia no se encere cada vez que se
+que se actualiza el módulo
+-->
+    <data noupdate="1">
+
+        <!-- Sequences for sale.order -->
+        <record id="seq_orden_reparacion" model="ir.sequence">
+            <field name="name">Secuencial Activo</field>
+            <field name="code">seq_activo</field>
+            <field name="prefix">ACT</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

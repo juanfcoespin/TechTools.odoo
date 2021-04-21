@@ -1,0 +1,66 @@
+<odoo>
+  <data>
+    <!-- Form -->
+    <record id="activo_form_view" model="ir.ui.view">
+        <field name="name">activo.form.view</field>
+        <field name="model">tt_activos_fijos.activo</field>
+        <field name="arch" type="xml">
+            <form string="Información del Activo">
+                <sheet>
+                    <group>
+                        <field name="product_id"/>
+                        <field name="modelo"/>
+                        <field name="nro_serie"/>
+                        <field name="fecha_compra"/>
+                    </group>
+                    <group>
+                        <field name="caracteristicas" widget="many2many_tags"/>
+                    </group>
+                    <notebook>
+                        <page string="Custodios" name="asignacion_activo_line_ids">
+                            <field name="asignacion_activo_line_ids">
+                                <tree editable="bottom">
+                                    <field name="custodio_id"/>
+                                    <field name="custodio_actual"/>
+                                    <field name="fecha_asignacion"/>
+                                    <field name="observaciones"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!--Tree-->
+    <record id="activo_tree_view" model="ir.ui.view">
+        <field name="name">activo_tree_view</field>
+        <field name="model">tt_activos_fijos.activo</field>
+        <field name="arch" type="xml">
+            <tree string="Activo Tree">
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="modelo"/>
+                <field name="nro_serie"/>
+            </tree>
+        </field>
+    </record>
+    <!--Accion-->
+    <record id="activo_action" model="ir.actions.act_window">
+        <field name="name">Activos</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">tt_activos_fijos.activo</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!--Menus-->
+    <menuitem id="menuitem_root"
+              name="Activos Fijos"
+              web_icon="tt_activos_fijos,static/description/icon.png"
+              sequence="1"/>
+    <menuitem id="menuitem_activo"
+              parent="menuitem_root"
+              action="activo_action"
+              name="Dato Maestro de Activo"
+              sequence="2"/>
+  </data>
+</odoo>

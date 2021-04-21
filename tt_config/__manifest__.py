@@ -20,7 +20,6 @@
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
         'views/inventario_conf_view.xml',
         "security/ir.model.access.csv",
     ],

@@ -27,4 +27,5 @@ Estado de Módulos:
 | sale_order_line_check_stock   | Finalizado| Impide crear un pedido si no hay stock
 | sale_order_line_view_weight   | Finalizado| Registrar el peso en la línea del pedido
 | tt_config   | Finalizado| establece los costos de los productos si ya han sido ingresados
+| tt_activos_fijos   | En Desarrollo | Gestión de activos fijos 
 

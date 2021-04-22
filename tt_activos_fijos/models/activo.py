@@ -7,11 +7,21 @@ class Activo(models.Model):
     _name = 'tt_activos_fijos.activo'
     _description = 'Gestion de Activos'
 
-    name = fields.Char("Name")
+    name = fields.Char("Código de Activo")
+    estado = fields.Selection(
+        string="Estado",
+        selection=[
+            ('a', 'Activo'),
+            ('o', 'Obsoleto'),
+            ('b', 'Dado de Baja'),
+        ]
+    )
+    foto = fields.Binary(readonly=False)
     product_id = fields.Many2one('product.product', string='Producto')
     modelo = fields.Char("Modelo")
     nro_serie = fields.Char(string="Nro. Serie")
     fecha_compra = fields.Date("Fecha de Compra", default=fields.Date.today)
+    tiempo_vida_util = fields.Integer("Tiempo de Vida Útil en años")
     caracteristicas = fields.Many2many(comodel_name="tt_activos_fijos.caracteristica")
     asignacion_activo_line_ids = fields.One2many(
         comodel_name="tt_activos_fijos.asignacion_activo",
@@ -49,7 +59,8 @@ class AsignacionActivo(models.Model):
 
     custodio_actual = fields.Boolean(string="Custodio Actual", default=False)
     activo_id = fields.Many2one("tt_activos_fijos.activo")
-    custodio_id = fields.Many2one("res.partner", string="Custodio")
+    custodio_id = fields.Many2one("hr.employee", string="Custodio")
+    departamento_id = fields.Many2one("hr.department", string="Departamento")
     fecha_asignacion = fields.Date("Fecha Asignación", default=fields.Date.today)
     observaciones = fields.Char("Observaciones")
 

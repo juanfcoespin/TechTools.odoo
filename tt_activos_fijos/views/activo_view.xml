@@ -8,19 +8,26 @@
             <form string="Información del Activo">
                 <sheet>
                     <group>
-                        <field name="product_id"/>
-                        <field name="modelo"/>
-                        <field name="nro_serie"/>
-                        <field name="fecha_compra"/>
-                    </group>
-                    <group>
-                        <field name="caracteristicas" widget="many2many_tags"/>
+                        <group>
+                            <field name="name" readonly="1"/>
+                            <field name="product_id"/>
+                            <field name="modelo"/>
+                            <field name="nro_serie"/>
+                            <field name="fecha_compra"/>
+                            <field name="tiempo_vida_util"/>
+                        </group>
+                        <group>
+                            <field name="estado"/>
+                            <field name="foto" widget="image" class="oe_avatar"/>
+                            <field name="caracteristicas" widget="many2many_tags"/>
+                        </group>
                     </group>
                     <notebook>
                         <page string="Custodios" name="asignacion_activo_line_ids">
                             <field name="asignacion_activo_line_ids">
                                 <tree editable="bottom">
                                     <field name="custodio_id"/>
+                                    <field name="departamento_id"/>
                                     <field name="custodio_actual"/>
                                     <field name="fecha_asignacion"/>
                                     <field name="observaciones"/>

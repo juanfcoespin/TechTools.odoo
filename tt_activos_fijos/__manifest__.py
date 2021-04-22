@@ -18,11 +18,12 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['stock'],
+    'depends': ['stock', 'hr'],
 
     # always loaded
     'data': [
         'views/activo_view.xml',
+        'views/consumible_view.xml',
         "security/ir.model.access.csv",
         'data/secuence.xml',
     ]

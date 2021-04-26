@@ -13,10 +13,12 @@
                             <field name="product_id"/>
                             <field name="modelo"/>
                             <field name="nro_serie"/>
+                            <field name="pedido_compra"/>
                             <field name="fecha_compra"/>
                             <field name="tiempo_vida_util"/>
                         </group>
                         <group>
+                            <field name="custodio"/>
                             <field name="estado"/>
                             <field name="foto" widget="image" class="oe_avatar"/>
                             <field name="caracteristicas" widget="many2many_tags"/>
@@ -30,6 +32,7 @@
                                     <field name="departamento_id"/>
                                     <field name="custodio_actual"/>
                                     <field name="fecha_asignacion"/>
+                                    <field name="ubicaciones" widget="many2many_tags"/>
                                     <field name="observaciones"/>
                                 </tree>
                             </field>
@@ -45,6 +48,7 @@
         <field name="model">tt_activos_fijos.activo</field>
         <field name="arch" type="xml">
             <tree string="Activo Tree">
+                <field name="custodio"/>
                 <field name="name"/>
                 <field name="product_id"/>
                 <field name="modelo"/>

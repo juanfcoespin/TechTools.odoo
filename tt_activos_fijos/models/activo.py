@@ -18,11 +18,17 @@ class Activo(models.Model):
     )
     foto = fields.Binary(readonly=False)
     product_id = fields.Many2one('product.product', string='Producto')
-    modelo = fields.Char("Modelo")
+    '''
+    Hay que mapear el pedido porque el mismo producto puede ser comprado varias veces
+    Pero es un solo activo caracterizado por su código y número de serie
+    '''
+    pedido_compra = fields.Many2one('purchase.order', string='Orden de Compra')
+    modelo = fields.Char("Marca / Modelo")
     nro_serie = fields.Char(string="Nro. Serie")
-    fecha_compra = fields.Date("Fecha de Compra", default=fields.Date.today)
+    fecha_compra = fields.Date("Fecha de Compra", compute="get_fecha_compra")
     tiempo_vida_util = fields.Integer("Tiempo de Vida Útil en años")
     caracteristicas = fields.Many2many(comodel_name="tt_activos_fijos.caracteristica")
+    custodio = fields.Char("Custodio", compute="get_custodio", store=True)
     asignacion_activo_line_ids = fields.One2many(
         comodel_name="tt_activos_fijos.asignacion_activo",
         inverse_name="activo_id",
@@ -33,6 +39,11 @@ class Activo(models.Model):
         ('nro_serie_uniq', 'unique (nro_serie)',
          "Nro. Serie Duplicado")
     ]
+    def get_custodio(self):
+        if self.asignacion_activo_line_ids and len(self.asignacion_activo_line_ids)>0:
+            for asignacion in self.asignacion_activo_line_ids:
+                if asignacion.custodio_actual:
+                    self.custodio = asignacion.custodio_id.name
 
     @api.model
     def create(self, vals):
@@ -47,6 +58,12 @@ class Activo(models.Model):
         # la funcion create hace un insert en la tabla
         res = super(Activo, self).create(vals)
         return res
+    def get_fecha_compra(self):
+        if self.pedido_compra:
+            self.fecha_compra = self.pedido_compra.date_planned
+        else:
+            self.fecha_compra = None
+
 
 
 class CaracteristicaActivo(models.Model):
@@ -62,8 +79,13 @@ class AsignacionActivo(models.Model):
     custodio_id = fields.Many2one("hr.employee", string="Custodio")
     departamento_id = fields.Many2one("hr.department", string="Departamento")
     fecha_asignacion = fields.Date("Fecha Asignación", default=fields.Date.today)
+    ubicaciones = fields.Many2many(comodel_name="ubicacion")
     observaciones = fields.Char("Observaciones")
 
+    _sql_constraints = [
+        ('fecha_asinacion_uniq', 'unique (fecha_asignacion)',
+         "Fecha de asignación duplicada")
+    ]
     @api.constrains('custodio_actual')
     def _check_unique_custodio(self):
         #    Valida que solo exista un custodio activo
@@ -72,14 +94,3 @@ class AsignacionActivo(models.Model):
                                              ('activo_id', '=', self.activo_id.id)])
             if custodios_activos and len(custodios_activos) > 1:
                 raise exceptions.ValidationError("Sólo puede haber un custodio activo")
-
-    @api.constrains('fecha_asignacion')
-    def _check_unique_fecha_asignacion(self):
-        #    Valida que no se dupliquen fechas de asignación
-        if self.fecha_asignacion:
-            records = self.search([('fecha_asignacion', '=', self.fecha_asignacion),
-                                             ('activo_id', '=', self.activo_id.id)])
-            if records and len(records) > 1:
-                raise exceptions.ValidationError("Fecha de asignación duplicada")
-
-

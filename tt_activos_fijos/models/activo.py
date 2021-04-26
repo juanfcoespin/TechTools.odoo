@@ -28,7 +28,8 @@ class Activo(models.Model):
     fecha_compra = fields.Date("Fecha de Compra", compute="get_fecha_compra")
     tiempo_vida_util = fields.Integer("Tiempo de Vida Útil en años")
     caracteristicas = fields.Many2many(comodel_name="tt_activos_fijos.caracteristica")
-    custodio = fields.Char("Custodio", compute="get_custodio", store=True)
+    # store=True
+    custodio = fields.Char("Custodio", compute="get_custodio")
     asignacion_activo_line_ids = fields.One2many(
         comodel_name="tt_activos_fijos.asignacion_activo",
         inverse_name="activo_id",
@@ -39,11 +40,19 @@ class Activo(models.Model):
         ('nro_serie_uniq', 'unique (nro_serie)',
          "Nro. Serie Duplicado")
     ]
+
     def get_custodio(self):
-        if self.asignacion_activo_line_ids and len(self.asignacion_activo_line_ids)>0:
-            for asignacion in self.asignacion_activo_line_ids:
-                if asignacion.custodio_actual:
-                    self.custodio = asignacion.custodio_id.name
+
+        # porque en el tree view trae todos los activos
+        for activo in self:
+            if activo.asignacion_activo_line_ids and len(activo.asignacion_activo_line_ids) > 0:
+                for asignacion in activo.asignacion_activo_line_ids:
+                    if asignacion.custodio_actual:
+                        activo.custodio = asignacion.custodio_id.name
+                    else:
+                        activo.custodio = None
+
+
 
     @api.model
     def create(self, vals):

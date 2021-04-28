@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- Form -->
     <record model="ir.ui.view" id="account_move_view_inherit">
         <field name="name">account.move.view.inherit</field>
         <field name="model">account.move</field>
@@ -45,6 +46,19 @@
                 </group>
             </page>
             </xpath>
+        </field>
+    </record>
+
+    <!-- Tree -->
+    <record model="ir.ui.view" id="account_move_view_inherit_tree">
+        <field name="name">account.move.view.inherit.tree</field>
+        <field name="name">account.move.view.inherit.tree</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_invoice_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="num_documento"/>
+            </field>
         </field>
     </record>
 </odoo>

@@ -16,6 +16,7 @@ Puntos a tener en cuenta en la implementación:
     - Aquí se cargan las firmas digitales de los clientes
  - Establecer permiso de lectura/escritura para el path configurado para los comprobantes electrónicos
     - Aquí se generan los pdf y xml de los documentos electrónicos
+ - cuando se creen las variables de entorno para java y python hacerlas a nivel de sistema no de usuario 
 
 Estado de Módulos:
 -----------------

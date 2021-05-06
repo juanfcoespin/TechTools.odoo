@@ -21,7 +21,11 @@ class Consumible(models.Model):
     ]
 
     def get_stock_from_product(self):
-        self.stock = self.name.qty_available
+        for obj in self:
+            if obj and obj.name and obj.name.qty_available:
+                obj.stock = obj.name.qty_available
+            else:
+                obj.stock = 0
 
 
 class AsignacionComsumible(models.Model):

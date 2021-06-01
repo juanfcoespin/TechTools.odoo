@@ -140,19 +140,40 @@
                                 </thead>
                                 <tbody>
                                     <tr t-foreach="o.invoice_line_ids" t-as="line">
-                                         <td>
-                                            <t t-if="line.product_id.barcode">
-                                                <span t-field="line.product_id.barcode"/>
-                                            </t>
-                                            <t t-else="">
-                                                <span t-field="line.product_id.id"/>
-                                            </t>
-                                        </td>
-                                        <td><span t-field="line.product_id"/></td>
-                                        <td class="text-right"><span t-field="line.quantity"/></td>
-                                        <td class="text-right"><span t-field="line.price_unit"/></td>
-                                        <td class="text-right"><span t-field="line.price_subtotal"/></td>
+                                        <!-- linea de factura normal -->
+                                        <t t-if="not line.display_type">
+                                             <td>
+                                                <t t-if="line.product_id.barcode">
+                                                    <span t-field="line.product_id.barcode"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <span t-field="line.product_id.id"/>
+                                                </t>
+                                            </td>
+                                            <td><span t-field="line.product_id"/></td>
+                                            <td class="text-right"><span t-field="line.quantity"/></td>
+                                            <td class="text-right"><span t-field="line.price_unit"/></td>
+                                            <td class="text-right"><span t-field="line.price_subtotal"/></td>
+                                        </t>
+                                        <!-- Cuando se registra una nota en la linea -->
+                                        <t t-if="line.display_type == 'line_note'">
+                                            <td colspan="99">
+                                                <span t-field="line.name" t-options="{'widget': 'text'}"/>
+                                            </td>
+                                        </t>
                                     </tr>
+                                    <!--tr t-foreach="o.invoice_line_ids" t-as="line">
+                                        <t t-if="line.display_type == 'line_section'">
+                                            <tr>
+                                                <td colspan="4">
+                                                    <span t-field="line.name" t-options="{'widget': 'text'}"/>
+                                                </td>
+                                                <t t-set="current_section" t-value="line"/>
+                                                <t t-set="current_subtotal" t-value="0"/>
+                                            </tr>
+                                        </t>
+                                    </tr-->
+
                                 </tbody>
                             </table>
                         </div>
@@ -178,22 +199,17 @@
                                             <span t-field="o.amount_untaxed"/>
                                         </td>
                                     </tr>
-                                    <tr style="">
+                                    <!--tr style="">
                                         <td>
                                             <span class="text-nowrap">Iva 12%</span>
                                         </td>
                                         <td class="text-right o_price_total">
                                             $ <span class="text-nowrap" t-field="o.iva" />
                                         </td>
-                                    </tr>
-                                    <tr class="border-black o_total">
-                                        <td><strong>Total con Impuestos</strong></td>
-                                        <td class="text-right">
-                                            $ <span class="text-nowrap" t-field="o.total_con_impuestos"/>
-                                        </td>
-                                    </tr>
+                                    </tr-->
+
                                     <!-- si se requiere que aparezca el detalle de impuestos y retenciones -->
-                                    <!--t t-foreach="o.amount_by_group" t-as="amount_by_group">
+                                    <t t-foreach="o.amount_by_group" t-as="amount_by_group">
                                         <tr style="">
                                             <t t-if="len(o.line_ids.filtered(lambda line: line.tax_line_id)) in [0, 1] and o.amount_untaxed == amount_by_group[2]">
                                                 <td>
@@ -203,17 +219,22 @@
                                                     <span class="text-nowrap" t-esc="amount_by_group[3]" />
                                                 </td>
                                             </t>
-                                            <t t-else="">
+                                            <!--t t-else="">
                                                 <td>
                                                     <span t-esc="amount_by_group[0]"/>
                                                 </td>
                                                 <td class="text-right o_price_total">
                                                     <span class="text-nowrap" t-esc="amount_by_group[3]"/>
                                                 </td>
-                                            </t>
+                                            </t-->
                                         </tr>
-                                    </t-->
-
+                                    </t>
+                                    <tr class="border-black o_total">
+                                        <td><strong>Total con Impuestos</strong></td>
+                                        <td class="text-right">
+                                            $ <span class="text-nowrap" t-field="o.total_con_impuestos"/>
+                                        </td>
+                                    </tr>
                                     <t t-if="print_with_payments">
                                         <t t-if="o.payment_state != 'invoicing_legacy'">
                                             <t t-set="payments_vals" t-value="o.sudo()._get_reconciled_info_JSON_values()"/>

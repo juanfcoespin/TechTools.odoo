@@ -65,33 +65,35 @@ class Factura(models.Model):
     def get_lines(self):
         detalles = []
         for line in self.invoice_line_ids:
-            codigo_principal = line.product_id.id
-            codigo_auxiliar = line.product_id.barcode
-            priced = line.price_unit * (1 - (line.discount or 0.00) / 100.0)
-            discount = (line.price_unit - priced) * line.quantity
-            detalle = {
-                'codigoPrincipal': codigo_principal,
-                'codigoAuxiliar': codigo_auxiliar,
-                'descripcion': line.name.strip(),
-                'cantidad': '%.6f' % (line.quantity),
-                'precioUnitario': '%.6f' % (line.price_unit),
-                'descuento': '%.2f' % discount,
-                'precioTotalSinImpuesto': '%.2f' % (line.price_subtotal)
-            }
-            impuestos = []
-            for tax in line.tax_ids:
-                if tax.description in ['IVA Cobrado 12%']:
-                    impuesto = {
-                        'codigo': 2,
-                        'codigoPorcentaje': 2,  # noqa
-                        'tarifa': tax.amount,
-                        'baseImponible': '{:.2f}'.format(line.price_subtotal),
-                        'valor': '{:.2f}'.format(line.price_subtotal *
-                                                 tax.amount / 100)
-                    }
-                    impuestos.append(impuesto)
-            detalle.update({'impuestos': impuestos})
-            detalles.append(detalle)
+            # para no incluir las notas de factura que se configuran como  linea
+            if not line.display_type:
+                codigo_principal = line.product_id.id
+                codigo_auxiliar = line.product_id.barcode
+                priced = line.price_unit * (1 - (line.discount or 0.00) / 100.0)
+                discount = (line.price_unit - priced) * line.quantity
+                detalle = {
+                    'codigoPrincipal': codigo_principal,
+                    'codigoAuxiliar': codigo_auxiliar,
+                    'descripcion': line.name.strip(),
+                    'cantidad': '%.6f' % (line.quantity),
+                    'precioUnitario': '%.6f' % (line.price_unit),
+                    'descuento': '%.2f' % discount,
+                    'precioTotalSinImpuesto': '%.2f' % (line.price_subtotal)
+                }
+                impuestos = []
+                for tax in line.tax_ids:
+                    if tax.description in ['IVA Cobrado 12%']:
+                        impuesto = {
+                            'codigo': 2,
+                            'codigoPorcentaje': 2,  # noqa
+                            'tarifa': tax.amount,
+                            'baseImponible': '{:.2f}'.format(line.price_subtotal),
+                            'valor': '{:.2f}'.format(line.price_subtotal *
+                                                     tax.amount / 100)
+                        }
+                        impuestos.append(impuesto)
+                detalle.update({'impuestos': impuestos})
+                detalles.append(detalle)
         return detalles
 
     def safe_pdf_factura(self, pdf_path, pdf_filename):

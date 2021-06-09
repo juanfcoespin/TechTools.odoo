@@ -119,7 +119,13 @@ class Ride2(models.AbstractModel):
                                                                        {})).get(value)
 
     def get_direccion(self):
-        return "{} y {}".format(self.company_id.street, self.company_id.street2)
+        if self.company_id.street and self.company_id.street2:
+            return "{} y {}".format(self.company_id.street, self.company_id.street2)
+        if self.company_id.street:
+            return self.company_id.street
+        if self.company_id.street2:
+            return self.company_id.street2
+        return ''
 
     def get_num_ride(self, secuencial):
         return "{}-{}-{}".format(

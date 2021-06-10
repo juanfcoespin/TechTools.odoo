@@ -37,12 +37,21 @@ class Factura(models.Model):
 
     @api.constrains('num_documento')
     def check_uniq_num_factura(self):
-        fact_num = self.num_documento
+        # Ej. 001-002-000000502
+        if not self.num_documento:
+            return
         facturas_existentes=self.env['account.move'].\
             search([('num_documento', '=', self.num_documento), ('move_type', '=', 'out_invoice')])
         if len(facturas_existentes) > 1:
             raise exceptions.UserError('Ya existe la factura con el número ' + self.num_documento +
                                        '\n Por favor seleccione otro número')
+        # valida que el numero de factura corresponda al secuencial registrado en la bdd
+        matrix = self.num_documento.split('-')
+        if len(matrix) >= 3:
+            seq_num_documento=matrix[2]
+            if self.secuencial != seq_num_documento: #si el usuario actualizó el num_documento
+                self.secuencial = seq_num_documento
+
     def init_ride(self):
         self.clave_acceso = self.init_ride_and_get_clave_acceso('01', self.date)
 

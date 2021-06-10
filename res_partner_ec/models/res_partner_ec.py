@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields
+from odoo import models, fields, api, exceptions
 
 
 class ResPartnerEc(models.Model):
@@ -20,6 +20,23 @@ class ResPartnerEc(models.Model):
         help="Registro único de contribuyentes o cédula de identidad", size=13)
     invoice_address = fields.Char(compute="set_invoice_address")
     delivery_address = fields.Char(compute="set_delivery_address")
+
+    @api.constrains('name', 'ec_identifier')
+    def check_uniq_cliente(self):
+        if not self.name:
+            return
+        #ilike compara mayusculas minusculas y tildes
+        if self.ec_identifier:
+            clientes_existentes = self.env['res.partner']. \
+                search(['|', ('name', 'ilike', self.name), ('ec_identifier', '=', self.ec_identifier)])
+            if len(clientes_existentes) > 1:
+                raise exceptions.UserError('Ya existe el cliente con nombre o ruc/cedula: ' + self.name + ' ' + self.ec_identifier)
+        else:
+            clientes_existentes = self.env['res.partner']. \
+                search([('name', 'ilike', self.name)])
+            if len(clientes_existentes) > 1:
+                raise exceptions.UserError('Ya existe el cliente ' + self.name)
+
 
     def set_invoice_address(self):
         if self.type == 'invoice':

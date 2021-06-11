@@ -48,6 +48,9 @@
                                     <table>
                                         <tbody>
                                             <tr>
+                                                <td><h4><span t-esc="res_company.razon_social"/></h4></td>
+                                            </tr>
+                                            <tr>
                                                 <td><h4>R.U.C.: <span t-esc="res_company.ruc"/></h4></td>
                                             </tr>
                                             <tr>

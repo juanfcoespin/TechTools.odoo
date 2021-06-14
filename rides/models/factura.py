@@ -21,10 +21,6 @@ class Factura(models.Model):
         string="Total Descuento",
         compute="get_total_discount"
     )
-    iva = fields.Float(
-        string="Iva",
-        compute="get_iva"
-    )
     total_con_impuestos = fields.Float(
         string="Total con impuestos",
         compute="get_total_con_impuestos"
@@ -71,6 +67,27 @@ class Factura(models.Model):
         else:
             self.autorizacion_sri = "Primero debe enviarse el documento al SRI"
 
+    def get_total_impuestos(self):
+        ms = []
+        for impuesto in self.amount_by_group:
+            # Todos los impuestos que no son retención
+            if impuesto[0].count('Retención') == 0:
+                maestro_impuesto = self.get_maestro_impuesto(impuesto[0])
+                itemImpuesto = {
+                    'nombre': impuesto[0],
+                    'codigo': maestro_impuesto.codigo_impuesto,
+                    'codigoPorcentaje': maestro_impuesto.codigo_porcentaje_impuesto,
+                    'valor': impuesto[1],
+                }
+                ms.append(itemImpuesto)
+        return ms
+
+    def get_maestro_impuesto(self, nombre_impuesto):
+        ms = self.env['account.tax'].search([('tax_group_id', '=', nombre_impuesto)])
+        if len(ms) > 0:
+            return ms[0]
+        return None
+
     def get_lines(self):
         detalles = []
         for line in self.invoice_line_ids:
@@ -91,10 +108,12 @@ class Factura(models.Model):
                 }
                 impuestos = []
                 for tax in line.tax_ids:
-                    if tax.description in ['IVA Cobrado 12%']:
+                    # Todos los impuestos que no son retención
+                    if tax.description and \
+                            tax.description.count('Retención') == 0:
                         impuesto = {
-                            'codigo': 2,
-                            'codigoPorcentaje': 2,  # noqa
+                            'codigo': tax.codigo_impuesto,
+                            'codigoPorcentaje': tax.codigo_porcentaje_impuesto,  # noqa
                             'tarifa': tax.amount,
                             'baseImponible': '{:.2f}'.format(line.price_subtotal),
                             'valor': '{:.2f}'.format(line.price_subtotal *
@@ -201,6 +220,7 @@ class Factura(models.Model):
             self.enviado_al_sri = True
         except Exception as e:
             self.resp_sri = "El Servicio Web del Sri no está disponible en este momento. Error:"+str(e)
+
     def send_documents_by_mail(self):
         template_id = self.env.ref('rides.email_template_FEL').id
         template = self.env['mail.template'].browse(template_id)
@@ -217,13 +237,12 @@ class Factura(models.Model):
         self.total_sin_descuento = self.amount_untaxed + self.total_discount
 
     def get_total_con_impuestos(self):
-        self.total_con_impuestos = round(self.amount_untaxed + self.iva, 2)
-
-    def get_iva(self):
-        self.iva = 0
-        for group in self.amount_by_group:
-            if group[0] == 'IVA 12%':
-                self.iva = group[1]
+        impuestos  = self.get_total_impuestos()
+        valor_impuestos = 0
+        for impuesto in impuestos:
+            if impuesto:
+                valor_impuestos = valor_impuestos + impuesto['valor']
+        self.total_con_impuestos = round(self.amount_untaxed + valor_impuestos, 2)
 
     def get_total_discount(self):
         self.total_discount = 0

@@ -33,6 +33,7 @@
     'data': [
         'views/stock_picking.xml',
         'views/account.move.xml',
+        'views/impuesto.xml',
         'data/fec_email_template.xml',
         'data/fec_send_invoices_cron.xml',
     ]

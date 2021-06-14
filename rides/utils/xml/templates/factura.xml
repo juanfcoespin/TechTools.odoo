@@ -24,12 +24,14 @@
     <totalSinImpuestos>{{ totalSinImpuestos }}</totalSinImpuestos>
     <totalDescuento>{{ totalDescuento }}</totalDescuento>
     <totalConImpuestos>
+      {% for tax in impuestos %}
       <totalImpuesto>
-        <codigo>2</codigo>
-        <codigoPorcentaje>2</codigoPorcentaje>
+        <codigo>{{ tax.codigo }}</codigo>
+        <codigoPorcentaje>{{ tax.codigoPorcentaje }}</codigoPorcentaje>
         <baseImponible>{{ totalSinImpuestos }}</baseImponible>
-        <valor>{{ iva }}</valor>
+        <valor>{{ tax.valor }}</valor>
       </totalImpuesto>
+      {% endfor %}
     </totalConImpuestos>
     <importeTotal>{{ totalConImpuesto }}</importeTotal>
   </infoFactura>

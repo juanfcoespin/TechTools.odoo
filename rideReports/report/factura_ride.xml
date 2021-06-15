@@ -138,6 +138,7 @@
                                         <th>Producto</th>
                                         <th class="text-right">Cantidad</th>
                                         <th class="text-right">Precio</th>
+                                        <th class="text-right">Descuento</th>
                                         <th class="text-right">Subtotal</th>
                                     </tr>
                                 </thead>
@@ -155,7 +156,8 @@
                                             </td>
                                             <td><span t-field="line.product_id"/></td>
                                             <td class="text-right"><span t-field="line.quantity"/></td>
-                                            <td class="text-right"><span t-field="line.price_unit"/></td>
+                                            <td class="text-right"><span t-esc="'%.2f'%line.price_unit"/></td>
+                                            <td class="text-right"><span t-esc="'%.2f'%line.descuento"/></td>
                                             <td class="text-right"><span t-field="line.price_subtotal"/></td>
                                         </t>
                                         <!-- Cuando se registra una nota en la linea -->

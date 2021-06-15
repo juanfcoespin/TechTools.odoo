@@ -251,3 +251,21 @@ class Factura(models.Model):
             line_discount = line_subTotal * line.discount / 100
             self.total_discount += line_discount
         self.total_discount = round(self.total_discount, 2)
+
+
+class FacturaLinea(models.Model):
+    _name = 'account.move.line'
+    _inherit = ['account.move.line']
+    descuento = fields.Float(
+        string="Descuento",
+        compute="set_discount"
+    )
+
+    def set_discount(self):
+        for line in self:
+            if not line.display_type and line.discount:
+                priced = line.price_unit * (1 - (line.discount or 0.00) / 100.0)
+                line.descuento = (line.price_unit - priced) * line.quantity
+            else:
+                line.descuento = 0
+

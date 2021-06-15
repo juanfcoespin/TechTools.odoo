@@ -44,8 +44,8 @@ class XmlDoc:
             totalSinImpuestos=ride.amount_untaxed,
             totalDescuento=ride.total_discount,
             totalConImpuesto=ride.total_con_impuestos,
-            iva=ride.iva,
-            lines=ride.get_lines()
+            lines=ride.get_lines(),
+            impuestos=ride.get_total_impuestos()
         )
         return ms
 

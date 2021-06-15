@@ -21,10 +21,6 @@ class Factura(models.Model):
         string="Total Descuento",
         compute="get_total_discount"
     )
-    iva = fields.Float(
-        string="Iva",
-        compute="get_iva"
-    )
     total_con_impuestos = fields.Float(
         string="Total con impuestos",
         compute="get_total_con_impuestos"
@@ -37,12 +33,21 @@ class Factura(models.Model):
 
     @api.constrains('num_documento')
     def check_uniq_num_factura(self):
-        fact_num = self.num_documento
+        # Ej. 001-002-000000502
+        if not self.num_documento:
+            return
         facturas_existentes=self.env['account.move'].\
             search([('num_documento', '=', self.num_documento), ('move_type', '=', 'out_invoice')])
         if len(facturas_existentes) > 1:
             raise exceptions.UserError('Ya existe la factura con el número ' + self.num_documento +
                                        '\n Por favor seleccione otro número')
+        # valida que el numero de factura corresponda al secuencial registrado en la bdd
+        matrix = self.num_documento.split('-')
+        if len(matrix) >= 3:
+            seq_num_documento=matrix[2]
+            if self.secuencial != seq_num_documento: #si el usuario actualizó el num_documento
+                self.secuencial = seq_num_documento
+
     def init_ride(self):
         self.clave_acceso = self.init_ride_and_get_clave_acceso('01', self.date)
 
@@ -62,36 +67,61 @@ class Factura(models.Model):
         else:
             self.autorizacion_sri = "Primero debe enviarse el documento al SRI"
 
+    def get_total_impuestos(self):
+        ms = []
+        for impuesto in self.amount_by_group:
+            # Todos los impuestos que no son retención
+            if impuesto[0].count('Retención') == 0:
+                maestro_impuesto = self.get_maestro_impuesto(impuesto[0])
+                itemImpuesto = {
+                    'nombre': impuesto[0],
+                    'codigo': maestro_impuesto.codigo_impuesto,
+                    'codigoPorcentaje': maestro_impuesto.codigo_porcentaje_impuesto,
+                    'valor': impuesto[1],
+                }
+                ms.append(itemImpuesto)
+        return ms
+
+    def get_maestro_impuesto(self, nombre_impuesto):
+        ms = self.env['account.tax'].search([('tax_group_id', '=', nombre_impuesto)])
+        if len(ms) > 0:
+            return ms[0]
+        return None
+
     def get_lines(self):
         detalles = []
         for line in self.invoice_line_ids:
-            codigo_principal = line.product_id.id
-            codigo_auxiliar = line.product_id.barcode
-            priced = line.price_unit * (1 - (line.discount or 0.00) / 100.0)
-            discount = (line.price_unit - priced) * line.quantity
-            detalle = {
-                'codigoPrincipal': codigo_principal,
-                'codigoAuxiliar': codigo_auxiliar,
-                'descripcion': line.name.strip(),
-                'cantidad': '%.6f' % (line.quantity),
-                'precioUnitario': '%.6f' % (line.price_unit),
-                'descuento': '%.2f' % discount,
-                'precioTotalSinImpuesto': '%.2f' % (line.price_subtotal)
-            }
-            impuestos = []
-            for tax in line.tax_ids:
-                if tax.description in ['IVA Cobrado 12%']:
-                    impuesto = {
-                        'codigo': 2,
-                        'codigoPorcentaje': 2,  # noqa
-                        'tarifa': tax.amount,
-                        'baseImponible': '{:.2f}'.format(line.price_subtotal),
-                        'valor': '{:.2f}'.format(line.price_subtotal *
-                                                 tax.amount / 100)
-                    }
-                    impuestos.append(impuesto)
-            detalle.update({'impuestos': impuestos})
-            detalles.append(detalle)
+            # para no incluir las notas de factura que se configuran como  linea
+            if not line.display_type:
+                codigo_principal = line.product_id.id
+                codigo_auxiliar = line.product_id.barcode
+                priced = line.price_unit * (1 - (line.discount or 0.00) / 100.0)
+                discount = (line.price_unit - priced) * line.quantity
+                detalle = {
+                    'codigoPrincipal': codigo_principal,
+                    'codigoAuxiliar': codigo_auxiliar,
+                    'descripcion': line.name.strip(),
+                    'cantidad': '%.6f' % (line.quantity),
+                    'precioUnitario': '%.6f' % (line.price_unit),
+                    'descuento': '%.2f' % discount,
+                    'precioTotalSinImpuesto': '%.2f' % (line.price_subtotal)
+                }
+                impuestos = []
+                for tax in line.tax_ids:
+                    # Todos los impuestos que no son retención
+                    if tax.description and \
+                            tax.description.count('Retención') == 0:
+                        impuesto = {
+                            'codigo': tax.codigo_impuesto,
+                            'codigoPorcentaje': tax.codigo_porcentaje_impuesto,  # noqa
+                            'tarifa': tax.amount,
+                            'baseImponible': '{:.2f}'.format(line.price_subtotal),
+                            'valor': '{:.2f}'.format(line.price_subtotal *
+                                                     tax.amount / 100)
+                        }
+                        impuestos.append(impuesto)
+                detalle.update({'impuestos': impuestos})
+                detalles.append(detalle)
         return detalles
 
     def safe_pdf_factura(self, pdf_path, pdf_filename):
@@ -190,6 +220,7 @@ class Factura(models.Model):
             self.enviado_al_sri = True
         except Exception as e:
             self.resp_sri = "El Servicio Web del Sri no está disponible en este momento. Error:"+str(e)
+
     def send_documents_by_mail(self):
         template_id = self.env.ref('rides.email_template_FEL').id
         template = self.env['mail.template'].browse(template_id)
@@ -206,13 +237,12 @@ class Factura(models.Model):
         self.total_sin_descuento = self.amount_untaxed + self.total_discount
 
     def get_total_con_impuestos(self):
-        self.total_con_impuestos = round(self.amount_untaxed + self.iva, 2)
-
-    def get_iva(self):
-        self.iva = 0
-        for group in self.amount_by_group:
-            if group[0] == 'IVA 12%':
-                self.iva = group[1]
+        impuestos  = self.get_total_impuestos()
+        valor_impuestos = 0
+        for impuesto in impuestos:
+            if impuesto:
+                valor_impuestos = valor_impuestos + impuesto['valor']
+        self.total_con_impuestos = round(self.amount_untaxed + valor_impuestos, 2)
 
     def get_total_discount(self):
         self.total_discount = 0

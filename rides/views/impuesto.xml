@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form -->
+    <record model="ir.ui.view" id="account_tax_view_inherit">
+        <field name="name">account.tax.view.inherit</field>
+        <field name="model">account.tax</field>
+        <field name="inherit_id" ref="account.view_tax_form"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="codigo_impuesto"/>
+                <field name="codigo_porcentaje_impuesto"/>
+            </field>
+
+        </field>
+    </record>
+</odoo>

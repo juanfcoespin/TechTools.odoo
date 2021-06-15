@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form -->
+    <record model="ir.ui.view" id="stock_move_line_view_inherit">
+        <field name="name">stock.move.line.view.inherit</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_move_line_form"/>
+        <field name="arch" type="xml">
+            <field name="origin" position="after">
+                <field name="num_factura"/>
+                <field name="factura_id"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Tree -->
+    <record model="ir.ui.view" id="stock_move_line_view_inherit_tree">
+        <field name="name">stock.move.line.view.inherit.tree</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_move_line_tree"/>
+        <field name="arch" type="xml">
+            <field name="product_id" position="before">
+                <field name="num_factura"/>
+            </field>
+        </field>
+    </record>
+</odoo>

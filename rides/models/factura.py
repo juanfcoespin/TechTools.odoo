@@ -95,15 +95,15 @@ class Factura(models.Model):
             if not line.display_type:
                 codigo_principal = line.product_id.id
                 codigo_auxiliar = line.product_id.barcode
-                priced = line.price_unit * (1 - (line.discount or 0.00) / 100.0)
-                discount = (line.price_unit - priced) * line.quantity
+                # priced = line.price_unit * (1 - (line.discount or 0.00) / 100.0)
+                # discount = (line.price_unit - priced) * line.quantity
                 detalle = {
                     'codigoPrincipal': codigo_principal,
                     'codigoAuxiliar': codigo_auxiliar,
                     'descripcion': line.name.strip(),
                     'cantidad': '%.6f' % (line.quantity),
                     'precioUnitario': '%.6f' % (line.price_unit),
-                    'descuento': '%.2f' % discount,
+                    'descuento': '%.2f' % line.descuento,
                     'precioTotalSinImpuesto': '%.2f' % (line.price_subtotal)
                 }
                 impuestos = []
@@ -176,6 +176,7 @@ class Factura(models.Model):
         :return:
         '''
         try:
+            error = None
             if me is None:
                 me = self
 
@@ -201,6 +202,7 @@ class Factura(models.Model):
                 self.pdf_generado = True
             if not me.email_enviado:
                 self.send_documents_by_mail()
+            me.resp_sri = error #se encera si existe un error anterior
             if not me.enviado_al_sri:
                 self.send_xmlsigned_to_sri(url, ride_path, clave_acceso)
             me.procesando_fec = False

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "tt_inventario",
+    'name': "TechTools - Inventario",
 
     'summary': """
         Desarrollos sobre inventario

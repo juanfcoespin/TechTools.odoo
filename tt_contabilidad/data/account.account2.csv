@@ -1,0 +1,397 @@
+id,currency_id/id,reconcile,code,company_id/id,create_uid/id,tax_ids/id,deprecated,note,write_uid/id,name,tag_ids/id,internal_type,user_type_id/id
+1,,FALSE,1,base.main_company,base.user_root,,FALSE,,base.user_root,ACTIVO,,other,account.data_account_type_current_assets
+101,,FALSE,101,base.main_company,base.user_root,,FALSE,,base.user_root,ACTIVO CORRIENTE,,other,account.data_account_type_current_assets
+10101,,FALSE,10101,base.main_company,base.user_root,,FALSE,,base.user_root,EFECTIVO Y EQUIVALTES AL EFECT,,other,account.data_account_type_current_assets
+1010101,,FALSE,1010101,base.main_company,base.user_root,,FALSE,,base.user_root,CAJA,,other,account.data_account_type_current_assets
+101010101,,FALSE,101010101,base.main_company,base.user_root,,FALSE,,base.user_root,Caja General,,other,account.data_account_type_current_assets
+101010102,,FALSE,101010102,base.main_company,base.user_root,,FALSE,,base.user_root,Caja Chica,,other,account.data_account_type_current_assets
+101010103,,FALSE,101010103,base.main_company,base.user_root,,FALSE,,base.user_root,Valores a Depositar,,other,account.data_account_type_current_assets
+101010104,,FALSE,101010104,base.main_company,base.user_root,,FALSE,,base.user_root,CAJA-EFECTIVO EUROS DR,,other,account.data_account_type_current_assets
+1010102,,FALSE,1010102,base.main_company,base.user_root,,FALSE,,base.user_root,BANCOS,,other,account.data_account_type_current_assets
+101010201,,FALSE,101010201,base.main_company,base.user_root,,FALSE,,base.user_root,Produbanco,,liquidity,account.data_account_type_liquidity
+101010202,,FALSE,101010202,base.main_company,base.user_root,,FALSE,,base.user_root,Pacifico,,liquidity,account.data_account_type_liquidity
+101010203,,FALSE,101010203,base.main_company,base.user_root,,FALSE,,base.user_root,Bolivariano,,liquidity,account.data_account_type_liquidity
+101010204,,FALSE,101010204,base.main_company,base.user_root,,FALSE,,base.user_root,Guayaquil,,liquidity,account.data_account_type_liquidity
+101010205,,FALSE,101010205,base.main_company,base.user_root,,FALSE,,base.user_root,Pichincha,,liquidity,account.data_account_type_liquidity
+101010206,,FALSE,101010206,base.main_company,base.user_root,,FALSE,,base.user_root,BOLIVARIANO-Ahorros,,liquidity,account.data_account_type_liquidity
+101010207,,FALSE,101010207,base.main_company,base.user_root,,FALSE,,base.user_root,Bolivariano-Euros,,liquidity,account.data_account_type_liquidity
+101010208,,FALSE,101010208,base.main_company,base.user_root,,FALSE,,base.user_root,Panama-Bolivariano,,liquidity,account.data_account_type_liquidity
+1010103,,FALSE,1010103,base.main_company,base.user_root,,FALSE,,base.user_root,Valores por Depositar,,other,account.data_account_type_current_assets
+10102,,FALSE,10102,base.main_company,base.user_root,,FALSE,,base.user_root,ACTIVOS FINANCIEROS,,other,account.data_account_type_current_assets
+1010204,,FALSE,1010204,base.main_company,base.user_root,,FALSE,,base.user_root,(-) PROVISION X DETERIORO,,other,account.data_account_type_current_assets
+1010205,,TRUE,1010205,base.main_company,base.user_root,,FALSE,,base.user_root,CTAS X COB CLIE. NO RELA,,receivable,account.data_account_type_receivable
+1010206,,FALSE,1010206,base.main_company,base.user_root,,FALSE,,base.user_root,DOC Y CTAS X COB CLIE. RELACIO,,other,account.data_account_type_current_assets
+101020601,,FALSE,101020601,base.main_company,base.user_root,,FALSE,,base.user_root,Master-Pacificard,,other,account.data_account_type_current_assets
+101020602,,FALSE,101020602,base.main_company,base.user_root,,FALSE,,base.user_root,Visa Pacificard,,other,account.data_account_type_current_assets
+101020603,,FALSE,101020603,base.main_company,base.user_root,,FALSE,,base.user_root,Diners Pichincha,,other,account.data_account_type_current_assets
+101020604,,FALSE,101020604,base.main_company,base.user_root,,FALSE,,base.user_root,American Gye,,other,account.data_account_type_current_assets
+101020605,,FALSE,101020605,base.main_company,base.user_root,,FALSE,,base.user_root,Visa Gye,,other,account.data_account_type_current_assets
+101020606,,FALSE,101020606,base.main_company,base.user_root,,FALSE,,base.user_root,Master Gye,,other,account.data_account_type_current_assets
+101020607,,FALSE,101020607,base.main_company,base.user_root,,FALSE,,base.user_root,Bankard Bolivariano,,other,account.data_account_type_current_assets
+101020608,,FALSE,101020608,base.main_company,base.user_root,,FALSE,,base.user_root,Visa Pichincha,,other,account.data_account_type_current_assets
+101020609,,FALSE,101020609,base.main_company,base.user_root,,FALSE,,base.user_root,Master Pichincha,,other,account.data_account_type_current_assets
+101020610,,FALSE,101020610,base.main_company,base.user_root,,FALSE,,base.user_root,VisaElectron Pacifico,,other,account.data_account_type_current_assets
+101020611,,FALSE,101020611,base.main_company,base.user_root,,FALSE,,base.user_root,Maestro Gye,,other,account.data_account_type_current_assets
+101020612,,FALSE,101020612,base.main_company,base.user_root,,FALSE,,base.user_root,Discover Gye,,other,account.data_account_type_current_assets
+101020613,,FALSE,101020613,base.main_company,base.user_root,,FALSE,,base.user_root,VisaElect Bolivariano,,other,account.data_account_type_current_assets
+1010207,,FALSE,1010207,base.main_company,base.user_root,,FALSE,,base.user_root,OTRAS CTAS X COB. RELACIONADA,,other,account.data_account_type_current_assets
+101020701,,FALSE,101020701,base.main_company,base.user_root,,FALSE,,base.user_root,Anticipo Empleados,,other,account.data_account_type_current_assets
+101020702,,FALSE,101020702,base.main_company,base.user_root,,FALSE,,base.user_root,Prestamos Empleados,,other,account.data_account_type_current_assets
+101020703,,FALSE,101020703,base.main_company,base.user_root,,FALSE,,base.user_root,Anticipos Varios,,other,account.data_account_type_current_assets
+101020704,,FALSE,101020704,base.main_company,base.user_root,,FALSE,,base.user_root,Otras Ctas.por Cobrar,,other,account.data_account_type_current_assets
+101020705,,FALSE,101020705,base.main_company,base.user_root,,FALSE,,base.user_root,DINERS X PAGAR,,other,account.data_account_type_current_assets
+101020706,,FALSE,101020706,base.main_company,base.user_root,,FALSE,,base.user_root,Anticipo Proveedores,,other,account.data_account_type_current_assets
+1010208,,FALSE,1010208,base.main_company,base.user_root,,FALSE,,base.user_root,OTRAS CTAS X COB.,,other,account.data_account_type_current_assets
+1010209,,FALSE,1010209,base.main_company,base.user_root,,FALSE,,base.user_root,(-) PROV. CTAS INCOBRABLES,,other,account.data_account_type_current_assets
+10103,,FALSE,10103,base.main_company,base.user_root,,FALSE,,base.user_root,INVENTARIOS,,other,account.data_account_type_current_assets
+1010301,,FALSE,1010301,base.main_company,base.user_root,,FALSE,,base.user_root,INV MATERIA PRIMA,,other,account.data_account_type_current_assets
+1010302,,FALSE,1010302,base.main_company,base.user_root,,FALSE,,base.user_root,INV PROD. PROCE.,,other,account.data_account_type_current_assets
+1010303,,FALSE,1010303,base.main_company,base.user_root,,FALSE,,base.user_root,INV SUMINI CONSU. PRODU,,other,account.data_account_type_current_assets
+1010304,,FALSE,1010304,base.main_company,base.user_root,,FALSE,,base.user_root,INV SUMINI CONSU.SERVICIO,,other,account.data_account_type_current_assets
+1010305,,FALSE,1010305,base.main_company,base.user_root,,FALSE,,base.user_root,INV PROD. TERM. X LA CIA,,other,account.data_account_type_current_assets
+1010306,,FALSE,1010306,base.main_company,base.user_root,,FALSE,,base.user_root,INV PROD.TERM.DE 3ROS,,other,account.data_account_type_current_assets
+1010307,,FALSE,1010307,base.main_company,base.user_root,,FALSE,,base.user_root,MERCADERIA TRANSITO,,other,account.data_account_type_current_assets
+1010308,,FALSE,1010308,base.main_company,base.user_root,,FALSE,,base.user_root,OBRAS CONSTRUCCION,,other,account.data_account_type_current_assets
+1010309,,FALSE,1010309,base.main_company,base.user_root,,FALSE,,base.user_root,"INV REPTOS, HERRA. Y ACCESORI",,other,account.data_account_type_current_assets
+1010310,,FALSE,1010310,base.main_company,base.user_root,,FALSE,,base.user_root,TRANSFERENCIA A BODEGAS,,other,account.data_account_type_current_assets
+1010311,,FALSE,1010311,base.main_company,base.user_root,,FALSE,,base.user_root,(-) PROV. INV X VALOR NETO R,,other,account.data_account_type_current_assets
+1010312,,FALSE,1010312,base.main_company,base.user_root,,FALSE,,base.user_root,(-) PROV. INV X DETERIORO,,other,account.data_account_type_current_assets
+10104,,FALSE,10104,base.main_company,base.user_root,,FALSE,,base.user_root,SERVICIOS Y OTROS PAGOS ANTS,,other,account.data_account_type_current_assets
+1010401,,FALSE,1010401,base.main_company,base.user_root,,FALSE,,base.user_root,SEGUROS PAGADOS X ANT,,other,account.data_account_type_current_assets
+1010402,,FALSE,1010402,base.main_company,base.user_root,,FALSE,,base.user_root,ARRIENDOS PAGADOS X ANT,,other,account.data_account_type_current_assets
+1010403,,FALSE,1010403,base.main_company,base.user_root,,FALSE,,base.user_root,ANTICIPOS A PROVEEDORES,,other,account.data_account_type_current_assets
+1010404,,FALSE,1010404,base.main_company,base.user_root,,FALSE,,base.user_root,OTROS ANTICIPOS ENTREGADOS,,other,account.data_account_type_current_assets
+10105,,FALSE,10105,base.main_company,base.user_root,,FALSE,,base.user_root,ACTIVOS X IMPUESTOS CORRIE.,,other,account.data_account_type_current_assets
+1010501,,FALSE,1010501,base.main_company,base.user_root,,FALSE,,base.user_root,CRÉDITO TRIBUTARIO (IVA),,other,account.data_account_type_current_assets
+1010502,,FALSE,1010502,base.main_company,base.user_root,,FALSE,,base.user_root,CRÉDITO TRIBUTARIO ( I. R.),,other,account.data_account_type_current_assets
+1010503,,FALSE,1010503,base.main_company,base.user_root,,FALSE,,base.user_root,ANTICIPO IMPUESTO A LA RTA,,other,account.data_account_type_current_assets
+10106,,FALSE,10106,base.main_company,base.user_root,,FALSE,,base.user_root,ACTI. NO CORRI. MANT. VTA OP.,,other,account.data_account_type_current_assets
+10107,,FALSE,10107,base.main_company,base.user_root,,FALSE,,base.user_root,OTROS ACTIVOS CORRIE.,,other,account.data_account_type_current_assets
+102,,FALSE,102,base.main_company,base.user_root,,FALSE,,base.user_root,ACTIVO NO CORRTE,,other,account.data_account_type_current_assets
+10201,,FALSE,10201,base.main_company,base.user_root,,FALSE,,base.user_root,"PROPIEDAD, PLANTA Y EQUIPO",,other,account.data_account_type_current_assets
+1020101,,FALSE,1020101,base.main_company,base.user_root,,FALSE,,base.user_root,TERRENOS,,other,account.data_account_type_current_assets
+1020102,,FALSE,1020102,base.main_company,base.user_root,,FALSE,,base.user_root,EDIFICIOS,,other,account.data_account_type_current_assets
+1020103,,FALSE,1020103,base.main_company,base.user_root,,FALSE,,base.user_root,CONSTRUCCIONES CURSO,,other,account.data_account_type_current_assets
+1020104,,FALSE,1020104,base.main_company,base.user_root,,FALSE,,base.user_root,INSTALACIONES,,other,account.data_account_type_current_assets
+1020105,,FALSE,1020105,base.main_company,base.user_root,,FALSE,,base.user_root,MUEBLES Y SERES,,other,account.data_account_type_current_assets
+1020106,,FALSE,1020106,base.main_company,base.user_root,,FALSE,,base.user_root,MAQUINARIA Y EQUIPO,,other,account.data_account_type_current_assets
+1020107,,FALSE,1020107,base.main_company,base.user_root,,FALSE,,base.user_root,"NAVES, AERONAVES, BARCAZAS YSI",,other,account.data_account_type_current_assets
+1020108,,FALSE,1020108,base.main_company,base.user_root,,FALSE,,base.user_root,EQUIPO COMPUTACIÓN,,other,account.data_account_type_current_assets
+1020109,,FALSE,1020109,base.main_company,base.user_root,,FALSE,,base.user_root,"VEHÍCULOS, EQUIPOS TRANSPORTE",,other,account.data_account_type_current_assets
+1020110,,FALSE,1020110,base.main_company,base.user_root,,FALSE,,base.user_root,"OTROS PROPIEDAS, PLANTA Y EQUI",,other,account.data_account_type_current_assets
+1020111,,FALSE,1020111,base.main_company,base.user_root,,FALSE,,base.user_root,REPUESTOS Y HERRAMITAS,,other,account.data_account_type_current_assets
+1020112,,FALSE,1020112,base.main_company,base.user_root,,FALSE,,base.user_root,"(-) DEPRE ACUMULADA PROPIEDAS,",,other,account.data_account_type_current_assets
+1020113,,FALSE,1020113,base.main_company,base.user_root,,FALSE,,base.user_root,(-) DETERIORO ACUMULADO PROP,,other,account.data_account_type_current_assets
+1020114,,FALSE,1020114,base.main_company,base.user_root,,FALSE,,base.user_root,ACTIVOS EXPLORACION Y EXPLOTA,,other,account.data_account_type_current_assets
+102011401,,FALSE,102011401,base.main_company,base.user_root,,FALSE,,base.user_root,ACTIVOS EXPLORACION Y EXPLOTA,,other,account.data_account_type_current_assets
+102011402,,FALSE,102011402,base.main_company,base.user_root,,FALSE,,base.user_root,(-) AMORTIZACION ACUMULADA AC,,other,account.data_account_type_current_assets
+102011403,,FALSE,102011403,base.main_company,base.user_root,,FALSE,,base.user_root,(-)DETERIORO ACUMULADO ACTIV,,other,account.data_account_type_current_assets
+10202,,FALSE,10202,base.main_company,base.user_root,,FALSE,,base.user_root,PROPIEDAD INVERSIÓN,,other,account.data_account_type_current_assets
+1020201,,FALSE,1020201,base.main_company,base.user_root,,FALSE,,base.user_root,TERRENOS,,other,account.data_account_type_current_assets
+1020202,,FALSE,1020202,base.main_company,base.user_root,,FALSE,,base.user_root,EDIFICIOS,,other,account.data_account_type_current_assets
+1020203,,FALSE,1020203,base.main_company,base.user_root,,FALSE,,base.user_root,(-) DEPRECIACION ACUMULADA PR,,other,account.data_account_type_current_assets
+1020204,,FALSE,1020204,base.main_company,base.user_root,,FALSE,,base.user_root,(-) DETERIORO ACUMULADO PROPI,,other,account.data_account_type_current_assets
+10203,,FALSE,10203,base.main_company,base.user_root,,FALSE,,base.user_root,ACTIVOS INTANGIBLES,,other,account.data_account_type_current_assets
+1020301,,FALSE,1020301,base.main_company,base.user_root,,FALSE,,base.user_root,ANIMALES VIVOS CRECIMITO,,other,account.data_account_type_current_assets
+1020302,,FALSE,1020302,base.main_company,base.user_root,,FALSE,,base.user_root,ANIMALES VIVOS PRODU,,other,account.data_account_type_current_assets
+1020303,,FALSE,1020303,base.main_company,base.user_root,,FALSE,,base.user_root,PLANTAS CRECIMITO,,other,account.data_account_type_current_assets
+1020304,,FALSE,1020304,base.main_company,base.user_root,,FALSE,,base.user_root,PLANTAS PRODU,,other,account.data_account_type_current_assets
+1020305,,FALSE,1020305,base.main_company,base.user_root,,FALSE,,base.user_root,(-) DEPRECIACION ACUMULADA AC,,other,account.data_account_type_current_assets
+1020306,,FALSE,1020306,base.main_company,base.user_root,,FALSE,,base.user_root,(-) DETERIORO ACUMULADO ACTIV,,other,account.data_account_type_current_assets
+10204,,FALSE,10204,base.main_company,base.user_root,,FALSE,,base.user_root,ACTIVO INTANGIBLE,,other,account.data_account_type_current_assets
+1020401,,FALSE,1020401,base.main_company,base.user_root,,FALSE,,base.user_root,PLUSVALÍAS,,other,account.data_account_type_current_assets
+1020402,,FALSE,1020402,base.main_company,base.user_root,,FALSE,,base.user_root,"MARCAS, PATTES, RECHOS LLAVE",,other,account.data_account_type_current_assets
+1020403,,FALSE,1020403,base.main_company,base.user_root,,FALSE,,base.user_root,ACTIVOS EXPLORACION Y EXPLOTA,,other,account.data_account_type_current_assets
+1020404,,FALSE,1020404,base.main_company,base.user_root,,FALSE,,base.user_root,(-) AMORTIZACIÓN ACUMULADA AC,,other,account.data_account_type_current_assets
+1020405,,FALSE,1020405,base.main_company,base.user_root,,FALSE,,base.user_root,(-)DETERIORO ACUMULADO ACTIVO,,other,account.data_account_type_current_assets
+1020406,,FALSE,1020406,base.main_company,base.user_root,,FALSE,,base.user_root,OTROS INTANGIBLES,,other,account.data_account_type_current_assets
+10205,,FALSE,10205,base.main_company,base.user_root,,FALSE,,base.user_root,ACTIVOS X IMPUESTOS DIFERIDOS,,other,account.data_account_type_current_assets
+1020501,,FALSE,1020501,base.main_company,base.user_root,,FALSE,,base.user_root,ACTIVOS X IMPUESTOS DIFERIDOS,,other,account.data_account_type_current_assets
+10206,,FALSE,10206,base.main_company,base.user_root,,FALSE,,base.user_root,ACT.FINANC. NO CORRIE.,,other,account.data_account_type_current_assets
+1020601,,FALSE,1020601,base.main_company,base.user_root,,FALSE,,base.user_root,ACT.FINANC. MANTE. HASTA EL VC,,other,account.data_account_type_current_assets
+1020602,,FALSE,1020602,base.main_company,base.user_root,,FALSE,,base.user_root,(-) PROVISION X TERIORO ACT.F,,other,account.data_account_type_current_assets
+1020603,,FALSE,1020603,base.main_company,base.user_root,,FALSE,,base.user_root,DOCUMTOS Y CUOTAS X COB.,,other,account.data_account_type_current_assets
+1020604,,FALSE,1020604,base.main_company,base.user_root,,FALSE,,base.user_root,(-) PROV. CUOTAS INCOBRABLES,,other,account.data_account_type_current_assets
+10207,,FALSE,10207,base.main_company,base.user_root,,FALSE,,base.user_root,OTROS ACTIVOS NO CORRIE.,,other,account.data_account_type_current_assets
+1020701,,FALSE,1020701,base.main_company,base.user_root,,FALSE,,base.user_root,INVERSIONES SUBSIDIARIAS,,other,account.data_account_type_current_assets
+1020702,,FALSE,1020702,base.main_company,base.user_root,,FALSE,,base.user_root,INVERSIONES ASOCIADAS,,other,account.data_account_type_current_assets
+1020703,,FALSE,1020703,base.main_company,base.user_root,,FALSE,,base.user_root,INVERSIONES NEGOCIOS CONJUNTOS,,other,account.data_account_type_current_assets
+1020704,,FALSE,1020704,base.main_company,base.user_root,,FALSE,,base.user_root,OTRAS INVERSIONES,,other,account.data_account_type_current_assets
+1020705,,FALSE,1020705,base.main_company,base.user_root,,FALSE,,base.user_root,(-) PROV. VALUACIÓN INVERSION,,other,account.data_account_type_current_assets
+1020706,,FALSE,1020706,base.main_company,base.user_root,,FALSE,,base.user_root,OTROS ACTIVOS NO CORRIE.,,other,account.data_account_type_current_assets
+2,,FALSE,2,base.main_company,base.user_root,,FALSE,,base.user_root,PASIVO,,other,account.data_account_type_current_liabilities
+201,,FALSE,201,base.main_company,base.user_root,,FALSE,,base.user_root,PASIVO CORRIENTE,,other,account.data_account_type_current_liabilities
+20101,,FALSE,20101,base.main_company,base.user_root,,FALSE,,base.user_root,PASIVOS FINANCIEROS A VAL.RAZO,,other,account.data_account_type_current_liabilities
+20102,,FALSE,20102,base.main_company,base.user_root,,FALSE,,base.user_root,PASIVOS X CONTRATOS ARRENDAMI,,other,account.data_account_type_current_liabilities
+20103,,FALSE,20103,base.main_company,base.user_root,,FALSE,,base.user_root,CTAS.DTOS.XPAGAR (PROVEEDOR),,other,account.data_account_type_current_liabilities
+2010301,,TRUE,2010301,base.main_company,base.user_root,,FALSE,,base.user_root,PROVEEDORES LOCALES,,payable,account.data_account_type_payable
+2010302,,FALSE,2010302,base.main_company,base.user_root,,FALSE,,base.user_root,PROVEED EXTERIOR,,other,account.data_account_type_current_liabilities
+20104,,FALSE,20104,base.main_company,base.user_root,,FALSE,,base.user_root,DEUDAS BCOS LOCALES,,other,account.data_account_type_current_liabilities
+2010401,,FALSE,2010401,base.main_company,base.user_root,,FALSE,,base.user_root,DEUDAS LOCALES DR,,other,account.data_account_type_current_liabilities
+201040101,,FALSE,201040101,base.main_company,base.user_root,,FALSE,,base.user_root,PRESTAMO INTERNACIONAL,,other,account.data_account_type_current_liabilities
+201040102,,FALSE,201040102,base.main_company,base.user_root,,FALSE,,base.user_root,PRESTAMO BCO BOLIVARIANO,,other,account.data_account_type_current_liabilities
+201040103,,FALSE,201040103,base.main_company,base.user_root,,FALSE,,base.user_root,PRESTAMO BOLIVARIANO PANAMA,,other,account.data_account_type_current_liabilities
+201040104,,FALSE,201040104,base.main_company,base.user_root,,FALSE,,base.user_root,PRESTAMO PACIFICO,,other,account.data_account_type_current_liabilities
+201040105,,FALSE,201040105,base.main_company,base.user_root,,FALSE,,base.user_root,PRESTAMO PICHINCHA,,other,account.data_account_type_current_liabilities
+2010402,,FALSE,2010402,base.main_company,base.user_root,,FALSE,,base.user_root,DEUDAS BCOS EXTERIOR,,other,account.data_account_type_current_liabilities
+20105,,FALSE,20105,base.main_company,base.user_root,,FALSE,,base.user_root,PROVISION EMPLEADOS,,other,account.data_account_type_current_liabilities
+2010501,,FALSE,2010501,base.main_company,base.user_root,,FALSE,,base.user_root,PROVISION 13ERO/14TO/F.RESERVA,,other,account.data_account_type_current_liabilities
+2010502,,FALSE,2010502,base.main_company,base.user_root,,FALSE,,base.user_root,PROVISION DEL EXTERIOR,,other,account.data_account_type_current_liabilities
+20106,,FALSE,20106,base.main_company,base.user_root,,FALSE,,base.user_root,PARTE CORRITE OBLIGACIO,,other,account.data_account_type_current_liabilities
+20107,,FALSE,20107,base.main_company,base.user_root,,FALSE,,base.user_root,DEUDAS SRI-IESS-EMPLEADOS,,other,account.data_account_type_current_liabilities
+2010701,,FALSE,2010701,base.main_company,base.user_root,,FALSE,,base.user_root,IVA VTAS-.X PAGAR,,other,account.data_account_type_current_liabilities
+2010702,,FALSE,2010702,base.main_company,base.user_root,,FALSE,,base.user_root,RET.FUENTE POR PAGAR,,other,account.data_account_type_current_liabilities
+2010703,,FALSE,2010703,base.main_company,base.user_root,,FALSE,,base.user_root,APORTES/PRESTAMOS IESS,,other,account.data_account_type_current_liabilities
+201070301,,FALSE,201070301,base.main_company,base.user_root,,FALSE,,base.user_root,SUELDOS POR PAGAR,,other,account.data_account_type_current_liabilities
+2010704,,FALSE,2010704,base.main_company,base.user_root,,FALSE,,base.user_root,IMPTO A LA RENTA POR PAGAR,,other,account.data_account_type_current_liabilities
+2010705,,FALSE,2010705,base.main_company,base.user_root,,FALSE,,base.user_root,PARTICIPACIÓN TRABAJADORES X P,,other,account.data_account_type_current_liabilities
+2010706,,FALSE,2010706,base.main_company,base.user_root,,FALSE,,base.user_root,DIVIDENDOS X PAGAR,,other,account.data_account_type_current_liabilities
+20108,,FALSE,20108,base.main_company,base.user_root,,FALSE,,base.user_root,CTAS X PAGAR DIVERSAS/RELACI,,other,account.data_account_type_current_liabilities
+20109,,FALSE,20109,base.main_company,base.user_root,,FALSE,,base.user_root,OTROS PASIVOS FINANCIEROS,,other,account.data_account_type_current_liabilities
+20110,,FALSE,20110,base.main_company,base.user_root,,FALSE,,base.user_root,ANTICIPOS CLIE.S,,other,account.data_account_type_current_liabilities
+201101,,FALSE,201101,base.main_company,base.user_root,,FALSE,,base.user_root,ANTICIPO CLIENTES LOCALES,,other,account.data_account_type_current_liabilities
+20111,,FALSE,20111,base.main_company,base.user_root,,FALSE,,base.user_root,PASIVOS DIRECT. ASOCIADOS CON,,other,account.data_account_type_current_liabilities
+20112,,FALSE,20112,base.main_company,base.user_root,,FALSE,,base.user_root,PORCION CORRITE PROVISIONES X,,other,account.data_account_type_current_liabilities
+2011201,,FALSE,2011201,base.main_company,base.user_root,,FALSE,,base.user_root,JUBILACION PATRONAL,,other,account.data_account_type_current_liabilities
+2011202,,FALSE,2011202,base.main_company,base.user_root,,FALSE,,base.user_root,OTROS BEFICIOS A LARGO PLAZO P,,other,account.data_account_type_current_liabilities
+20113,,FALSE,20113,base.main_company,base.user_root,,FALSE,,base.user_root,OTROS PASIVOS CORRIE.,,other,account.data_account_type_current_liabilities
+202,,FALSE,202,base.main_company,base.user_root,,FALSE,,base.user_root,PASIVO NO CORRITE,,other,account.data_account_type_current_liabilities
+20201,,FALSE,20201,base.main_company,base.user_root,,FALSE,,base.user_root,PASIVOS X CONTRATOS ARRDAMITO,,other,account.data_account_type_current_liabilities
+20202,,FALSE,20202,base.main_company,base.user_root,,FALSE,,base.user_root,CTAS Y DOCUMTOS X PAGAR,,other,account.data_account_type_current_liabilities
+2020201,,FALSE,2020201,base.main_company,base.user_root,,FALSE,,base.user_root,PROVEEDOR LOCAL L/P,,other,account.data_account_type_current_liabilities
+2020202,,FALSE,2020202,base.main_company,base.user_root,,FALSE,,base.user_root,PROVEEDOR EXTERIOR L/P,,other,account.data_account_type_current_liabilities
+20203,,FALSE,20203,base.main_company,base.user_root,,FALSE,,base.user_root,OBLIGACIONES CON INSTITUCIONES,,other,account.data_account_type_current_liabilities
+2020301,,FALSE,2020301,base.main_company,base.user_root,,FALSE,,base.user_root,CTASPAGAR BCOS LOCAL L/P,,other,account.data_account_type_current_liabilities
+2020302,,FALSE,2020302,base.main_company,base.user_root,,FALSE,,base.user_root,CTAS X PAGAR BCO EXTERIOR,,other,account.data_account_type_current_liabilities
+20204,,FALSE,20204,base.main_company,base.user_root,,FALSE,,base.user_root,CTAS X PAGAR DIVERSAS/RELACIO,,other,account.data_account_type_current_liabilities
+2020401,,FALSE,2020401,base.main_company,base.user_root,,FALSE,,base.user_root,POR PAGAR RELACIONADAS,,other,account.data_account_type_current_liabilities
+2020402,,FALSE,2020402,base.main_company,base.user_root,,FALSE,,base.user_root,X PAGAR E,,other,account.data_account_type_current_liabilities
+20205,,FALSE,20205,base.main_company,base.user_root,,FALSE,,base.user_root,OBLIGACIONES EMITIDAS,,other,account.data_account_type_current_liabilities
+20206,,FALSE,20206,base.main_company,base.user_root,,FALSE,,base.user_root,ANTICIPOS CLIENTES,,other,account.data_account_type_current_liabilities
+20207,,FALSE,20207,base.main_company,base.user_root,,FALSE,,base.user_root,PROVISIONES X BENEFICIOS A EMP,,other,account.data_account_type_current_liabilities
+2020701,,FALSE,2020701,base.main_company,base.user_root,,FALSE,,base.user_root,JUBILACION PATRONAL,,other,account.data_account_type_current_liabilities
+2020702,,FALSE,2020702,base.main_company,base.user_root,,FALSE,,base.user_root,OTROS BENEFICIOS NO CORRIE. PA,,other,account.data_account_type_current_liabilities
+20208,,FALSE,20208,base.main_company,base.user_root,,FALSE,,base.user_root,OTRAS PROVISIONES,,other,account.data_account_type_current_liabilities
+20209,,FALSE,20209,base.main_company,base.user_root,,FALSE,,base.user_root,PASIVO DIFERIDO,,other,account.data_account_type_current_liabilities
+2020901,,FALSE,2020901,base.main_company,base.user_root,,FALSE,,base.user_root,INGRESOS DIFERIDOS,,other,account.data_account_type_current_liabilities
+2020902,,FALSE,2020902,base.main_company,base.user_root,,FALSE,,base.user_root,PASIVOS X IMPUESTOS DIFERIDOS,,other,account.data_account_type_current_liabilities
+20210,,FALSE,20210,base.main_company,base.user_root,,FALSE,,base.user_root,OTROS PASIVOS NO CORRIE.,,other,account.data_account_type_current_liabilities
+3,,FALSE,3,base.main_company,base.user_root,,FALSE,,base.user_root,PATRIMONIO NETO,,other,account.data_account_type_equity
+301,,FALSE,301,base.main_company,base.user_root,,FALSE,,base.user_root,CAPITAL,,other,account.data_account_type_equity
+30101,,FALSE,30101,base.main_company,base.user_root,,FALSE,,base.user_root,CAPITAL SUSCRITO o ASIGNADO,,other,account.data_account_type_equity
+30102,,FALSE,30102,base.main_company,base.user_root,,FALSE,,base.user_root,(-) CAPITAL SUSCRITO NO PAGADO,,other,account.data_account_type_equity
+302,,FALSE,302,base.main_company,base.user_root,,FALSE,,base.user_root,APORTES SOCIOS O ACCIONISTAS,,other,account.data_account_type_equity
+30201,,FALSE,30201,base.main_company,base.user_root,,FALSE,,base.user_root,APORTES FUTURAS CAP SOCIOS,,other,account.data_account_type_equity
+303,,FALSE,303,base.main_company,base.user_root,,FALSE,,base.user_root,PRIMA X EMISIÓN PRIMARIA ACCI,,other,account.data_account_type_equity
+304,,FALSE,304,base.main_company,base.user_root,,FALSE,,base.user_root,RESERVAS,,other,account.data_account_type_equity
+30401,,FALSE,30401,base.main_company,base.user_root,,FALSE,,base.user_root,RESERVA LEGAL,,other,account.data_account_type_equity
+30402,,FALSE,30402,base.main_company,base.user_root,,FALSE,,base.user_root,RESERVAS FACULTATIVA Y ESTATUT,,other,account.data_account_type_equity
+30403,,FALSE,30403,base.main_company,base.user_root,,FALSE,,base.user_root,RESERVA CAPITAL,,other,account.data_account_type_equity
+30404,,FALSE,30404,base.main_company,base.user_root,,FALSE,,base.user_root,OTRAS RESERVAS,,other,account.data_account_type_equity
+305,,FALSE,305,base.main_company,base.user_root,,FALSE,,base.user_root,OTROS RESUL. INTEGRALES,,other,account.data_account_type_equity
+30501,,FALSE,30501,base.main_company,base.user_root,,FALSE,,base.user_root,SUPERAVIT ACT.FINANC. DISPO.,,other,account.data_account_type_equity
+30502,,FALSE,30502,base.main_company,base.user_root,,FALSE,,base.user_root,SUPERAVIT X REVALUACIÓN PROPI,,other,account.data_account_type_equity
+30503,,FALSE,30503,base.main_company,base.user_root,,FALSE,,base.user_root,SUPERAVIT X REVALUACION ACTIV,,other,account.data_account_type_equity
+30504,,FALSE,30504,base.main_company,base.user_root,,FALSE,,base.user_root,OTROS SUPERAVIT X REVALUACION,,other,account.data_account_type_equity
+306,,FALSE,306,base.main_company,base.user_root,,FALSE,,base.user_root,UTIL.ACUMULA DISPOS.ACCIONISTA,,other,account.data_account_type_equity
+30601,,FALSE,30601,base.main_company,base.user_root,,FALSE,,base.user_root,GANANCIAS ACUMULADAS,,other,account.data_account_type_equity
+30602,,FALSE,30602,base.main_company,base.user_root,,FALSE,,base.user_root,(-) PÉRDIDAS ACUMULADAS,,other,account.data_account_type_equity
+30603,,FALSE,30603,base.main_company,base.user_root,,FALSE,,base.user_root,RESUL. ACUMULADOS PROVTES NII,,other,account.data_account_type_equity
+307,,FALSE,307,base.main_company,base.user_root,,FALSE,,base.user_root,RESUL. DEL EJERCICIO,,other,account.data_account_type_equity
+30701,,FALSE,30701,base.main_company,base.user_root,,FALSE,,base.user_root,UTILIDAD DEL EJERCICIO,,other,account.data_account_type_equity
+30702,,FALSE,30702,base.main_company,base.user_root,,FALSE,,base.user_root,UTILIDAD AÑO ANTERIOR,,other,account.data_account_type_equity
+4,,FALSE,4,base.main_company,base.user_root,,FALSE,,base.user_root,INGRESOS,,other,account.data_account_type_other_income
+41,,FALSE,41,base.main_company,base.user_root,,FALSE,,base.user_root,INGRESOS ACTIVIDAS ORDINARIAS,,other,account.data_account_type_other_income
+4101,,FALSE,4101,base.main_company,base.user_root,,FALSE,,base.user_root,VENTAS,,other,account.data_account_type_other_income
+4102,,FALSE,4102,base.main_company,base.user_root,,FALSE,,base.user_root,PRESTACION SERVICIOS,,other,account.data_account_type_other_income
+4103,,FALSE,4103,base.main_company,base.user_root,,FALSE,,base.user_root,CONTRATOS CONSTRUCCION,,other,account.data_account_type_other_income
+4104,,FALSE,4104,base.main_company,base.user_root,,FALSE,,base.user_root,SUBVCIONES L GOBIERNO,,other,account.data_account_type_other_income
+4105,,FALSE,4105,base.main_company,base.user_root,,FALSE,,base.user_root,REGALÍAS,,other,account.data_account_type_other_income
+4106,,FALSE,4106,base.main_company,base.user_root,,FALSE,,base.user_root,INTERESES,,other,account.data_account_type_other_income
+4107,,FALSE,4107,base.main_company,base.user_root,,FALSE,,base.user_root,DIVIDENDOS,,other,account.data_account_type_other_income
+4108,,FALSE,4108,base.main_company,base.user_root,,FALSE,,base.user_root,OTROS INGRESOS ACTIVIDAS ORDI,,other,account.data_account_type_other_income
+4109,,FALSE,4109,base.main_company,base.user_root,,FALSE,,base.user_root,(-)DSCTO.EN VTAS,,other,account.data_account_type_other_income
+4110,,FALSE,4110,base.main_company,base.user_root,,FALSE,,base.user_root,(-)DEVOLUCION VTAS,,other,account.data_account_type_other_income
+4111,,FALSE,4111,base.main_company,base.user_root,,FALSE,,base.user_root,(-) BONIFICACIÓN PRODUCTO,,other,account.data_account_type_other_income
+4112,,FALSE,4112,base.main_company,base.user_root,,FALSE,,base.user_root,(-) OTRAS REBAJAS COMERCIALES,,other,account.data_account_type_other_income
+42,,FALSE,42,base.main_company,base.user_root,,FALSE,,base.user_root,GANANCIA BRUTA,,other,account.data_account_type_other_income
+43,,FALSE,43,base.main_company,base.user_root,,FALSE,,base.user_root,OTROS INGRESOS,,other,account.data_account_type_other_income
+4301,,FALSE,4301,base.main_company,base.user_root,,FALSE,,base.user_root,DIVIDENDOS,,other,account.data_account_type_other_income
+4302,,FALSE,4302,base.main_company,base.user_root,,FALSE,,base.user_root,INTERESES FINANCIEROS,,other,account.data_account_type_other_income
+4303,,FALSE,4303,base.main_company,base.user_root,,FALSE,,base.user_root,GANANCIA INVERSIONES ASOCIAD,,other,account.data_account_type_other_income
+4304,,FALSE,4304,base.main_company,base.user_root,,FALSE,,base.user_root,VALUACION INSTRUMTOS FINANCIE,,other,account.data_account_type_other_income
+4305,,FALSE,4305,base.main_company,base.user_root,,FALSE,,base.user_root,OTRAS RTAS,,other,account.data_account_type_other_income
+5,,FALSE,5,base.main_company,base.user_root,,FALSE,,base.user_root,EGRESOS,,other,account.data_account_type_expenses
+51,,FALSE,51,base.main_company,base.user_root,,FALSE,,base.user_root,COSTO VTAS Y PRODU,,other,account.data_account_type_expenses
+5101,,FALSE,5101,base.main_company,base.user_root,,FALSE,,base.user_root,MATERIALES UTILIZADOS O PROD.,,other,account.data_account_type_expenses
+510101,,FALSE,510101,base.main_company,base.user_root,,FALSE,,base.user_root,(+) INV. INI. BIES NO PRODUCI,,other,account.data_account_type_expenses
+510102,,FALSE,510102,base.main_company,base.user_root,,FALSE,,base.user_root,(+) COMPRAS NETAS LOCALES BIE,,other,account.data_account_type_expenses
+510103,,FALSE,510103,base.main_company,base.user_root,,FALSE,,base.user_root,(+) IMPORTACIONES BIES NO PRO,,other,account.data_account_type_expenses
+510104,,FALSE,510104,base.main_company,base.user_root,,FALSE,,base.user_root,(-) INV. FIN. BIES NO PRODU X,,other,account.data_account_type_expenses
+510105,,FALSE,510105,base.main_company,base.user_root,,FALSE,,base.user_root,(+) INV. INI. MATERIA PRIMA,,other,account.data_account_type_expenses
+510106,,FALSE,510106,base.main_company,base.user_root,,FALSE,,base.user_root,(+) COMPRAS NETAS LOCAL MP,,other,account.data_account_type_expenses
+510107,,FALSE,510107,base.main_company,base.user_root,,FALSE,,base.user_root,(+) IMPORTACIONES MATERIA PRI,,other,account.data_account_type_expenses
+510108,,FALSE,510108,base.main_company,base.user_root,,FALSE,,base.user_root,(-) INV. FIN. MATERIA PRIMA,,other,account.data_account_type_expenses
+510109,,FALSE,510109,base.main_company,base.user_root,,FALSE,,base.user_root,(+) INV. INI. PROD. PROCE.,,other,account.data_account_type_expenses
+510110,,FALSE,510110,base.main_company,base.user_root,,FALSE,,base.user_root,(-) INV. FIN. PROD. PROCE.,,other,account.data_account_type_expenses
+510111,,FALSE,510111,base.main_company,base.user_root,,FALSE,,base.user_root,(+) INV. INI. PROD. TERMINADOS,,other,account.data_account_type_expenses
+510112,,FALSE,510112,base.main_company,base.user_root,,FALSE,,base.user_root,(-) INV. FIN. PROD. TERMINADO,,other,account.data_account_type_expenses
+5102,,FALSE,5102,base.main_company,base.user_root,,FALSE,,base.user_root,(+) MANO OBRA DIRECTA,,other,account.data_account_type_expenses
+510201,,FALSE,510201,base.main_company,base.user_root,,FALSE,,base.user_root,SUELDOS Y BENEFICIOS SOCIALES,,other,account.data_account_type_expenses
+510202,,FALSE,510202,base.main_company,base.user_root,,FALSE,,base.user_root,GASTO PLANES BEFICIOS A EMPLE,,other,account.data_account_type_expenses
+5103,,FALSE,5103,base.main_company,base.user_root,,FALSE,,base.user_root,(+) MANO OBRA INDIRECTA,,other,account.data_account_type_expenses
+510301,,FALSE,510301,base.main_company,base.user_root,,FALSE,,base.user_root,SUELDOS Y BEFICIOS SOCIALES,,other,account.data_account_type_expenses
+510302,,FALSE,510302,base.main_company,base.user_root,,FALSE,,base.user_root,GASTO PLANES BEFICIOS A EMPLE,,other,account.data_account_type_expenses
+5104,,FALSE,5104,base.main_company,base.user_root,,FALSE,,base.user_root,TOTAL COSTOS DE VENTAS,,other,account.data_account_type_expenses
+510401,,FALSE,510401,base.main_company,base.user_root,,FALSE,,base.user_root,"PRE PROPIEDAS, PLANTA Y EQUIPO",,other,account.data_account_type_expenses
+510402,,FALSE,510402,base.main_company,base.user_root,,FALSE,,base.user_root,PRE ACTIVOS BIOLOGICOS,,other,account.data_account_type_expenses
+510403,,FALSE,510403,base.main_company,base.user_root,,FALSE,,base.user_root,"DETERIORO PROPIEDAD, PLANTA Y",,other,account.data_account_type_expenses
+510404,,FALSE,510404,base.main_company,base.user_root,,FALSE,,base.user_root,EFECTO VALOR NETO REALIZACION,,other,account.data_account_type_expenses
+510405,,FALSE,510405,base.main_company,base.user_root,,FALSE,,base.user_root,GASTO X GARANTIAS VTA PROD.,,other,account.data_account_type_expenses
+510406,,FALSE,510406,base.main_company,base.user_root,,FALSE,,base.user_root,MANTIMITO Y REPARACIONES,,other,account.data_account_type_expenses
+510407,,FALSE,510407,base.main_company,base.user_root,,FALSE,,base.user_root,SUMINISTROS MATERIALES Y REPUE,,other,account.data_account_type_expenses
+510408,,FALSE,510408,base.main_company,base.user_root,,FALSE,,base.user_root,COSTO DE VENTAS BIENES,,other,account.data_account_type_expenses
+52,,FALSE,52,base.main_company,base.user_root,,FALSE,,base.user_root,GASTOS ADMINISTRA/VENTAS,,other,account.data_account_type_expenses
+5201,,FALSE,5201,base.main_company,base.user_root,,FALSE,,base.user_root,GASTOS DE VENTAS,,other,account.data_account_type_expenses
+520101,,FALSE,520101,base.main_company,base.user_root,,FALSE,,base.user_root,SUELDOS VENTAS,,other,account.data_account_type_expenses
+520102,,FALSE,520102,base.main_company,base.user_root,,FALSE,,base.user_root,APORTES A LA SEGURIDAD SOCIAL,,other,account.data_account_type_expenses
+52010201,,FALSE,52010201,base.main_company,base.user_root,,FALSE,,base.user_root,Aporte Patronal Vtas,,other,account.data_account_type_expenses
+52010202,,FALSE,52010202,base.main_company,base.user_root,,FALSE,,base.user_root,Fondo Reserva Ventas,,other,account.data_account_type_expenses
+520103,,FALSE,520103,base.main_company,base.user_root,,FALSE,,base.user_root,BEFICIOS SOCIALES E INMNIZACIO,,other,account.data_account_type_expenses
+52010301,,FALSE,52010301,base.main_company,base.user_root,,FALSE,,base.user_root,Dec.Tercero Vtas,,other,account.data_account_type_expenses
+52010302,,FALSE,52010302,base.main_company,base.user_root,,FALSE,,base.user_root,Dec.Cuarto Vtas,,other,account.data_account_type_expenses
+52010303,,FALSE,52010303,base.main_company,base.user_root,,FALSE,,base.user_root,Vacaciones Vtas,,other,account.data_account_type_expenses
+52010304,,FALSE,52010304,base.main_company,base.user_root,,FALSE,,base.user_root,Deshaucio y Despido Vtas,,other,account.data_account_type_expenses
+520104,,FALSE,520104,base.main_company,base.user_root,,FALSE,,base.user_root,SOBRESUELDOS VTAS,,other,account.data_account_type_expenses
+52010401,,FALSE,52010401,base.main_company,base.user_root,,FALSE,,base.user_root,Premios y Compensacion Vtas,,other,account.data_account_type_expenses
+52010402,,FALSE,52010402,base.main_company,base.user_root,,FALSE,,base.user_root,Alimentacion Vtas,,other,account.data_account_type_expenses
+520105,,FALSE,520105,base.main_company,base.user_root,,FALSE,,base.user_root,"HONORARIOS, COMISIONES GYE",,other,account.data_account_type_expenses
+520106,,FALSE,520106,base.main_company,base.user_root,,FALSE,,base.user_root,REMUNERACIONES A OTROS GYE,,other,account.data_account_type_expenses
+520107,,FALSE,520107,base.main_company,base.user_root,,FALSE,,base.user_root,HONORARIOS A EXTRANJEROS X SER,,other,account.data_account_type_expenses
+520108,,FALSE,520108,base.main_company,base.user_root,,FALSE,,base.user_root,MANTIMITO Y REPARACIONES GYE,,other,account.data_account_type_expenses
+520109,,FALSE,520109,base.main_company,base.user_root,,FALSE,,base.user_root,ARRIENDO GUAYAQUIL,,other,account.data_account_type_expenses
+520110,,FALSE,520110,base.main_company,base.user_root,,FALSE,,base.user_root,COMISIONES GYE,,other,account.data_account_type_expenses
+520111,,FALSE,520111,base.main_company,base.user_root,,FALSE,,base.user_root,PROMOCIÓN Y PUBLICIDAD GYE,,other,account.data_account_type_expenses
+520112,,FALSE,520112,base.main_company,base.user_root,,FALSE,,base.user_root,COMBUSTIBLES GYE,,other,account.data_account_type_expenses
+520113,,FALSE,520113,base.main_company,base.user_root,,FALSE,,base.user_root,LUBRICANTES GYE,,other,account.data_account_type_expenses
+520114,,FALSE,520114,base.main_company,base.user_root,,FALSE,,base.user_root,SEGUROS Y REASEGUROS GYE,,other,account.data_account_type_expenses
+520115,,FALSE,520115,base.main_company,base.user_root,,FALSE,,base.user_root,TRANSPORTE GYE,,other,account.data_account_type_expenses
+520116,,FALSE,520116,base.main_company,base.user_root,,FALSE,,base.user_root,GASTOS GESTIÓN GYE,,other,account.data_account_type_expenses
+520117,,FALSE,520117,base.main_company,base.user_root,,FALSE,,base.user_root,GASTOS VIAJE GYE,,other,account.data_account_type_expenses
+520118,,FALSE,520118,base.main_company,base.user_root,,FALSE,,base.user_root,"AGUA, LUZ, Y TELECOMU GYE",,other,account.data_account_type_expenses
+520119,,FALSE,520119,base.main_company,base.user_root,,FALSE,,base.user_root,NOTARIOS Y REGISTRADORES GYE,,other,account.data_account_type_expenses
+520120,,FALSE,520120,base.main_company,base.user_root,,FALSE,,base.user_root,"IMPUESTOS, CONTRIBUCIONES GYE",,other,account.data_account_type_expenses
+520121,,FALSE,520121,base.main_company,base.user_root,,FALSE,,base.user_root,DEPRECIACIONES: GYE,,other,account.data_account_type_expenses
+52012101,,FALSE,52012101,base.main_company,base.user_root,,FALSE,,base.user_root,"PROPIEDAS, PLANTA Y EQUIPO GYE",,other,account.data_account_type_expenses
+52012102,,FALSE,52012102,base.main_company,base.user_root,,FALSE,,base.user_root,PROPIEDAS INVERSIÓN,,other,account.data_account_type_expenses
+520122,,FALSE,520122,base.main_company,base.user_root,,FALSE,,base.user_root,AMORTIZACIONES: GYE,,other,account.data_account_type_expenses
+52012201,,FALSE,52012201,base.main_company,base.user_root,,FALSE,,base.user_root,INTANGIBLES GYE,,other,account.data_account_type_expenses
+52012202,,FALSE,52012202,base.main_company,base.user_root,,FALSE,,base.user_root,OTROS ACTIVOS GYE,,other,account.data_account_type_expenses
+520123,,FALSE,520123,base.main_company,base.user_root,,FALSE,,base.user_root,GASTO DETERIORO:,,other,account.data_account_type_expenses
+52012301,,FALSE,52012301,base.main_company,base.user_root,,FALSE,,base.user_root,"PROPIEDAD, PLANTA Y EQUIPO",,other,account.data_account_type_expenses
+52012302,,FALSE,52012302,base.main_company,base.user_root,,FALSE,,base.user_root,INVERSIONES,,other,account.data_account_type_expenses
+52012303,,FALSE,52012303,base.main_company,base.user_root,,FALSE,,base.user_root,INSTRUMENTOS FINANCIEROS,,other,account.data_account_type_expenses
+52012304,,FALSE,52012304,base.main_company,base.user_root,,FALSE,,base.user_root,INTANGIBLES,,other,account.data_account_type_expenses
+52012305,,FALSE,52012305,base.main_company,base.user_root,,FALSE,,base.user_root,CUOTAS X COB.,,other,account.data_account_type_expenses
+52012306,,FALSE,52012306,base.main_company,base.user_root,,FALSE,,base.user_root,OTROS ACTIVOS,,other,account.data_account_type_expenses
+520124,,FALSE,520124,base.main_company,base.user_root,,FALSE,,base.user_root,GASTOS X CAN. ANORMALES PRODU,,other,account.data_account_type_expenses
+52012401,,FALSE,52012401,base.main_company,base.user_root,,FALSE,,base.user_root,MANO OBRA,,other,account.data_account_type_expenses
+52012402,,FALSE,52012402,base.main_company,base.user_root,,FALSE,,base.user_root,MATERIALES,,other,account.data_account_type_expenses
+52012403,,FALSE,52012403,base.main_company,base.user_root,,FALSE,,base.user_root,COSTOS PRODU,,other,account.data_account_type_expenses
+520125,,FALSE,520125,base.main_company,base.user_root,,FALSE,,base.user_root,GASTO X REESTRUCTURACION,,other,account.data_account_type_expenses
+520126,,FALSE,520126,base.main_company,base.user_root,,FALSE,,base.user_root,VALOR NETO REALIZACION INV,,other,account.data_account_type_expenses
+520127,,FALSE,520127,base.main_company,base.user_root,,FALSE,,base.user_root,OTROS GASTOS GYE,,other,account.data_account_type_expenses
+52012701,,FALSE,52012701,base.main_company,base.user_root,,FALSE,,base.user_root,MANTENIMTO Y REPARA GYE,,other,account.data_account_type_expenses
+5202,,FALSE,5202,base.main_company,base.user_root,,FALSE,,base.user_root,GASTOS ADMINISTRATIVOS,,other,account.data_account_type_expenses
+520201,,FALSE,520201,base.main_company,base.user_root,,FALSE,,base.user_root,"SUELDOS, ADMINISTRACION",,other,account.data_account_type_expenses
+520202,,FALSE,520202,base.main_company,base.user_root,,FALSE,,base.user_root,APORTES A LA SEGURIDAD SOCIAL,,other,account.data_account_type_expenses
+52020201,,FALSE,52020201,base.main_company,base.user_root,,FALSE,,base.user_root,Aporte Patronal Adm.,,other,account.data_account_type_expenses
+52020202,,FALSE,52020202,base.main_company,base.user_root,,FALSE,,base.user_root,Fondo Reserva Adm.,,other,account.data_account_type_expenses
+520203,,FALSE,520203,base.main_company,base.user_root,,FALSE,,base.user_root,BENEFICIOS SOCIALES E INDEMNIZ,,other,account.data_account_type_expenses
+52020301,,FALSE,52020301,base.main_company,base.user_root,,FALSE,,base.user_root,Dec.Tercero Adm.,,other,account.data_account_type_expenses
+52020302,,FALSE,52020302,base.main_company,base.user_root,,FALSE,,base.user_root,Dec.Cuarto Adm.,,other,account.data_account_type_expenses
+52020303,,FALSE,52020303,base.main_company,base.user_root,,FALSE,,base.user_root,Vacaciones Adm.,,other,account.data_account_type_expenses
+52020304,,FALSE,52020304,base.main_company,base.user_root,,FALSE,,base.user_root,Despido y deshaucio Adm.,,other,account.data_account_type_expenses
+520204,,FALSE,520204,base.main_company,base.user_root,,FALSE,,base.user_root,SOBRESUELDOS ADMIN.,,other,account.data_account_type_expenses
+52020401,,FALSE,52020401,base.main_company,base.user_root,,FALSE,,base.user_root,Compensa y Premios Admi.,,other,account.data_account_type_expenses
+52020402,,FALSE,52020402,base.main_company,base.user_root,,FALSE,,base.user_root,Alimentacion Adm.,,other,account.data_account_type_expenses
+520205,,FALSE,520205,base.main_company,base.user_root,,FALSE,,base.user_root,"HONORARIOS, COMISIONES Y DIETA",,other,account.data_account_type_expenses
+520206,,FALSE,520206,base.main_company,base.user_root,,FALSE,,base.user_root,REMUNERACIONES A OTROS TRABAJA,,other,account.data_account_type_expenses
+520207,,FALSE,520207,base.main_company,base.user_root,,FALSE,,base.user_root,HONORARIOS A EXTRANJEROS X SER,,other,account.data_account_type_expenses
+520208,,FALSE,520208,base.main_company,base.user_root,,FALSE,,base.user_root,MANTENIMIENTO Y REPARACIONES,,other,account.data_account_type_expenses
+520209,,FALSE,520209,base.main_company,base.user_root,,FALSE,,base.user_root,ARRIENDO QUITO,,other,account.data_account_type_expenses
+520210,,FALSE,520210,base.main_company,base.user_root,,FALSE,,base.user_root,COMISIONES,,other,account.data_account_type_expenses
+520211,,FALSE,520211,base.main_company,base.user_root,,FALSE,,base.user_root,PROMOCIÓN Y PUBLICIDAD,,other,account.data_account_type_expenses
+520212,,FALSE,520212,base.main_company,base.user_root,,FALSE,,base.user_root,COMBUSTIBLES,,other,account.data_account_type_expenses
+520213,,FALSE,520213,base.main_company,base.user_root,,FALSE,,base.user_root,LUBRICANTES,,other,account.data_account_type_expenses
+520214,,FALSE,520214,base.main_company,base.user_root,,FALSE,,base.user_root,SEGUROS Y REASEGUROS (primas y,,other,account.data_account_type_expenses
+520215,,FALSE,520215,base.main_company,base.user_root,,FALSE,,base.user_root,TRANSPORTE,,other,account.data_account_type_expenses
+520216,,FALSE,520216,base.main_company,base.user_root,,FALSE,,base.user_root,GASTOS GESTIÓN (agasajos a ac,,other,account.data_account_type_expenses
+520217,,FALSE,520217,base.main_company,base.user_root,,FALSE,,base.user_root,GASTOS VIAJE,,other,account.data_account_type_expenses
+520218,,FALSE,520218,base.main_company,base.user_root,,FALSE,,base.user_root,"AGUA, ENERGIA, LUZ, Y TELECOM",,other,account.data_account_type_expenses
+520219,,FALSE,520219,base.main_company,base.user_root,,FALSE,,base.user_root,NOTARIOS Y REGISTRADORES LA P,,other,account.data_account_type_expenses
+520220,,FALSE,520220,base.main_company,base.user_root,,FALSE,,base.user_root,"IMPUESTOS, CONTRIBUCIONES Y OT",,other,account.data_account_type_expenses
+520221,,FALSE,520221,base.main_company,base.user_root,,FALSE,,base.user_root,DEPRECIACIONES:,,other,account.data_account_type_expenses
+52022101,,FALSE,52022101,base.main_company,base.user_root,,FALSE,,base.user_root,"PROPIEDAD, PLANTA Y EQUIPO",,other,account.data_account_type_expenses
+52022102,,FALSE,52022102,base.main_company,base.user_root,,FALSE,,base.user_root,PROPIEDAD INVERSIÓN,,other,account.data_account_type_expenses
+520222,,FALSE,520222,base.main_company,base.user_root,,FALSE,,base.user_root,AMORTIZACIONES:,,other,account.data_account_type_expenses
+52022201,,FALSE,52022201,base.main_company,base.user_root,,FALSE,,base.user_root,INTANGIBLES,,other,account.data_account_type_expenses
+52022202,,FALSE,52022202,base.main_company,base.user_root,,FALSE,,base.user_root,OTROS ACTIVOS,,other,account.data_account_type_expenses
+520223,,FALSE,520223,base.main_company,base.user_root,,FALSE,,base.user_root,GASTO DETERIORO:,,other,account.data_account_type_expenses
+52022301,,FALSE,52022301,base.main_company,base.user_root,,FALSE,,base.user_root,"PROPIEDAS, PLANTA Y EQUIPO",,other,account.data_account_type_expenses
+52022302,,FALSE,52022302,base.main_company,base.user_root,,FALSE,,base.user_root,INVERSIONES,,other,account.data_account_type_expenses
+52022303,,FALSE,52022303,base.main_company,base.user_root,,FALSE,,base.user_root,INSTRUMENTOS FINANCIEROS,,other,account.data_account_type_expenses
+52022304,,FALSE,52022304,base.main_company,base.user_root,,FALSE,,base.user_root,INTANGIBLES,,other,account.data_account_type_expenses
+52022305,,FALSE,52022305,base.main_company,base.user_root,,FALSE,,base.user_root,CUOTAS X COB.,,other,account.data_account_type_expenses
+52022306,,FALSE,52022306,base.main_company,base.user_root,,FALSE,,base.user_root,OTROS ACTIVOS,,other,account.data_account_type_expenses
+520224,,FALSE,520224,base.main_company,base.user_root,,FALSE,,base.user_root,GASTOS X CAN. ANORMALES PRODU,,other,account.data_account_type_expenses
+52022401,,FALSE,52022401,base.main_company,base.user_root,,FALSE,,base.user_root,MANO OBRA,,other,account.data_account_type_expenses
+52022402,,FALSE,52022402,base.main_company,base.user_root,,FALSE,,base.user_root,MATERIALES,,other,account.data_account_type_expenses
+52022403,,FALSE,52022403,base.main_company,base.user_root,,FALSE,,base.user_root,COSTOS PRODUCCION,,other,account.data_account_type_expenses
+520225,,FALSE,520225,base.main_company,base.user_root,,FALSE,,base.user_root,GASTO X REESTRUCTURACION,,other,account.data_account_type_expenses
+520226,,FALSE,520226,base.main_company,base.user_root,,FALSE,,base.user_root,VALOR NETO REALIZACION INV,,other,account.data_account_type_expenses
+520227,,FALSE,520227,base.main_company,base.user_root,,FALSE,,base.user_root,OTROS GASTOS,,other,account.data_account_type_expenses
+52022701,,FALSE,52022701,base.main_company,base.user_root,,FALSE,,base.user_root,MANTENIMIENTO Y REPARACION AD,,other,account.data_account_type_expenses
+52022702,,FALSE,52022702,base.main_company,base.user_root,,FALSE,,base.user_root,OTROS GASTOS LOCALES,,other,account.data_account_type_expenses
+5203,,FALSE,5203,base.main_company,base.user_root,,FALSE,,base.user_root,GASTOS FINANCIEROS,,other,account.data_account_type_expenses
+520301,,FALSE,520301,base.main_company,base.user_root,,FALSE,,base.user_root,INTERESES,,other,account.data_account_type_expenses
+520302,,FALSE,520302,base.main_company,base.user_root,,FALSE,,base.user_root,COMISIONES,,other,account.data_account_type_expenses
+520303,,FALSE,520303,base.main_company,base.user_root,,FALSE,,base.user_root,GASTOS FINANCIAMITO ACTIVOS,,other,account.data_account_type_expenses
+520304,,FALSE,520304,base.main_company,base.user_root,,FALSE,,base.user_root,DIFERENCIAL CAMBIARIO,,other,account.data_account_type_expenses
+520305,,FALSE,520305,base.main_company,base.user_root,,FALSE,,base.user_root,OTROS GASTOS FINANCIEROS,,other,account.data_account_type_expenses
+5204,,FALSE,5204,base.main_company,base.user_root,,FALSE,,base.user_root,OTROS GASTOS,,other,account.data_account_type_expenses
+520401,,FALSE,520401,base.main_company,base.user_root,,FALSE,,base.user_root,PERDIDA INVERSIONES ASOCIADA,,other,account.data_account_type_expenses
+520402,,FALSE,520402,base.main_company,base.user_root,,FALSE,,base.user_root,OTROS GASTOS LOCALES,,other,account.data_account_type_expenses
+6,,FALSE,6,base.main_company,base.user_root,,FALSE,,base.user_root,CUTAS REGULACION ORN,,other,account.data_account_type_expenses
+660,,FALSE,660,base.main_company,base.user_root,,FALSE,,base.user_root,GANANCIA (PÉRDIDA) ANTES 15%,,other,account.data_account_type_expenses
+661,,FALSE,661,base.main_company,base.user_root,,FALSE,,base.user_root,15% PARTICIPACIÓN TRABAJADORES,,other,account.data_account_type_expenses
+662,,FALSE,662,base.main_company,base.user_root,,FALSE,,base.user_root,GANANCIA (PÉRDIDA) ANTES IMPU,,other,account.data_account_type_expenses
+663,,FALSE,663,base.main_company,base.user_root,,FALSE,,base.user_root,IMPUESTO A LA RTA,,other,account.data_account_type_expenses
+664,,FALSE,664,base.main_company,base.user_root,,FALSE,,base.user_root,GANANCIA (PÉRDIDA) OPERAC. CO,,other,account.data_account_type_expenses
+671,,FALSE,671,base.main_company,base.user_root,,FALSE,,base.user_root,INGRESOS X OPERAC. DISCONT.,,other,account.data_account_type_expenses
+672,,FALSE,672,base.main_company,base.user_root,,FALSE,,base.user_root,GASTOS X OPERAC. DISCONT.,,other,account.data_account_type_expenses
+673,,FALSE,673,base.main_company,base.user_root,,FALSE,,base.user_root,GANANCIA (PÉRDIDA) ANTES 15%,,other,account.data_account_type_expenses
+674,,FALSE,674,base.main_company,base.user_root,,FALSE,,base.user_root,15% PARTICIPACIÓN TRABAJADORES,,other,account.data_account_type_expenses
+675,,FALSE,675,base.main_company,base.user_root,,FALSE,,base.user_root,GANANCIA (PÉRDIDA) ANTES IMPU,,other,account.data_account_type_expenses
+676,,FALSE,676,base.main_company,base.user_root,,FALSE,,base.user_root,IMPUESTO A LA RTA,,other,account.data_account_type_expenses
+677,,FALSE,677,base.main_company,base.user_root,,FALSE,,base.user_root,GANANCIA (PÉRDIDA) OPERAC. DI,,other,account.data_account_type_expenses
+679,,FALSE,679,base.main_company,base.user_root,,FALSE,,base.user_root,GANANCIA (PÉRDIDA) NETA L PERI,,other,account.data_account_type_expenses
+68,,FALSE,68,base.main_company,base.user_root,,FALSE,,base.user_root,OTRO RESULTADO INTEGRAL,,other,account.data_account_type_expenses
+681,,FALSE,681,base.main_company,base.user_root,,FALSE,,base.user_root,COMPONTES OTRO RESULTADO INTEG,,other,account.data_account_type_expenses
+68101,,FALSE,68101,base.main_company,base.user_root,,FALSE,,base.user_root,DIFERENCIA CAMBIO X CONVERSIÓ,,other,account.data_account_type_expenses
+68102,,FALSE,68102,base.main_company,base.user_root,,FALSE,,base.user_root,VALUACION ACT.FINANC. DISPO.,,other,account.data_account_type_expenses
+68103,,FALSE,68103,base.main_company,base.user_root,,FALSE,,base.user_root,GANANCIAS X REVALUACIÓN PROPI,,other,account.data_account_type_expenses
+68104,,FALSE,68104,base.main_company,base.user_root,,FALSE,,base.user_root,GANANCIAS (PÉRDIDAS) ACTUARIAL,,other,account.data_account_type_expenses
+68105,,FALSE,68105,base.main_company,base.user_root,,FALSE,,base.user_root,REVERSION L TERIORO (PÉRDIDA X,,other,account.data_account_type_expenses
+68106,,FALSE,68106,base.main_company,base.user_root,,FALSE,,base.user_root,PARTICIPACION OTRO RESULTADO,,other,account.data_account_type_expenses
+68107,,FALSE,68107,base.main_company,base.user_root,,FALSE,,base.user_root,IMPUESTO SOBRE LAS GANANCIAS R,,other,account.data_account_type_expenses
+68108,,FALSE,68108,base.main_company,base.user_root,,FALSE,,base.user_root,GASTOS NO DEDUCIBLES,,other,account.data_account_type_expenses
+682,,FALSE,682,base.main_company,base.user_root,,FALSE,,base.user_root,RESULTADO INTEGRAL TOTAL AÑO,,other,account.data_account_type_expenses
+690,,FALSE,690,base.main_company,base.user_root,,FALSE,,base.user_root,GANANCIA X ACCION:,,other,account.data_account_type_expenses
+69001,,FALSE,69001,base.main_company,base.user_root,,FALSE,,base.user_root,Ganancia X acción básica,,other,account.data_account_type_expenses
+6900101,,FALSE,6900101,base.main_company,base.user_root,,FALSE,,base.user_root,Ganancia X acción básica OPER,,other,account.data_account_type_expenses
+6900102,,FALSE,6900102,base.main_company,base.user_root,,FALSE,,base.user_root,Ganancia X acción básica OPER,,other,account.data_account_type_expenses
+69002,,FALSE,69002,base.main_company,base.user_root,,FALSE,,base.user_root,Ganancia X acción diluída,,other,account.data_account_type_expenses
+6900201,,FALSE,6900201,base.main_company,base.user_root,,FALSE,,base.user_root,Ganancia X acción diluída OPE,,other,account.data_account_type_expenses
+6900202,,FALSE,6900202,base.main_company,base.user_root,,FALSE,,base.user_root,Ganancia X acción diluída OPE,,other,account.data_account_type_expenses
+691,,FALSE,691,base.main_company,base.user_root,,FALSE,,base.user_root,UTILIDAD A REINVERTIR (INFORMA,,other,account.data_account_type_expenses

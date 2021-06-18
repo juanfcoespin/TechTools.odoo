@@ -19,5 +19,6 @@
         "views/res_partner_ec.xml",
         "views/res_company_ec.xml"
     ],
+    'application': True,
 }
 

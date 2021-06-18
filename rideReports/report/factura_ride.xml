@@ -154,7 +154,7 @@
                                                     <span t-field="line.product_id.id"/>
                                                 </t>
                                             </td>
-                                            <td><span t-field="line.product_id"/></td>
+                                            <td><span t-field="line.name"/></td>
                                             <td class="text-right"><span t-field="line.quantity"/></td>
                                             <td class="text-right"><span t-esc="'%.2f'%line.price_unit"/></td>
                                             <td class="text-right"><span t-esc="'%.2f'%line.descuento"/></td>

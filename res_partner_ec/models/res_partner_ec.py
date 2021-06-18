@@ -24,7 +24,7 @@ class ResPartnerEc(models.Model):
     @api.constrains('name', 'ec_identifier')
     def check_uniq_cliente(self):
         if not self.name:
-            return
+            raise exceptions.UserError('Debe registrar el nombre del cliente')
         #ilike compara mayusculas minusculas y tildes
         if self.ec_identifier:
             clientes_existentes = self.env['res.partner']. \
@@ -36,6 +36,10 @@ class ResPartnerEc(models.Model):
                 search([('name', 'ilike', self.name)])
             if len(clientes_existentes) > 1:
                 raise exceptions.UserError('Ya existe el cliente ' + self.name)
+
+        # valida que se ingresen clientes con cédula o ruc o consumidor final
+        if self.name.lower() != 'consumidor final' and not self.ec_identifier:
+            raise exceptions.UserError('No se puede registrar un cliente sin ruc o cédula!!')
 
 
     def set_invoice_address(self):

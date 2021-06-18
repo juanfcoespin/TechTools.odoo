@@ -36,5 +36,6 @@
         'views/impuesto.xml',
         'data/fec_email_template.xml',
         'data/fec_send_invoices_cron.xml',
-    ]
+    ],
+    'application': True,
 }

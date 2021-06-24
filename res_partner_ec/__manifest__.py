@@ -3,7 +3,7 @@
     'name': "Socio Negocio Ecuador",
 
     'summary': """
-        Gestion del socio de negocio en ecuador
+        Gestion de companías y socio de negocio en ecuador
         """,
 
     'author': "TechTools",

@@ -26,6 +26,12 @@ class ResCompanyEc(models.Model):
     ultimo_secuencial_factura = fields.Integer(string="Último secuencial factura", default=500)
     ultimo_secuencial_gr = fields.Integer(string="Último secuencial guía de Remisión", default=500)
     ultimo_secuencial_nc = fields.Integer(string="Último secuencial nota de crédito", default=500)
+    # para establecer los puntos de emisión por tipo de documento. Ej. Factura Física 001, Fact Electroncia 002
+    tipo_documento_ids = fields.One2many(
+        comodel_name="res.tipo.documento",
+        inverse_name="company_id",
+        string="Documentos Electrónicos"
+    )
 
     # facturación electrónica
     factura_electronica_ambiente = fields.Selection(

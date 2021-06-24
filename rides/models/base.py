@@ -4,8 +4,8 @@ from datetime import datetime
 
 
 class Ride2(models.AbstractModel):
-    '''def __init__(self, pool, cr, ride_type):
-        self.ride_type = ride_type'''
+    """def __init__(self, pool, cr, ride_type):
+        self.ride_type = ride_type"""
 
     _name = 'rides.base'
     _description = 'Compendio de funciones generales para los rides'
@@ -28,6 +28,7 @@ class Ride2(models.AbstractModel):
     email_enviado = fields.Boolean(string="Email enviado al cliente")
     resp_sri = fields.Char(string="Respuesta SRI")
     autorizacion_sri = fields.Char(string="Estado autorización SRI")
+
 
     def init_ride_and_get_clave_acceso(self, cod_tipo_documento, ride_date):
         '''

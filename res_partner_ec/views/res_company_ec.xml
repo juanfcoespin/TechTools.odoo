@@ -26,6 +26,14 @@
                                 <field name="ultimo_secuencial_gr"/>
                                 <field name="ultimo_secuencial_nc"/>
                             </group>
+                            <group>
+                                <field name="tipo_documento_ids">
+                                    <tree editable="bottom">
+                                        <field name="name"></field>
+                                        <field name="punto_emision"></field>
+                                    </tree>
+                                </field>
+                            </group>
                         </group>
                     </page>
                 </xpath>

@@ -2,3 +2,4 @@
 
 from . import res_partner_ec
 from . import res_company_ec
+from . import tipo_documento

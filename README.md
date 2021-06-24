@@ -35,7 +35,7 @@ Puntos a tener en cuenta en la implementación:
 
 Estado de Módulos:
 -----------------
-| MODULO                   | ESTADO    | OBSERVACIONES                           |
+| MODULO                   | ESTADO    | DESCRIPCIÓN                           |
 |--------------------------|-----------|-----------------------------------------|
 | res_partner_ec   | Estable| configuraciones de la compañía
 | rides   | Estable| factura electrónica

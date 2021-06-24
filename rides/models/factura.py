@@ -207,7 +207,7 @@ class Factura(models.Model):
                 self.send_xmlsigned_to_sri(url, ride_path, clave_acceso)
             me.procesando_fec = False
         except Exception as e:
-            error = 'Error al enviar la factura al SRI:' + str(e)
+            error = 'Error al procesar la factura electrónica:' + str(e)
             me.resp_sri = error
             _logger.debug(error)
             exceptions.UserError(error)

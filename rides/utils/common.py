@@ -10,6 +10,8 @@ def remove_chars(chars_to_remove, str_in):
 
 
 def clear_tildes(me):
+    if not me:
+        return me
     me = me.replace('á', 'a')
     me = me.replace('é', 'e')
     me = me.replace('í', 'i')
@@ -22,7 +24,7 @@ def clear_tildes(me):
     me = me.replace('Í', 'I')
     me = me.replace('Ó', 'O')
     me = me.replace('Ú', 'U')
-    me = me.replace('Ñ', 'Ñ')
+    me = me.replace('Ñ', 'N')
     return me
 
 

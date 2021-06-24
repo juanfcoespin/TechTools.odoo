@@ -7,7 +7,13 @@ Este proyecto crea una localización para ecuador soportado para la version 14 C
 
 - version 1.0 no soporta facturación electrónica
 - version 1.2 soporta facturacion electrónica (en desarrollo)
-- version 1.2.2 Factura electronicamente de manera correcta 
+- version 1.2.2 Factura electronicamente de manera correcta
+- version 1.3.0 Se cambia la lógica de asignacion de punto de emisión
+   cada documento electrónico tiene su punto de emisión
+   Ej. Factura Local ->pto emision 001
+       Factura Exportación ->pto emision 002
+       Nota de Crédito  ->pto emision 003
+       Guia de Remisión ->pto emision 004  
 
 Puntos a tener en cuenta en la implementación:
 ---------------------------------------------

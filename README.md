@@ -5,15 +5,24 @@ TechTools Localización de Odoo para Ecuador
 
 Este proyecto crea una localización para ecuador soportado para la version 14 Comunity de Odoo.
 
-- version 1.0 no soporta facturación electrónica
-- version 1.2 soporta facturacion electrónica (en desarrollo)
-- version 1.2.2 Factura electronicamente de manera correcta
-- version 1.3.0 Se cambia la lógica de asignacion de punto de emisión
-   cada documento electrónico tiene su punto de emisión
-   Ej. Factura Local ->pto emision 001
-       Factura Exportación ->pto emision 002
-       Nota de Crédito  ->pto emision 003
-       Guia de Remisión ->pto emision 004  
+Versiones:
+-----------------
+-----------------
+| Versión|Descripción| 
+|------|----------|
+|1.0.0 |No soporta facturación electrónica
+|1.2.0 |soporta facturacion electrónica (en desarrollo)
+|1.2.2 |Factura electronicamente de manera correcta
+|1.3.0 |Se cambia la lógica de asignacion del punto de emisión. Cada documento electrónico tiene su punto de emisión
+Ej.
+---
+
+| Tipo Documento|Punto de Emisión| 
+|--------|----------|
+|Factura Local|001
+|Factura Exportación|002
+|Nota de Crédito|003
+|Guia de Remisión|004  
 
 Puntos a tener en cuenta en la implementación:
 ---------------------------------------------
@@ -28,11 +37,12 @@ Estado de Módulos:
 -----------------
 | MODULO                   | ESTADO    | OBSERVACIONES                           |
 |--------------------------|-----------|-----------------------------------------|
-| res_partner_ec   | Finalizado| configuraciones de la compañía
-| rides   | Finalizado| factura electrónica
-| ridesReports   | Finalizado| generación de layouts
-| sale_order_line_check_stock   | Finalizado| Impide crear un pedido si no hay stock
-| sale_order_line_view_weight   | Finalizado| Registrar el peso en la línea del pedido
-| tt_config   | Finalizado| establece los costos de los productos si ya han sido ingresados
-| tt_activos_fijos   | En Desarrollo | Gestión de activos fijos 
+| res_partner_ec   | Estable| configuraciones de la compañía
+| rides   | Estable| factura electrónica
+| ridesReports   | Estable| generación de layouts
+| sale_order_line_check_stock   | Estable| Impide crear un pedido si no hay stock
+| sale_order_line_view_weight   | Estable| Registrar el peso en la línea del pedido
+| tt_config|Estable| establece los costos de los productos si ya han sido ingresados
+| tt_activos_fijos| En Desarrollo | Gestión de activos fijos
+| tt_inventario| Estable | relaciona los movimientos de inventario con las facturas
 

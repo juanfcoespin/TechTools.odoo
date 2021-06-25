@@ -23,16 +23,6 @@
                                 <field name="cod_establecimiento"/>
                                 <field name="cod_punto_emision"/>
                                 <field name="ultimo_secuencial_factura"/>
-                                <field name="ultimo_secuencial_gr"/>
-                                <field name="ultimo_secuencial_nc"/>
-                            </group>
-                            <group>
-                                <field name="tipo_documento_ids">
-                                    <tree editable="bottom">
-                                        <field name="name"></field>
-                                        <field name="punto_emision"></field>
-                                    </tree>
-                                </field>
                             </group>
                         </group>
                     </page>
@@ -52,7 +42,6 @@
                                 <field name="cert_pwd"/>
                                 <field name="electronic_docs_path"/>
                             </group>
-
                         </group>
                         <group>
                             <field name="url_recepcion_documentos_prueba" readonly="1"/>

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields
+from odoo import models, fields, exceptions, api
 
 
 class ResCompanyEc(models.Model):
@@ -24,15 +24,6 @@ class ResCompanyEc(models.Model):
     cod_punto_emision = fields.Char(string="Codigo Punto Emisión",
                                     default="002", size=3)
     ultimo_secuencial_factura = fields.Integer(string="Último secuencial factura", default=500)
-    ultimo_secuencial_gr = fields.Integer(string="Último secuencial guía de Remisión", default=500)
-    ultimo_secuencial_nc = fields.Integer(string="Último secuencial nota de crédito", default=500)
-    # para establecer los puntos de emisión por tipo de documento. Ej. Factura Física 001, Fact Electroncia 002
-    tipo_documento_ids = fields.One2many(
-        comodel_name="res.tipo.documento",
-        inverse_name="company_id",
-        string="Documentos Electrónicos"
-    )
-
     # facturación electrónica
     factura_electronica_ambiente = fields.Selection(
         [
@@ -71,6 +62,8 @@ class ResCompanyEc(models.Model):
         fields.Char(string="Url Autorizacion Documentos",
                     default="https://cel.sri.gob.ec/comprobantes-electronicos-ws"
                             "/AutorizacionComprobantesOffline?wsdl")
+
+
 
 
 

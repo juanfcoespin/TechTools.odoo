@@ -28,6 +28,7 @@
                     <!--field name="num_documento"
                         attrs="{'readonly':[('move_type','=','out_invoice')]}"
                     /-->
+                    <field name="tipo_documento_id"/>
                     <field name="num_documento"/>
                 </group>
             </field>

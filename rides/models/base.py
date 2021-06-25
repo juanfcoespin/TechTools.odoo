@@ -1,14 +1,14 @@
 import logging
-from odoo import api, fields, models
+from odoo import api, fields, models, exceptions
 from datetime import datetime
 
 
 class Ride2(models.AbstractModel):
     """def __init__(self, pool, cr, ride_type):
         self.ride_type = ride_type"""
-
     _name = 'rides.base'
     _description = 'Compendio de funciones generales para los rides'
+    tipo_documento_id = fields.Many2one('tt_company.punto.emision', 'Tipo Documento', required=True)
     cod_ambiente = fields.Char(compute="set_ambiente")
     ambiente = fields.Char(compute="set_ambiente")
     fecha_autorizacion = fields.Datetime(
@@ -30,7 +30,7 @@ class Ride2(models.AbstractModel):
     autorizacion_sri = fields.Char(string="Estado autorización SRI")
 
 
-    def init_ride_and_get_clave_acceso(self, cod_tipo_documento, ride_date):
+    def init_ride_and_get_clave_acceso(self, ride_date):
         '''
          establece el secuencial, numero de documento y clave de acceso
         :param cod_tipo_documento:
@@ -42,35 +42,25 @@ class Ride2(models.AbstractModel):
             07 Comprobante de Retención
         :return:
         '''
-        if self.es_factura_provedor(cod_tipo_documento):
+        if self.es_factura_provedor():
             return
         if not self.secuencial:
-            ultimo_secuencial=self.get_ultimo_secuencia(cod_tipo_documento)
-            self.secuencial = str(ultimo_secuencial).rjust(9, '0')
+            self.secuencial = str(self.tipo_documento_id.ultimo_secuencial).rjust(9, '0')
         if not self.num_documento:
             self.num_documento = self.get_num_ride(self.secuencial)
-        return self.get_clave_acceso(cod_tipo_documento, ride_date)
+        return self.get_clave_acceso(ride_date)
 
-    def es_factura_provedor(self, ride_type):
+    def es_factura_provedor(self):
         '''
             la factura de proveedor o factura de compra no debe generar secuencial
         :return:
         '''
         # en odoo account_move es la misma tabla para factura de venta y compra
-        if ride_type == '01' and self.move_type == 'in_invoice':
+        if self.move_type == 'in_invoice':
             return True
         return False
 
-    def get_ultimo_secuencia(self, ride_type):
-        if ride_type == '01':
-            ultimo_secuencial = self.company_id.ultimo_secuencial_factura + 1
-            self.company_id.ultimo_secuencial_factura = ultimo_secuencial
-        if ride_type == '06':
-            ultimo_secuencial = self.company_id.ultimo_secuencial_gr + 1
-            self.company_id.ultimo_secuencial_gr = ultimo_secuencial
-        return ultimo_secuencial
-
-    def get_clave_acceso(self, cod_tipo_documento, ride_date):
+    def get_clave_acceso(self, ride_date):
         '''
 
         :param cod_tipo_documento:
@@ -83,15 +73,17 @@ class Ride2(models.AbstractModel):
         :param ride_date:
         :return:
         '''
+        if not self.tipo_documento_id:
+            return None
         current_date = self.get_ddmmyyy_date(ride_date)
         num_emisor = "12345678"  # es el valor por defecto que pide el SRI
         clave = "{}{}{}{}{}{}{}{}{}".format(
             current_date,
-            cod_tipo_documento,
+            self.tipo_documento_id.cod_tipo_documento,
             self.company_id.ruc,
             self.cod_ambiente,
             self.company_id.cod_establecimiento,
-            self.company_id.cod_punto_emision,
+            self.tipo_documento_id.cod_punto_emision,
             self.secuencial,
             num_emisor,
             self.cod_tipo_emision
@@ -131,14 +123,9 @@ class Ride2(models.AbstractModel):
     def get_num_ride(self, secuencial):
         return "{}-{}-{}".format(
             self.company_id.cod_establecimiento,
-            self.company_id.cod_punto_emision,
+            self.tipo_documento_id.cod_punto_emision,
             secuencial
         )
-
-
-
-
-
     def get_ddmmyyy_date(self, fecha, token=''):
         return "{}{}{}{}{}".format(str(fecha.day).rjust(2, '0'),
                                    token,

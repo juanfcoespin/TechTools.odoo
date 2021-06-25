@@ -3,12 +3,12 @@
     'name': "Socio Negocio Ecuador",
 
     'summary': """
-        Gestion de companías y socio de negocio en ecuador
+        Gestion de socio de negocio en ecuador
         """,
 
     'author': "TechTools",
     'website': "http://www.techtoolsec.com",
-    'category': 'TechTools Socio Negocio EC',
+    'category': 'Socio Negocio',
     'version': '0.1',
 
     # any module necessary for this one to work correctly
@@ -16,8 +16,9 @@
 
     # always loaded
     'data': [
+        "security/ir.model.access.csv",
         "views/res_partner_ec.xml",
-        "views/res_company_ec.xml"
+        "views/res_company_ec.xml",
     ],
     'application': True,
 }

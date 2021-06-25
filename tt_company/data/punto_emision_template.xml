@@ -1,0 +1,58 @@
+<?xml version="1.0" ?>
+<odoo>
+    <!--
+        por defecto company_id es 1 que es la pk de la compañía relacionada al la empresa
+        principal
+    -->
+    <data noupdate="1">
+        <record id="pe_factura" model="tt_company.punto.emision">
+            <field name="name">Factura Física</field>
+            <field name="cod_tipo_documento">01</field>
+            <field name="company_id">1</field>
+            <field name="cod_punto_emision">001</field>
+            <field name="ultimo_secuencial">1</field>
+        </record>
+        <record id="pe_factura" model="tt_company.punto.emision">
+            <field name="name">Factura Electrónica</field>
+            <field name="cod_tipo_documento">01</field>
+            <field name="company_id">1</field>
+            <field name="cod_punto_emision">002</field>
+            <field name="ultimo_secuencial">1</field>
+        </record>
+        <record id="pe_liquidacion_compra" model="tt_company.punto.emision">
+            <field name="name">Liquidación de compra de bienes y prestación de servicios</field>
+            <field name="cod_tipo_documento">03</field>
+            <field name="company_id">1</field>
+            <field name="cod_punto_emision">003</field>
+            <field name="ultimo_secuencial">1</field>
+        </record>
+        <record id="pe_nota_credito" model="tt_company.punto.emision">
+            <field name="name">Nota de Crédito</field>
+            <field name="cod_tipo_documento">04</field>
+            <field name="company_id">1</field>
+            <field name="cod_punto_emision">004</field>
+            <field name="ultimo_secuencial">1</field>
+        </record>
+        <record id="pe_nota_debito" model="tt_company.punto.emision">
+            <field name="name">Nota de Débito</field>
+            <field name="cod_tipo_documento">05</field>
+            <field name="company_id">1</field>
+            <field name="cod_punto_emision">005</field>
+            <field name="ultimo_secuencial">1</field>
+        </record>
+        <record id="pe_guia_remision" model="tt_company.punto.emision">
+            <field name="name">Guía de Remisión</field>
+            <field name="cod_tipo_documento">06</field>
+            <field name="company_id">1</field>
+            <field name="cod_punto_emision">006</field>
+            <field name="ultimo_secuencial">1</field>
+        </record>
+        <record id="pe_comprobante_retencion" model="tt_company.punto.emision">
+            <field name="name">Comprobante de Retención</field>
+            <field name="cod_tipo_documento">07</field>
+            <field name="company_id">1</field>
+            <field name="cod_punto_emision">007</field>
+            <field name="ultimo_secuencial">1</field>
+        </record>
+    </data>
+</odoo>

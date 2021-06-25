@@ -12,7 +12,6 @@ import threading
 
 _logger = logging.getLogger(__name__)
 
-
 class Factura(models.Model):
     _name = 'account.move'
     _inherit = ['account.move', 'rides.base']
@@ -29,7 +28,6 @@ class Factura(models.Model):
         string="Total sin descuento",
         compute="get_total_sin_descuento"
     )
-
 
     @api.constrains('num_documento')
     def check_uniq_num_factura(self):
@@ -49,7 +47,7 @@ class Factura(models.Model):
                 self.secuencial = seq_num_documento
 
     def init_ride(self):
-        self.clave_acceso = self.init_ride_and_get_clave_acceso('01', self.date)
+        self.clave_acceso = self.init_ride_and_get_clave_acceso(self.date)
 
     def consultar_estado_autorizacion(self):
         if self.resp_sri is not None and self.enviado_al_sri:
@@ -190,7 +188,7 @@ class Factura(models.Model):
                 ride_path = common.get_ride_path(ride_path, dbname)
             # to no call algorithm to generate clave_acceso more than one time
             _logger.debug(ride_path)
-            clave_acceso = self.init_ride_and_get_clave_acceso('01', me.date)
+            clave_acceso = self.init_ride_and_get_clave_acceso(me.date)
             _logger.debug(clave_acceso)
             if not me.xml_generado:
                 xml_path = common.get_ride_path(ride_path, 'xml')

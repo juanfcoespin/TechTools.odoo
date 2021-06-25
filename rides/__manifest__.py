@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "rides",
+    'name': "Techtools - Factura Electrónica",
 
     'summary': """
-        Construye los RIDES  de facturación electrónica según los lineamientos del SRI
+        Facturación electrónica según los lineamientos del SRI
           
     """,
 
@@ -24,10 +24,10 @@
     'author': "TechTools",
     'website': "http://www.techtoolsec.com",
     'category': 'Facturacion Electronica',
-    'version': '0.1',
+    'version': '1.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['stock', 'account'],
+    'depends': ['stock', 'account', 'tt_company'],
 
     # always loaded
     'data': [

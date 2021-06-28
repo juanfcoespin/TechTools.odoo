@@ -23,14 +23,11 @@
             <field name="amount_total" position="before">
                 <field name="total_con_impuestos"/>
             </field>
-            <field name="name" position="after">
-                <group>
-                    <!--field name="num_documento"
-                        attrs="{'readonly':[('move_type','=','out_invoice')]}"
-                    /-->
-                    <field name="tipo_documento_id"/>
-                    <field name="num_documento"/>
-                </group>
+            <field name="partner_id" position="after">
+                <field name="tipo_documento_id"/>
+                <field name="num_documento"
+                    attrs="{'readonly':[('move_type','=','out_invoice')]}"
+                />
             </field>
             <xpath expr="//notebook[last()]" position="inside">
                 <page string="Facturación Electrónica">

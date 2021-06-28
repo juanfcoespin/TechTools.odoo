@@ -9,6 +9,7 @@ class Ride2(models.AbstractModel):
     _name = 'rides.base'
     _description = 'Compendio de funciones generales para los rides'
     tipo_documento_id = fields.Many2one('tt_company.punto.emision', 'Tipo Documento', required=True)
+    clave_acceso = fields.Char(string="Clave de Acceso", compute="init_ride")
     cod_ambiente = fields.Char(compute="set_ambiente")
     ambiente = fields.Char(compute="set_ambiente")
     fecha_autorizacion = fields.Datetime(
@@ -29,6 +30,8 @@ class Ride2(models.AbstractModel):
     resp_sri = fields.Char(string="Respuesta SRI")
     autorizacion_sri = fields.Char(string="Estado autorización SRI")
 
+    def init_ride(self):
+        self.clave_acceso = self.init_ride_and_get_clave_acceso(self.date)
 
     def init_ride_and_get_clave_acceso(self, ride_date):
         '''
@@ -45,7 +48,9 @@ class Ride2(models.AbstractModel):
         if self.es_factura_provedor():
             return
         if not self.secuencial:
-            self.secuencial = str(self.tipo_documento_id.ultimo_secuencial).rjust(9, '0')
+            siguiente_secuencial = self.tipo_documento_id.ultimo_secuencial+1
+            self.secuencial = str(siguiente_secuencial).rjust(9, '0')
+            self.tipo_documento_id.ultimo_secuencial = siguiente_secuencial
         if not self.num_documento:
             self.num_documento = self.get_num_ride(self.secuencial)
         return self.get_clave_acceso(ride_date)
@@ -121,6 +126,8 @@ class Ride2(models.AbstractModel):
         return ''
 
     def get_num_ride(self, secuencial):
+        if not self.tipo_documento_id:
+            return None
         return "{}-{}-{}".format(
             self.company_id.cod_establecimiento,
             self.tipo_documento_id.cod_punto_emision,

@@ -15,7 +15,7 @@ _logger = logging.getLogger(__name__)
 class Factura(models.Model):
     _name = 'account.move'
     _inherit = ['account.move', 'rides.base']
-    clave_acceso = fields.Char(string="Clave de Acceso", compute="init_ride")
+
     total_discount = fields.Float(
         string="Total Descuento",
         compute="get_total_discount"
@@ -45,9 +45,6 @@ class Factura(models.Model):
             seq_num_documento=matrix[2]
             if self.secuencial != seq_num_documento: #si el usuario actualizó el num_documento
                 self.secuencial = seq_num_documento
-
-    def init_ride(self):
-        self.clave_acceso = self.init_ride_and_get_clave_acceso(self.date)
 
     def consultar_estado_autorizacion(self):
         if self.resp_sri is not None and self.enviado_al_sri:

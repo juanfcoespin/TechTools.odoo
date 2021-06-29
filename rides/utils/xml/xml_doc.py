@@ -35,7 +35,7 @@ class XmlDoc:
             ruc=ride.company_id.ruc,
             claveAcceso=ride.clave_acceso,
             estab=ride.company_id.cod_establecimiento,
-            ptoEmi=ride.company_id.cod_punto_emision,
+            ptoEmi=ride.tipo_documento_id.cod_punto_emision,
             secuencial=ride.secuencial,
             dirMatriz=common.clear_tildes(ride.get_direccion()),
             fechaEmision=ride.get_ddmmyyy_date(ride.date, '/'),

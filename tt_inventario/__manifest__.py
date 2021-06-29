@@ -22,6 +22,7 @@
     'data': [
         # 'security/ir.model.access.csv',
         'views/stock_move.xml',
+        'views/product_template.xml',
     ],
     'application': True,
     # only loaded in demonstration mode

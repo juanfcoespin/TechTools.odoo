@@ -21,9 +21,6 @@ class ResCompanyEc(models.Model):
     nro_contribuyente_especial = fields.Integer(string="Nro. Contribuyente Especial")
     cod_establecimiento = fields.Char(string="Codigo Establecimiento",
                                       default="001", size=3)
-    cod_punto_emision = fields.Char(string="Codigo Punto Emisión",
-                                    default="002", size=3)
-    ultimo_secuencial_factura = fields.Integer(string="Último secuencial factura", default=500)
     # facturación electrónica
     factura_electronica_ambiente = fields.Selection(
         [

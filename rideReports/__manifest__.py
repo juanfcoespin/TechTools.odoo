@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "rideReports",
+    'name': "Techtools - Factura Electrónica - Reportes",
 
     'summary': """
         Reporte de los RIDES  de facturación electrónica según los lineamientos del SRI

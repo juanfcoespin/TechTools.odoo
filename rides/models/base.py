@@ -8,7 +8,7 @@ class Ride2(models.AbstractModel):
         self.ride_type = ride_type"""
     _name = 'rides.base'
     _description = 'Compendio de funciones generales para los rides'
-    tipo_documento_id = fields.Many2one('tt_company.punto.emision', 'Tipo Documento', required=True)
+    tipo_documento_id = fields.Many2one('tt_company.punto.emision', 'Tipo Documento', required=True,)
     clave_acceso = fields.Char(string="Clave de Acceso", compute="init_ride")
     cod_ambiente = fields.Char(compute="set_ambiente")
     ambiente = fields.Char(compute="set_ambiente")

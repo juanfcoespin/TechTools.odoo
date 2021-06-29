@@ -7,7 +7,7 @@
     <nombreComercial>{{ nombreComercial }}</nombreComercial>
     <ruc>{{ ruc }}</ruc>
     <claveAcceso>{{ claveAcceso }}</claveAcceso>
-    <codDoc>01</codDoc>
+    <codDoc>{{ codDocumento }}</codDoc>
     <estab>{{ estab }}</estab>
     <ptoEmi>{{ ptoEmi }}</ptoEmi>
     <secuencial>{{ secuencial }}</secuencial>

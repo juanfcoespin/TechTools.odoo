@@ -25,9 +25,7 @@
             </field>
             <field name="partner_id" position="after">
                 <field name="tipo_documento_id"/>
-                <field name="num_documento"
-                    attrs="{'readonly':[('move_type','=','out_invoice')]}"
-                />
+                <field name="num_documento" readonly="1"/>
             </field>
             <xpath expr="//notebook[last()]" position="inside">
                 <page string="Facturación Electrónica">

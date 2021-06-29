@@ -6,17 +6,17 @@
     -->
     <data noupdate="1">
         <record id="pe_factura" model="tt_company.punto.emision">
-            <field name="name">Factura Física</field>
-            <field name="cod_tipo_documento">01</field>
-            <field name="company_id">1</field>
-            <field name="cod_punto_emision">001</field>
-            <field name="ultimo_secuencial">0</field>
-        </record>
-        <record id="pe_factura" model="tt_company.punto.emision">
             <field name="name">Factura Electrónica</field>
             <field name="cod_tipo_documento">01</field>
             <field name="company_id">1</field>
             <field name="cod_punto_emision">002</field>
+            <field name="ultimo_secuencial">0</field>
+        </record>
+        <record id="pe_factura" model="tt_company.punto.emision">
+            <field name="name">Factura Física</field>
+            <field name="cod_tipo_documento">01</field>
+            <field name="company_id">1</field>
+            <field name="cod_punto_emision">001</field>
             <field name="ultimo_secuencial">0</field>
         </record>
         <record id="pe_liquidacion_compra" model="tt_company.punto.emision">

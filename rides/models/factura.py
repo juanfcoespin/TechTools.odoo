@@ -29,6 +29,56 @@ class Factura(models.Model):
         compute="get_total_sin_descuento"
     )
 
+    @api.model
+    def create(self, values):
+        '''
+        cuando se genera una NC a partir de una factura
+        :param values:
+        :return:
+        '''
+        inv = super(Factura, self).create(values)
+        return self.set_tipo_documento(inv)
+
+    @api.model
+    def default_get(self, fields_list):
+        '''
+        cuando se crea una nueva factura o NC
+        :param fields_list:
+        :return:
+        '''
+        if 'move_type' not in fields_list:
+            return super().default_get(fields_list)
+        inv = super(Factura, self).default_get(fields_list)
+        return self.set_tipo_documento(inv)
+
+    def set_tipo_documento(self, inv):
+        # tipo documento
+        default_tipo_documento = None
+        tipo = inv['move_type']
+        if tipo == 'out_invoice':  # factura 'out_invoice'
+            default_tipo_documento = self.get_first_tipo_documento('factura')
+        if tipo == 'out_refund':  # Nota credito
+            default_tipo_documento = self.get_first_tipo_documento('nota')
+        inv.update({
+            'tipo_documento_id': default_tipo_documento,
+            'secuencial': None,
+            'clave_acceso': None,
+            'num_documento': None,
+            'pdf_generado': False,
+            'xml_generado': False,
+            'email_enviado': False,
+            'enviado_al_sri': False,
+            'resp_sri': None,
+            'autorizacion_sri': None,
+        })
+        return inv
+
+    def get_first_tipo_documento(self, token):
+        td = self.env["tt_company.punto.emision"].search([('name', 'ilike', token)], limit=1)
+        if td:
+            return td.id
+        return None
+
     @api.constrains('num_documento')
     def check_uniq_num_factura(self):
         # Ej. 001-002-000000502

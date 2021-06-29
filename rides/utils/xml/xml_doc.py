@@ -34,6 +34,7 @@ class XmlDoc:
             nombreComercial=common.clear_tildes(ride.company_id.name),
             ruc=ride.company_id.ruc,
             claveAcceso=ride.clave_acceso,
+            codDocumento=ride.tipo_documento_id.cod_tipo_documento,
             estab=ride.company_id.cod_establecimiento,
             ptoEmi=ride.tipo_documento_id.cod_punto_emision,
             secuencial=ride.secuencial,

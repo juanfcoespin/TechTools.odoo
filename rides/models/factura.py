@@ -145,7 +145,7 @@ class Factura(models.Model):
                 detalle = {
                     'codigoPrincipal': codigo_principal,
                     'codigoAuxiliar': codigo_auxiliar,
-                    'descripcion': line.name.strip(),
+                    'descripcion': common.clear_tildes(line.product_id.name.strip()), #strip quita espacios al inicio y al final
                     'cantidad': '%.6f' % (line.quantity),
                     'precioUnitario': '%.6f' % (line.price_unit),
                     'descuento': '%.2f' % line.descuento,
@@ -241,10 +241,13 @@ class Factura(models.Model):
                 xml_path = common.get_ride_path(ride_path, 'xml')
                 self.sign_and_safe_xml_factura(xml_path, clave_acceso + '.xml')
                 self.xml_generado = True
-            if not me.pdf_generado:
+            '''
+                if not me.pdf_generado:
                 pdf_path = common.get_ride_path(ride_path, 'pdf')
                 self.safe_pdf_factura(pdf_path, clave_acceso + '.pdf')
                 self.pdf_generado = True
+            '''
+
             if not me.email_enviado:
                 self.send_documents_by_mail()
             me.resp_sri = error #se encera si existe un error anterior

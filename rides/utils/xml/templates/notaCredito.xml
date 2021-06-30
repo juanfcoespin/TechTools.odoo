@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<factura id="comprobante" version="1.1.0">
+<notaCredito id="comprobante" version="1.1.0">
   <infoTributaria>
     <ambiente>{{ ambiente }}</ambiente>
     <tipoEmision>{{ tipoEmision }}</tipoEmision>
@@ -13,17 +13,16 @@
     <secuencial>{{ secuencial }}</secuencial>
     <dirMatriz>{{ dirMatriz }}</dirMatriz>
   </infoTributaria>
-  <infoFactura>
+  <infoNotaCredito>
     <fechaEmision>{{ fechaEmision }}</fechaEmision>
     <dirEstablecimiento>{{ dirEstablecimiento }}</dirEstablecimiento>
+    <tipoIdentificacionComprador>{{ tipoIdentificacionComprador }}</tipoIdentificacionComprador>
+    <razonSocialComprador>{{ razonSocialComprador }}</razonSocialComprador>
+    <identificacionComprador>{{ identificacionComprador }}</identificacionComprador>
     {% if contribuyenteEspecial>0 %}
       <contribuyenteEspecial>{{ contribuyenteEspecial }}</contribuyenteEspecial>
     {%endif%}
     <obligadoContabilidad>{{ obligadoContabilidad }}</obligadoContabilidad>
-    <tipoIdentificacionComprador>{{ tipoIdentificacionComprador }}</tipoIdentificacionComprador>
-    <razonSocialComprador>{{ razonSocialComprador }}</razonSocialComprador>
-    <identificacionComprador>{{ identificacionComprador }}</identificacionComprador>
-    <direccionComprador>{{ direccionComprador }}</direccionComprador>
     <totalSinImpuestos>{{ totalSinImpuestos }}</totalSinImpuestos>
     <totalDescuento>{{ totalDescuento }}</totalDescuento>
     <totalConImpuestos>
@@ -37,7 +36,7 @@
       {% endfor %}
     </totalConImpuestos>
     <importeTotal>{{ totalConImpuesto }}</importeTotal>
-  </infoFactura>
+  </infoNotaCredito>
   <detalles>
     {% for item in lines %}
     <detalle>
@@ -62,4 +61,4 @@
     </detalle>
     {% endfor %}
   </detalles>
-</factura>
+</notaCredito>

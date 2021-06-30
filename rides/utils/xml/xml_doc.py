@@ -24,9 +24,6 @@ class XmlDoc:
         ride = self.ride
         comprador = ride.partner_id
         lines = ride.get_lines()
-        for item in lines:
-            item['descripcion'] = common.clear_tildes(item['descripcion'])
-
         ms = template.render(
             ambiente=ride.cod_ambiente,
             tipoEmision=ride.cod_tipo_emision,
@@ -53,12 +50,19 @@ class XmlDoc:
             lines=lines,
             impuestos=ride.get_total_impuestos()
         )
+
         return ms
 
     def get_template(self):
         template_path = os.path.join(os.path.dirname(__file__), 'templates')
         env = Environment(loader=FileSystemLoader(template_path))
-        template_file_name = 'factura.xml'
-        if self.ride.company_id.nro_contribuyente_especial > 0:
-            template_file_name = 'facturaContribuyenteEspecial.xml'
+        ride = self.ride
+        cod_tipo_documento = ride.tipo_documento_id.cod_tipo_documento
+        template_file_name = None
+        if cod_tipo_documento == '01':
+            template_file_name = 'factura.xml'
+        if cod_tipo_documento == '04':
+            template_file_name = 'notaCredito.xml'
+        if not template_file_name:
+            return None
         return env.get_template(template_file_name)

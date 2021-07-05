@@ -11,16 +11,18 @@ class XmlDoc:
         self.ride = ride
         self.loger = logging.getLogger(__name__)
 
-    def render(self):
+    '''
+        def render(self):
         ms = self.get_xml_text_factura()
         self.loger.info(ms)
         self.save_xml_ride(ms)
+    '''
 
     def get_xml_text_factura(self):
         template = self.get_template()
-        return self.render_factura(template)
+        return self.render_ride(template)
 
-    def render_factura(self, template):
+    def render_ride(self, template):
         ride = self.ride
         comprador = ride.partner_id
         lines = ride.get_lines()
@@ -40,6 +42,7 @@ class XmlDoc:
             dirEstablecimiento=common.clear_tildes(ride.get_direccion()),
             contribuyenteEspecial=ride.company_id.nro_contribuyente_especial,
             obligadoContabilidad=ride.company_id.obligado_llevar_contabilidad,
+            rise=ride.company_id.rise,
             tipoIdentificacionComprador=comprador.ec_identifier_type,
             razonSocialComprador=common.clear_tildes(comprador.name),
             identificacionComprador=comprador.ec_identifier,
@@ -50,7 +53,6 @@ class XmlDoc:
             lines=lines,
             impuestos=ride.get_total_impuestos()
         )
-
         return ms
 
     def get_template(self):

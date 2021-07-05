@@ -20,6 +20,9 @@
       <contribuyenteEspecial>{{ contribuyenteEspecial }}</contribuyenteEspecial>
     {%endif%}
     <obligadoContabilidad>{{ obligadoContabilidad }}</obligadoContabilidad>
+    {% if rise %}
+      <rise>Contribuyente Régimen Simplificado RISE</rise>
+    {%endif%}
     <tipoIdentificacionComprador>{{ tipoIdentificacionComprador }}</tipoIdentificacionComprador>
     <razonSocialComprador>{{ razonSocialComprador }}</razonSocialComprador>
     <identificacionComprador>{{ identificacionComprador }}</identificacionComprador>

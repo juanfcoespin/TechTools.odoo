@@ -23,6 +23,9 @@
       <contribuyenteEspecial>{{ contribuyenteEspecial }}</contribuyenteEspecial>
     {%endif%}
     <obligadoContabilidad>{{ obligadoContabilidad }}</obligadoContabilidad>
+    {% if rise %}
+      <rise>Contribuyente Régimen Simplificado RISE</rise>
+    {%endif%}
     <totalSinImpuestos>{{ totalSinImpuestos }}</totalSinImpuestos>
     <totalDescuento>{{ totalDescuento }}</totalDescuento>
     <totalConImpuestos>

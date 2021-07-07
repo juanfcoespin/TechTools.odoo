@@ -24,6 +24,20 @@
                     </page>
                 </xpath>
                 <xpath expr="//notebook[last()]" position="inside">
+                    <page string="Puntos de Emisión">
+                        <group>
+                            <field name="punto_emision_ids">
+                                <tree editable="bottom">
+                                    <field name="name"></field>
+                                    <field name="cod_tipo_documento"></field>
+                                    <field name="cod_punto_emision"></field>
+                                    <field name="ultimo_secuencial"></field>
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//notebook[last()]" position="inside">
                     <page string="Facturación Electrónica">
                         <group>
                             <group>
@@ -49,20 +63,7 @@
                         </group>
                     </page>
                 </xpath>
-                <xpath expr="//notebook[last()]" position="inside">
-                    <page string="Puntos de Emisión">
-                        <group>
-                            <field name="punto_emision_ids">
-                                <tree editable="bottom">
-                                    <field name="name"></field>
-                                    <field name="cod_tipo_documento"></field>
-                                    <field name="cod_punto_emision"></field>
-                                    <field name="ultimo_secuencial"></field>
-                                </tree>
-                            </field>
-                        </group>
-                    </page>
-                </xpath>
+
             </field>
         </record>
     </data>

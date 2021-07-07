@@ -5,7 +5,7 @@
         principal
     -->
     <data noupdate="1">
-        <record id="pe_factura" model="tt_company.punto.emision">
+        <record id="pe_factura_elec" model="tt_company.punto.emision">
             <field name="name">Factura Electrónica</field>
             <field name="cod_tipo_documento">01</field>
             <field name="company_id">1</field>

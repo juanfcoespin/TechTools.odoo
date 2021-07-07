@@ -20,13 +20,21 @@
     <razonSocialComprador>{{ razonSocialComprador }}</razonSocialComprador>
     <identificacionComprador>{{ identificacionComprador }}</identificacionComprador>
     {% if contribuyenteEspecial>0 %}
-      <contribuyenteEspecial>{{ contribuyenteEspecial }}</contribuyenteEspecial>
+    <contribuyenteEspecial>{{ contribuyenteEspecial }}</contribuyenteEspecial>
     {%endif%}
     <obligadoContabilidad>{{ obligadoContabilidad }}</obligadoContabilidad>
     {% if rise %}
-      <rise>Contribuyente Régimen Simplificado RISE</rise>
+    <rise>Contribuyente Régimen Simplificado RISE</rise>
+    {%endif%}
+    {% if facturaRelacionada %}
+    <codDocModificado>{{ facturaRelacionada.tipo_documento_id.cod_tipo_documento }}</codDocModificado>
+    <numDocModificado>{{ facturaRelacionada.num_documento }}</numDocModificado>
+    <fechaEmisionDocSustento>{{ fechaEmisionDocSustento }}</fechaEmisionDocSustento>
     {%endif%}
     <totalSinImpuestos>{{ totalSinImpuestos }}</totalSinImpuestos>
+    {% if facturaRelacionada %}
+    <valorModificacion>{{ facturaRelacionada.total_con_impuestos }}</valorModificacion>
+    {%endif%}
     <totalDescuento>{{ totalDescuento }}</totalDescuento>
     <totalConImpuestos>
       {% for tax in impuestos %}

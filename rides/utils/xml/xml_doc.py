@@ -26,6 +26,10 @@ class XmlDoc:
         ride = self.ride
         comprador = ride.partner_id
         lines = ride.get_lines()
+        factura_relacionada, motivo_nc = self.get_factura_relacionada()
+        fecha_emision_doc_sustento = None
+        if factura_relacionada:
+            fecha_emision_doc_sustento=ride.get_ddmmyyy_date(factura_relacionada.date, '/')
         ms = template.render(
             ambiente=ride.cod_ambiente,
             tipoEmision=ride.cod_tipo_emision,
@@ -51,9 +55,39 @@ class XmlDoc:
             totalDescuento=ride.total_discount,
             totalConImpuesto=ride.total_con_impuestos,
             lines=lines,
-            impuestos=ride.get_total_impuestos()
+            impuestos=ride.get_total_impuestos(),
+            facturaRelacionada=factura_relacionada,
+            motivoNc=motivo_nc,
+            fechaEmisionDocSustento=fecha_emision_doc_sustento,
         )
         return ms
+
+    def get_factura_relacionada(self):
+        ride = self.ride
+        cod_tipo_documento = ride.tipo_documento_id.cod_tipo_documento
+        if cod_tipo_documento == '04':  # si es nota de crédito
+            fact_name, motivo = self.get_fact_name_from_ref(ride.ref)
+            if fact_name:
+                factura_relacionada = ride.env['account.move'].search([('name', '=', fact_name)])
+                return factura_relacionada, motivo
+        return None, None
+
+    def get_fact_name_from_ref(self, ref):
+        '''
+            returns fact name from ref fielf of NC
+        :param ref: Ex: Reversal of: INV/2021/06/0001, Devolución
+        :return: fact name: INV/2021/06/0001
+        '''
+        if ref:
+            matrix = ref.split(",")
+            if len(matrix) == 2:
+                fact_name = matrix[0]
+                fact_name = fact_name.replace("Reversal of: ", "")
+                motivo = matrix[1]
+                return fact_name, motivo
+
+        return None, None
+
 
     def get_template(self):
         template_path = os.path.join(os.path.dirname(__file__), 'templates')

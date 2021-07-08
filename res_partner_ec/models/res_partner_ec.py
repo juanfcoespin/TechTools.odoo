@@ -20,6 +20,7 @@ class ResPartnerEc(models.Model):
         help="Registro único de contribuyentes o cédula de identidad", size=13)
     invoice_address = fields.Char(compute="set_invoice_address")
     delivery_address = fields.Char(compute="set_delivery_address")
+    telefono_o_celular = fields.Char(compute="set_telefono_o_celular")
 
     @api.constrains('name', 'ec_identifier')
     def check_uniq_cliente(self):
@@ -40,6 +41,14 @@ class ResPartnerEc(models.Model):
         # valida que se ingresen clientes con cédula o ruc o consumidor final
         if self.name.lower() != 'consumidor final' and not self.ec_identifier:
             raise exceptions.UserError('No se puede registrar un cliente sin ruc o cédula!!')
+
+    def set_telefono_o_celular(self):
+        self.telefono_o_celular = ''
+        if self.phone:
+            self.telefono_o_celular += self.phone
+            self.telefono_o_celular += ' '
+        if self.mobile:
+            self.telefono_o_celular += self.mobile
 
 
     def set_invoice_address(self):

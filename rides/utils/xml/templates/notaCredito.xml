@@ -35,7 +35,7 @@
     {% if facturaRelacionada %}
     <valorModificacion>{{ facturaRelacionada.total_con_impuestos }}</valorModificacion>
     {%endif%}
-    <totalDescuento>{{ totalDescuento }}</totalDescuento>
+    <moneda>DOLAR</moneda>
     <totalConImpuestos>
       {% for tax in impuestos %}
       <totalImpuesto>
@@ -46,13 +46,13 @@
       </totalImpuesto>
       {% endfor %}
     </totalConImpuestos>
-    <importeTotal>{{ totalConImpuesto }}</importeTotal>
+    <motivo>{{ motivoNc }}</motivo>
   </infoNotaCredito>
   <detalles>
     {% for item in lines %}
     <detalle>
-      <codigoPrincipal>{{ item['codigoPrincipal'] }}</codigoPrincipal>
-      <codigoAuxiliar>{{ item['codigoAuxiliar'] }}</codigoAuxiliar>
+      <codigoInterno>{{ item['codigoPrincipal'] }}</codigoInterno>
+      <codigoAdicional>{{ item['codigoAuxiliar'] }}</codigoAdicional>
       <descripcion>{{ item['descripcion'] }}</descripcion>
       <cantidad>{{ item['cantidad'] }}</cantidad>
       <precioUnitario>{{ item['precioUnitario'] }}</precioUnitario>

@@ -46,7 +46,7 @@ class Factura(models.Model):
         :param fields_list:
         :return:
         '''
-        if 'move_type' not in fields_list:
+        if 'move_type' not in fields_list:  # para validar que es el documento
             return super().default_get(fields_list)
         inv = super(Factura, self).default_get(fields_list)
         return self.set_tipo_documento(inv)
@@ -56,9 +56,9 @@ class Factura(models.Model):
         default_tipo_documento = None
         tipo = inv['move_type']
         if tipo == 'out_invoice':  # factura 'out_invoice'
-            default_tipo_documento = self.get_first_tipo_documento('factura')
+            default_tipo_documento = self.get_first_tipo_documento(self, 'factura')
         if tipo == 'out_refund':  # Nota credito
-            default_tipo_documento = self.get_first_tipo_documento('nota')
+            default_tipo_documento = self.get_first_tipo_documento(self, 'nota')
         inv.update({
             'tipo_documento_id': default_tipo_documento,
             'secuencial': None,
@@ -73,11 +73,7 @@ class Factura(models.Model):
         })
         return inv
 
-    def get_first_tipo_documento(self, token):
-        td = self.env["tt_company.punto.emision"].search([('name', 'ilike', token)], limit=1)
-        if td:
-            return td.id
-        return None
+
 
     @api.constrains('num_documento')
     def check_uniq_num_factura(self):

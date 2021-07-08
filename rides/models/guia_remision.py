@@ -7,7 +7,6 @@ class GuiaRemision(models.Model):
     _name = 'stock.picking'
     _inherit = ['stock.picking', 'rides.base']
 
-    clave_acceso = fields.Char(string="Clave de Acceso", compute="init_ride")
     peso_total = fields.Float(
         string="Total Peso (kg)",
         compute="get_total_peso"
@@ -21,14 +20,21 @@ class GuiaRemision(models.Model):
         string="Placa Vehículo",
         size=8
     )
-    punto_partida = fields.Char("Punto de Partida"
-                                )
-    def init_ride(self):
-        self.clave_acceso = self.init_ride_and_get_clave_acceso('06', self.date)
+    punto_partida = fields.Char("Punto de Partida")
+
+    @api.constrains('name')
+    def check_tipo_documento(self):
+        self.set_default_tipo_documento()
 
     # peso en quintales
     def get_total_peso_qq(self):
+        # por alguna extraña razon no se puede sobreescribir defaul_get()
+        self.set_default_tipo_documento()
         self.peso_total_qq = convertion_utils.kg_to_quintales(self.peso_total)
+
+
+    def set_default_tipo_documento(self):
+        self.tipo_documento_id = self.get_first_tipo_documento(self, 'gu')
 
     def get_total_peso(self):
         self.peso_total = 0

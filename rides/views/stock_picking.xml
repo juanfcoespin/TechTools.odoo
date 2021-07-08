@@ -5,10 +5,12 @@
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.view_picking_form"/>
         <field name="arch" type="xml">
-            <field name="name" position="after">
-                <field name="num_documento" readonly="1"/>
-            </field>
+            <!--field name="name" position="after">
+
+            </field-->
             <field name="backorder_id" position="after">
+                <field name="tipo_documento_id"/>
+                <field name="num_documento" readonly="1"/>
                 <field name="transportista_id"/>
                 <field name="placa_vehiculo"/>
                 <field name="punto_partida"/>

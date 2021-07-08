@@ -117,10 +117,13 @@
                                         <td>Guia Remisión:</td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2">
+                                        <td>
                                             Dirección:
                                             <span t-field="o.partner_id.street" style="padding-left:10px;"/> y
                                             <span t-field="o.partner_id.street2"/>
+                                        </td>
+                                        <td>
+                                            Teléfono Cliente:<span t-field="o.partner_id.telefono_o_celular" style="padding-left:10px;"/>
                                         </td>
                                     </tr>
                                     <tr>

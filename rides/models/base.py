@@ -45,6 +45,7 @@ class Ride2(models.AbstractModel):
             07 Comprobante de Retención
         :return:
         '''
+
         if self.es_factura_provedor():
             return
         if not self.secuencial:
@@ -55,6 +56,11 @@ class Ride2(models.AbstractModel):
             self.num_documento = self.get_num_ride(self.secuencial)
         return self.get_clave_acceso(ride_date)
 
+    def get_first_tipo_documento(self, ride, token):
+        td = ride.env["tt_company.punto.emision"].search([('name', 'ilike', token)], limit=1)
+        if td:
+            return td.id
+        return None
     def es_factura_provedor(self):
         '''
             la factura de proveedor o factura de compra no debe generar secuencial

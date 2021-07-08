@@ -89,24 +89,26 @@
                             </tbody>
                         </table>
                         <hr></hr>
-                        <!--Detalle Transporte-->
+                        <!--Detalle Cliente y Transporte-->
                         <table style="padding-bottom: 10px; width: 100%">
                             <tbody>
                                 <tr>
-                                    <td style="width: 50%">Identificación Transportista:</td>
-                                    <td><span t-field="o.transportista_id.ec_identifier"/></td>
+                                    <td style="width: 50%">Identificación Transportista: <span t-field="o.transportista_id.ec_identifier"/></td>
+                                    <td>
+                                        Cliente:<span t-field="o.partner_id.name" style="padding-left:10px;"/>
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td style="padding-right: 20px">Razón Social / Nombres y Apellidos:</td>
-                                    <td align="left"><span t-field="o.transportista_id.name"/></td>
+                                    <td style="padding-right: 20px">Razón Social / Nombres y Apellidos Transportista: <span t-field="o.transportista_id.name"/></td>
+                                    <td>
+                                        Teléfono Cliente:<span t-field="o.partner_id.telefono_o_celular" style="padding-left:10px;"/>
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td>Placa:</td>
-                                    <td><span t-field="o.placa_vehiculo"/></td>
+                                    <td>Placa: <span t-field="o.placa_vehiculo"/></td>
                                 </tr>
                                 <tr>
-                                    <td>Punto de Partida:</td>
-                                    <td><span t-field="o.punto_partida"/></td>
+                                    <td>Punto de Partida: <span t-field="o.punto_partida"/></td>
                                 </tr>
                                 <tr>
                                     <td>Fecha Inicio Transporte: <span t-field="o.date" t-options='{"format": "MM/dd/yyyy"}'/></td>

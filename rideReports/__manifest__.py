@@ -24,6 +24,7 @@
         'report/custom_header.xml',
         'report/rides.xml',
         'report/factura_ride.xml',
+        'report/nc_ride.xml',
         'report/guia_remision_ride.xml',
     ],
     'application': True,

@@ -12,6 +12,15 @@
             attachment="(object.state in ('done')) and ('FC-').replace('/','')+'.pdf'"
         />
         <report
+            id="rides.factura"
+            model="account.move"
+            report_type="qweb-pdf"
+            string="Nota Crédito (Ride)"
+            name="rides.factura"
+            file="rides.factura"
+            attachment="(object.state in ('done')) and ('FC-').replace('/','')+'.pdf'"
+        />
+        <report
             id="rides.guia_remision"
             model="stock.picking"
             report_type="qweb-pdf"

@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       <template id="report_nc">
+           <t t-call="web.html_container">
+              <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div style="padding-bottom: 20px;">
+                        <table >
+                            <tbody>
+                            <tr>
+                                <!--Logo y direccion-->
+                                <td class="align-top">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)" style="max-height: 200px;" alt="Logo"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><h5>Dirección Matriz:</h5></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span t-esc="res_company.street"/> y <span t-esc="res_company.street2"/> <span t-esc="res_company.city"/> - <span t-esc="res_company.country_id.name"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-top: 20px">
+                                                    <table>
+                                                        <tr>
+                                                            <td>Contribuyente Especial Nro:</td>
+                                                            <td style="padding-left: 10px"><span t-esc="res_company.nro_contribuyente_especial"/></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Obligado a Llevar Contabilidad:</td>
+                                                            <td style="padding-left: 10px"><span t-esc="res_company.obligado_llevar_contabilidad"/></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <!--Info ruc , clave de acceso-->
+                                <td style="padding-left: 30px" class="align-top">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td><h4><span t-esc="res_company.razon_social"/></h4></td>
+                                            </tr>
+                                            <tr>
+                                                <td><h4>R.U.C.: <span t-esc="res_company.ruc"/></h4></td>
+                                            </tr>
+                                            <tr>
+                                                <td><h2>NOTA DE CRÉDITO</h2></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-top: 10px">No. <span t-field="o.num_documento"/></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="padding-top: 10px">NÚMERO DE AUTORIZACIÓN</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span t-field="o.clave_acceso"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-top: 10px">FECHA Y HORA DE AUTORIZACIÓN:</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span t-field="o.fecha_autorizacion" t-options='{"format": "MM/dd/yyyy HH:mm:ss"}'/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-top: 10px">AMBIENTE: <span t-field="o.ambiente"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-top: 10px">EMISIÓN: <span t-field="o.tipo_emision"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-top: 10px">CLAVE DE ACCESO</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <t t-set="content" t-value="o.clave_acceso"/>
+                                                    <img class="barcode" style="max-height: 70px;" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;humanreadable=1' % ('Code128', content, 600, 100)" alt="Barcode"/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                        <!--Info Cliente-->
+                        <div style="padding-bottom: 20px;">
+                            <table width="100%">
+                                <tbody>
+                                    <tr>
+                                        <td colspan="2" style="border-top: solid 1px #666"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Razón Social / Nombres y Apellidos:
+                                            <span t-field="o.partner_id.name" style="padding-left:10px;"/>
+                                        </td>
+                                        <td>Identificación:
+                                            <span t-field="o.partner_id.ec_identifier" style="padding-left:10px;"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Fecha Emisión:<span t-field="o.invoice_date" style="padding-left:10px;"/>
+                                        </td>
+                                        <td>Guia Remisión:</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Dirección:
+                                            <span t-field="o.partner_id.street" style="padding-left:10px;"/> y
+                                            <span t-field="o.partner_id.street2"/>
+                                        </td>
+                                        <td>
+                                            Teléfono Cliente:<span t-field="o.partner_id.telefono_o_celular" style="padding-left:10px;"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="border-top: solid 1px #666"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--Detalle Productos-->
+                        <div>
+                            <table class="table" >
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Producto</th>
+                                        <th class="text-right">Cantidad</th>
+                                        <th class="text-right">Precio</th>
+                                        <th class="text-right">Descuento</th>
+                                        <th class="text-right">Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                        <!-- linea de factura normal -->
+                                        <t t-if="not line.display_type">
+                                             <td>
+                                                <t t-if="line.product_id.barcode">
+                                                    <span t-field="line.product_id.barcode"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <span t-field="line.product_id.id"/>
+                                                </t>
+                                            </td>
+                                            <td><span t-field="line.product_id.name"/></td>
+                                            <td class="text-right"><span t-field="line.quantity"/></td>
+                                            <td class="text-right"><span t-esc="'%.2f'%line.price_unit"/></td>
+                                            <td class="text-right"><span t-esc="'%.2f'%line.descuento"/></td>
+                                            <td class="text-right"><span t-field="line.price_subtotal"/></td>
+                                        </t>
+                                        <!-- Cuando se registra una nota en la linea -->
+                                        <t t-if="line.display_type == 'line_note'">
+                                            <td colspan="99">
+                                                <span t-field="line.name" t-options="{'widget': 'text'}"/>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Totales e impuestos copiado de:
+                         account/views/report_invoice.xml-->
+                        <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ml-auto">
+                            <table class="table table-sm" style="page-break-inside: avoid;">
+                                    <tr style="">
+                                        <td><strong>Subtotal sin Descuento</strong></td>
+                                        <td class="text-right">
+                                            $ <span t-field="o.total_sin_descuento"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="">
+                                        <td><strong>Descuento</strong></td>
+                                        <td class="text-right">
+                                            $ <span t-field="o.total_discount"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="">
+                                        <td><strong>Subtotal</strong></td>
+                                        <td class="text-right">
+                                            <span t-field="o.amount_untaxed"/>
+                                        </td>
+                                    </tr>
+                                    <!-- Detalle de impuestos sin retenciones -->
+                                    <t t-foreach="o.amount_by_group" t-as="amount_by_group">
+                                        <tr style="">
+                                            <t t-if="len(o.line_ids.filtered(lambda line: line.tax_line_id)) in [0, 1] and o.amount_untaxed == amount_by_group[2]">
+                                                <td>
+                                                    <span class="text-nowrap" t-esc="amount_by_group[0]"/>
+                                                </td>
+                                                <td class="text-right o_price_total">
+                                                    <span class="text-nowrap" t-esc="amount_by_group[3]" />
+                                                </td>
+                                            </t>
+                                            <t t-else="">
+                                                <!--
+                                                cuando hay retenciones:
+                                                amount_by_group[0]: titulo del impuesto
+                                                amount_by_group[1]: valor numerico del impuesto
+                                                amount_by_group[2]: subtotal
+                                                amount_by_group[3]: valor en string del impuesto
+                                                -->
+                                                <t t-if="amount_by_group[1]>0"> <!-- impuestos que no son retenciones-->
+                                                    <td>
+                                                        <span t-esc="amount_by_group[0]"/>
+                                                    </td>
+                                                    <td class="text-right o_price_total">
+                                                        <span class="text-nowrap" t-esc="amount_by_group[3]"/>
+                                                    </td>
+                                                </t>
+                                            </t>
+                                        </tr>
+                                    </t>
+                                    <tr class="border-black o_total">
+                                        <td><strong>Total con Impuestos</strong></td>
+                                        <td class="text-right">
+                                            $ <span class="text-nowrap" t-field="o.total_con_impuestos"/>
+                                        </td>
+                                    </tr>
+                                    <t t-if="print_with_payments">
+                                        <t t-if="o.payment_state != 'invoicing_legacy'">
+                                            <t t-set="payments_vals" t-value="o.sudo()._get_reconciled_info_JSON_values()"/>
+                                            <t t-foreach="payments_vals" t-as="payment_vals">
+                                                <tr>
+                                                    <td>
+                                                        <i class="oe_form_field text-right oe_payment_label">Paid on <t t-esc="payment_vals['date']" t-options='{"widget": "date"}'/></i>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="payment_vals['amount']" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                            <t t-if="len(payments_vals) > 0">
+                                                <tr class="border-black">
+                                                    <td><strong>Amount Due</strong></td>
+                                                    <td class="text-right">
+                                                        <span t-field="o.amount_residual"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </t>
+                                    </t>
+                                </table>
+                        </div>
+                    </div>
+                </t>
+              </t>
+           </t>
+       </template>
+   </data>
+</odoo>
